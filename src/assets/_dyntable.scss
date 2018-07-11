@@ -1,0 +1,84 @@
+.dyntable {
+    padding: 0;
+    width: 100%;
+    border-padding: 0;
+    border-spacing: 0;
+    border: 1px solid #999;
+
+    .itemIsSelected {
+        background-color: #CCC;
+    }
+
+    .itemIsSelected:hover {
+        background-color: #FCC;
+    }
+
+    .selectable:hover {
+        outline: 2px solid #202080;
+        cursor: pointer;
+    }
+
+    th {
+        background-color: #FBFBFB;
+        padding: 5px 10px;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+    td {
+        padding: 5px 10px;
+        font-weight: 100;
+        border-right: 1px solid lightgrey;
+    }
+
+    input {
+        border: 0;
+        outline: 0;
+        width: 96%;
+        border-bottom: 2px solid #999;
+        margin: 3px 0;
+        padding: 3px;
+    }
+}
+
+.nav {
+    display: flex;
+}
+
+.nav > * {
+    outline: 0;
+    border: 1px solid #999;
+    border-top: 0;
+}
+
+.navl, .navr {
+    display: flex;
+    padding: 0;
+    width: 100px;
+
+    button {
+        border-radius: 0;
+        border: 0;
+        outline: 0;
+        margin: 0;
+        background-color: white;
+        font-size: 120%;
+        font-weight: bold;
+        box-shadow: none;
+        width: 48px;
+    }
+
+    button:hover {
+        background-color: #EBEBEB;
+    }
+
+    button:disabled {
+        background-color: #EBEBEB;
+    }
+}
+
+.navc {
+    width: 100%;
+    text-align: center;
+    background-color: #EBEBEB;
+}

@@ -1,0 +1,131 @@
+#app {
+    padding: 10px;
+    display: flex;
+}
+
+@import 'dynform';
+@import 'dyntable';
+@import 'commons';
+
+body * {
+    font-family: "ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 13;
+    margin: 0;
+}
+
+body > .alert {
+    z-index: 9999;
+}
+
+.toolbox {
+    display: flex;
+
+    .btn-group {
+        width: content;
+    }
+
+    button {
+        height: 30px;
+    }
+}
+
+.separator {
+    flex: 5;
+    flex-grow: 5;
+}
+
+h1 {
+    margin-bottom: 1em;
+}
+
+.main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    height: 30px;
+    background-color: #201000;
+    color: #CCCCCC;
+    display: flex;
+    z-index: 100;
+}
+.main-nav-btn {
+    margin: 0;
+    display: block;
+    padding: 5px 15px;
+    color: #CCCCCC;
+    text-decoration: none;
+}
+.main-nav-btn:hover, .main-nav-btn:focus {
+    outline: none;
+    background-color: darkorange;
+    color: black;
+    text-decoration: none;
+}
+.main-nav-user {
+    flex: 1;
+    background-color: darkorange;
+    margin: 0;
+    padding: 5px 15px;
+}
+.main-nav-sep {
+    flex: 2;
+}
+
+.main-list {
+    margin-top: 10px;
+}
+
+.main-container {
+    padding-top: 140px;
+    margin: 15px;
+    width: 100%;
+}
+
+.main-container .titlebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-size: 4em;
+    background-color: #F5F5F5;
+    border-bottom: 10px solid darkorange;
+    padding: 60px 40px 20px 40px;
+}
+
+.general-content {
+    width: 100%;
+    display: flex;
+
+    .main-list {
+        width: 60%;
+        padding: 5px;
+    }
+
+    .side-form {
+        width: 40%;
+        padding: 5px;
+    }
+}
+
+.recherche {
+    margin-bottom: 1em;
+}
+
+.main-list {
+    min-width: 60%;
+}
+
+.side-form {
+    min-width: 40%;
+}
+
+.table_selected {
+    outline: 2px solid red;
+}
+
+.login-form {
+    width: 60%;
+    margin: 10px 20%;
+}

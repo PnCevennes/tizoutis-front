@@ -1,0 +1,4 @@
+// url de l'API tizoutis
+const SERVER = 'http://127.0.0.1'
+
+export {SERVER}

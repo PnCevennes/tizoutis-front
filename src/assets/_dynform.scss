@@ -1,0 +1,182 @@
+@import 'commons';
+
+.dynform{
+    width: 100%;
+
+    .commit {
+        background-color: #55DD66;
+    }
+    .commit:disabled, .commit:hover {
+        background-color: #33BB44;
+    }
+    .form-row {
+        margin-top: 12px;
+    }
+
+    li {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    fieldset {
+        border: 2px solid #CCCCFF;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 1em;
+    }
+
+    legend {
+        font-size: 1.5em;
+        padding: 0 10px;
+        width: fit-content;
+        width: -moz-fit-content;
+        border: 0;
+        outline: 0;
+    }
+
+    label {
+        display: inline-block;
+        padding: 5px 10px;
+    }
+
+    select {
+        background-color: #FBFBFB;
+    }
+
+    input, textarea, select {
+        font-size: 16px;
+        color: #606060;
+        font-weight: 100;
+        border-radius: 4px 4px 0 0;
+        border: 0;
+        outline: 0;
+        box-shadow: none;
+        border-bottom: 2px solid #CCCCFF;
+        padding: 3px;
+        width: 100%;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        box-shadow: none;    
+    }
+
+    input[readonly], textarea[readonly], select[readonly] {
+        border-bottom: 2px solid #333;
+        background-color: #EEEEFF;
+    }
+
+    input[type=checkbox] {
+        width: 30px;
+    }
+
+    .upload {
+        list-style-type: none;
+
+        li {
+            display: flex;
+        }
+
+        input[type=file] {
+            border-radius: 0;
+            box-shadow: none;
+            width: 0px;
+            visibility: hidden;
+        }
+
+        a {
+            display: block;
+            width: 100%;
+        }
+
+        .send {
+
+            label {
+                white-space: nowrap;
+                width: content;
+                color: blue;
+                cursor: pointer;
+                margin-right: 5px;
+            }
+
+            label:hover {
+                color: darkblue;
+            }
+
+            progress {
+                width: 100%;
+                margin-top: 10px;
+                height: 4px;
+                border: 0;
+                box-shadow: none;
+                vertical-align: bottom;
+                background: none;
+            }
+        }
+    }
+
+    input:invalid {
+        box-shadow: unset;
+        border-bottom: 2px solid red;
+    }
+
+    .checklist {
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    .errmsg {
+        visibility: hidden;
+        color: #FF0000;
+        text-align: right;
+        font-size: 80%;
+    }
+
+    *:invalid + .errmsg{
+        visibility: visible;
+    }
+
+    .repeated-item .errmsg {
+        display: none;
+    }
+
+    button {
+        border-radius: 0;
+        margin: 1px;
+        border: 1px solid #BBBBBB;
+        box-shadow: none;
+        padding: 5px 10px;
+        font-weight: bold;
+        width: content;
+    }
+
+    button:hover, button:focus {
+        outline: 1px solid black;
+    }
+
+    button[disabled]:hover {
+        outline: none;
+    }
+
+    .repeated-item {
+        width: 100%;
+        display: flex;
+
+        .fieldbox{
+            flex: 1;
+            margin-right: 10px;
+        }
+        .btnbox {
+            width: 120px;
+        }
+    }
+
+}
+
+.dynform-inline {
+    display: flex;
+}

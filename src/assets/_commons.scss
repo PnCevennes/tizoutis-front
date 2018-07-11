@@ -1,0 +1,22 @@
+$success-color: #dff0d8;
+$warning-color: #fcf8e3;
+$danger-color: #f2dede;
+
+.right-align {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.warning {
+    background-color: $warning-color;
+}
+
+.danger {
+    background-color: $danger-color;
+}
+
+.success {
+    background-color: $success-color;
+}
+
+
