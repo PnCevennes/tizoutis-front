@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 import {
     annuaire,
     batiments,
     interventions,
     recrutement,
     Login,
-    Logout
+    Logout,
+    Err404
 } from '@/modules/'
 
 Vue.use(Router)
@@ -56,7 +56,8 @@ export default new Router({
         {
             path: '*',
             name: 'Err',
-            component: HelloWorld
+            component: Err404,
+            props: (route) => ({ query: route.query })
         }
     ]
 })
