@@ -11,6 +11,7 @@
             type="text"
             ref="input"
             :value="formattedValue"
+            :placeholder="placeholder"
             @input="search($event.target.value)"
             :class="{'invalid': invalid}"
             />
@@ -49,6 +50,9 @@ export default {
     computed: {
         isPanVisible () {
             return false
+        },
+        placeholder () {
+            return this.config.placeholder !== undefined ? this.config.placeholder : ''
         },
         formattedSearchRes () {
             var out = this.searchRes.map(

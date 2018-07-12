@@ -23,7 +23,8 @@ export default {
             config: {
                 url: this.url,
                 urlfilters: this.filters ? this.filters : '',
-                property: 'label'
+                property: 'label',
+                placeholder: 'Tapez votre recherche ici'
             }
         }
     },
