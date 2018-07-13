@@ -44,9 +44,15 @@ export default {
                     type: 'success'
                 })
                 this.$router.push({name: 'index'})
-            }).catch((err) => {
+            }).catch(() => {
                 window.sessionStorage.setItem('tizoutis-login', '')
-                console.error(err)
+                Notification.notify({
+                    title: 'Authentification',
+                    content: "Erreur d'authentification ! Vérifiez votre mot de passe.",
+                    placement: 'top-right',
+                    type: 'danger'
+                })
+                this.passwd = ''
             })
         }
     }

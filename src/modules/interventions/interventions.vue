@@ -11,6 +11,8 @@
                 </div>
                 <div class="dynform dynform-inline">
                     <label><input type="checkbox" @input="hide_finished($event)" /> Masquer les interventions terminées</label>
+                    <div class="separator"></div>
+                    <a class="btn btn-success btn-xs" :href="csvUrl">Export CSV</a>
                 </div>
                 <div>
                     <dyn-table :controller="demTableCtrl" @select="select" />
@@ -28,6 +30,7 @@
     </div>
 </template>
 <script>
+import {SERVER} from '@/config'
 import {DynForm} from '@/components/tools/dynform'
 import {DynTable, TableController} from '@/components/tools/dyntable'
 import {demTable, reqForm, planForm, reaForm} from './config'
@@ -50,6 +53,7 @@ export default {
             groupAdmin: 'tizoutis-interventions',
             routeName: 'interventions',
             ressourceUrl: 'interventions',
+            csvUrl: [SERVER, 'interventions', '?format=csv'].join('/'),
             demTableCtrl: new TableController(demTable),
             userForm: [reqForm],
             adminForm: [reqForm, planForm, reaForm]

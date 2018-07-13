@@ -11,6 +11,8 @@
                 </div>
                 <div class="dynform dynform-inline">
                     <label><input type="checkbox" @input="hide_finished($event)" /> Masquer les demandes terminées</label>
+                    <div class="separator"></div>
+                    <a class="btn btn-success btn-xs" :href="csvUrl">Export CSV</a>
                 </div>
                 <div>
                     <dyn-table :controller="demTableCtrl" @select="select" />
@@ -55,6 +57,7 @@ export default {
             demTableCtrl: new TableController(demTable),
             userForm: [reqForm],
             adminForm: [reqForm, planForm, reaForm],
+            csvUrl: [SERVER, 'travaux_batiments', '?format=csv'].join('/'),
             refGeo
         }
     },
