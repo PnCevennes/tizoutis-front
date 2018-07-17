@@ -103,7 +103,7 @@
             <upload v-if="config.type=='upload'"
                 ref="input"
                 :value="value"
-                @change="input($event)"
+                @input="input($event)"
                 :config="config" />
             <div class="errmsg">
                 <p>{{config.errmsg}}</p>

@@ -3,15 +3,23 @@
         <div class="dynform">
             <fieldset :key="fset.label" v-for="fset in config.fieldsets">
                 <legend>{{fset.label}}</legend>
-                <field
-                    class="form-row"
-                    :key="item.name"
-                    v-for="item in fset.fields"
-                    v-if="visibleStatus[item.name]"
-                    :config="item"
-                    v-model="values[item.name]"
-                    @validation="validate($event)"
-                    @event-triggered="trigger($event)"/>
+                <div v-if="!fset.readonly || config.user_is_admin">
+                    <field
+                        class="form-row"
+                        :key="item.name"
+                        v-for="item in fset.fields"
+                        v-if="visibleStatus[item.name]"
+                        :config="item"
+                        v-model="values[item.name]"
+                        @validation="validate($event)"
+                        @event-triggered="trigger($event)"/>
+                </div>
+                <table class="table" v-else>
+                    <tr v-for="item in fset.fields" :key="item.name">
+                        <th>{{item.label}}</th>
+                        <td><info :config="item" :value="values[item.name]" /></td>
+                    </tr>
+                </table>
             </fieldset>
             <div class="toolbox" v-if="config.show_buttons">
                 <button type="button" class="danger" v-if="config.user_is_admin && values.id" @click="remove">Supprimer</button>
@@ -27,6 +35,7 @@
 
 <script>
 import Field from './field'
+import Info from './info'
 
 export default {
     name: 'dynForm',
@@ -90,7 +99,8 @@ export default {
         }
     },
     components: {
-        Field
+        Field,
+        Info
     },
     mounted () {
         if (this.value !== undefined) {

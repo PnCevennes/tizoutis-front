@@ -6,6 +6,8 @@
             <router-link class="main-nav-btn" to="/interventions">Interventions</router-link>
             <router-link v-if="isAuth('tizoutis-travaux-batiments-admin')" class="main-nav-btn" to="/batiments">Bâtiments</router-link>
             <div class="separator"></div>
+            <div class="msg loading" v-if="loadingData"><span class="glyphicon glyphicon-transfer"></span> Chargement des données...</div>
+            <div class="msg saving" v-if="savingData"><span class="glyphicon glyphicon-transfer"></span> Enregistrement des données...</div>
             <router-link class="main-nav-btn" to="/logout">{{user.name}}</router-link>
         </div>
         <div class="main-nav" v-else>
@@ -27,6 +29,12 @@ export default {
         },
         isAuth () {
             return this.$store.getters.isAuth
+        },
+        loadingData () {
+            return this.$store.state.loading
+        },
+        savingData () {
+            return this.$store.state.saving
         }
     }
 }

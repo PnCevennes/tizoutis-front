@@ -69,6 +69,21 @@ h1 {
     margin: 0;
     padding: 5px 15px;
 }
+.main-nav .msg{
+    align-self: center;
+    padding: 0 10px;
+}
+
+.loading {
+    background-color: darkorange;
+    color: black;
+}
+
+.saving {
+    background-color: darkgreen;
+    color: black;
+}
+
 .main-nav-sep {
     flex: 2;
 }
@@ -128,4 +143,11 @@ h1 {
 .login-form {
     width: 60%;
     margin: 10px 20%;
+}
+
+.fiche {
+    th, td {
+        vertical-align: top;
+        padding: 5px 10px;
+    }
 }

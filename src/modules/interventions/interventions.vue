@@ -55,8 +55,7 @@ export default {
             ressourceUrl: 'interventions',
             csvUrl: [SERVER, 'interventions', '?format=csv'].join('/'),
             demTableCtrl: new TableController(demTable),
-            userForm: [reqForm],
-            adminForm: [reqForm, planForm, reaForm]
+            userForm: [reqForm, planForm, reaForm],
         }
     },
     methods: {

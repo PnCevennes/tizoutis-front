@@ -24,11 +24,25 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        user: new User()
+        user: new User(),
+        loading: false,
+        saving: false
     },
     mutations: {
         setUser (state, userData) {
             state.user = userData
+        },
+        loadingData (state) {
+            state.loading = true
+        },
+        dataLoaded (state) {
+            state.loading = false
+        },
+        savingData (state) {
+            state.saving = true
+        },
+        dataSaved (state) {
+            state.saving = false
         }
     },
     getters: {

@@ -55,8 +55,7 @@ export default {
             routeName: 'batiments',
             ressourceUrl: 'travaux_batiments',
             demTableCtrl: new TableController(demTable),
-            userForm: [reqForm],
-            adminForm: [reqForm, planForm, reaForm],
+            userForm: [reqForm, planForm, reaForm],
             csvUrl: [SERVER, 'travaux_batiments', '?format=csv'].join('/'),
             refGeo
         }

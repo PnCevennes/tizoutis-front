@@ -170,10 +170,12 @@ export default {
             }
         },
         get_xhr (idEdit) {
+            this.$store.commit('loadingData')
             axios.get(URLS['entites'] + this.urlParams).then(
                 res => {
                     this.results = res.data
                     this.extract(idEdit)
+                    this.$store.commit('dataLoaded')
                     Notification.notify({
                         content: 'Données reçues',
                         placement: 'top-right',

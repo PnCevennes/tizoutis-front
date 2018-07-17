@@ -89,6 +89,7 @@ var reqForm = {
  */
 var planForm = {
     label: 'Planification',
+    readonly: true,
     fields: [
         {
             name: 'plan_date',
@@ -127,6 +128,7 @@ var planForm = {
  */
 var reaForm = {
     label: 'Réalisation',
+    readonly: true,
     fields: [
         {
             name: 'rea_date',

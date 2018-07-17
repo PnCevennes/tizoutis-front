@@ -1,5 +1,6 @@
 export {default as DynForm} from './form'
 export {default as Field} from './field'
+export {default as Info} from './info'
 export {default as Typeahead} from './typeahead'
 export {default as Repeated} from './repeated'
 export {default as Upload} from './upload'

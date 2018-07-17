@@ -8,9 +8,9 @@
                 </div>
             </li>
             <li class="send">
-                <label for="upd">Sélectionner un fichier</label>
+                <label :for="config.name">Sélectionner un fichier</label>
                 <progress :value="progression" min="0" max="100"></progress>
-                <input type="file" id="upd" @change="send($event)" />
+                <input type="file" :id="config.name" @change="send($event)" />
             </li>
         </ul>
     </div>
@@ -39,7 +39,7 @@ export default {
             axios.post(this.config.uploadTarget, formContent, updConf).then(res => {
                 this.fichiers.push(res.data)
                 this.progression = 0
-                this.$emit('change', this.fichiers)
+                this.$emit('input', this.fichiers)
             }).catch(() => {
                 // TODO
             })

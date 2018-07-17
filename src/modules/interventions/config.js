@@ -88,6 +88,7 @@ var reqForm = {
 
 var planForm = {
     label: 'Planification',
+    readonly: true,
     fields: [
         {
             name: 'plan_date',
@@ -104,6 +105,7 @@ var planForm = {
 
 var reaForm = {
     label: 'Réalisation',
+    readonly: true,
     fields: [
         {
             name: 'rea_date',
@@ -127,7 +129,7 @@ var reaForm = {
         },
         {
             name: 'rea_fichiers',
-            label: 'Fichiers',
+            label: 'Fichiers Réalisation',
             type: 'upload',
             uploadDir: SERVER + '/static/upload/',
             uploadTarget: SERVER + '/upload'

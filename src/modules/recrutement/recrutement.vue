@@ -48,8 +48,7 @@ export default {
             routeName: 'recrutement',
             ressourceUrl: 'recrutement',
             demTableCtrl: new TableController(demTable),
-            userForm: [headForm, reqForm],
-            adminForm: [headForm, reqForm]
+            userForm: [headForm, reqForm]
         }
     },
     methods: {

@@ -106,8 +106,10 @@ export default {
                 this.config.urlfilters = ''
             }
             if (value.trim().length > 0) {
+                this.$store.commit('loadingData')
                 axios.get(this.config.url + value.trim() + this.config.urlfilters).then(
                     res => {
+                        this.$store.commit('dataLoaded')
                         this.searchRes = res.data
                         this.invalid = this.config.required
                         this.idx = 0

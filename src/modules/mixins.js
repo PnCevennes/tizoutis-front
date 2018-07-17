@@ -33,16 +33,20 @@ var GeneralMixin = {
     },
     methods: {
         getAllCards (year) {
+            this.$store.commit('loadingData')
             axios.get([SERVER, this.ressourceUrl, '?annee=' + year].join('/')).then(res => {
                 this.demTableCtrl.setData(res.data)
+                this.$store.commit('dataLoaded')
                 window.scrollTo({top: 0})
             }).catch(() => {})
         },
         getOneCard (intervention) {
             // charge le détail d'une intervention
+            this.$store.commit('loadingData')
             axios.get([SERVER, this.ressourceUrl, intervention].join('/')).then(res => {
                 this.demTableCtrl.selected_id = intervention
                 this.form_content = res.data
+                this.$store.commit('dataLoaded')
                 window.scrollTo({top: 0})
             }).catch(() => {
                 this.form_content = {}
@@ -50,15 +54,18 @@ var GeneralMixin = {
         },
         save (data) {
             var theUrl = data.id !== undefined ? [SERVER, this.ressourceUrl, data.id] : [SERVER, this.ressourceUrl, '']
+            this.$store.commit('savingData')
             axios.post(theUrl.join('/'), data).then(res => {
                 Notification.notify({
                     content: 'Fiche enregistrée',
                     placement: 'top-right',
                     type: 'success'
                 })
+                this.$store.commit('dataSaved')
                 this.getAllCards(this.listYear)
                 this.getOneCard(res.data.id)
             }).catch(() => {
+                this.$store.commit('dataSaved')
                 Notification.notify({
                     content: 'Une erreur est survenue !',
                     placement: 'top-right',
@@ -81,7 +88,9 @@ var GeneralMixin = {
         },
         _remove (data) {
             // supprime une intervention
+            this.$store.commit('savingData')
             axios.delete([SERVER, this.ressourceUrl, data.id].join('/')).then(() => {
+                this.$store.commit('dataSaved')
                 Notification.notify({
                     content: 'Fiche supprimée !',
                     placement: 'top-right',
@@ -126,11 +135,7 @@ var GeneralMixin = {
     mounted () {
         this.formCtrl.user_is_admin = this.userIsAdmin
         this.listYear = this.query.annee === undefined ? new Date().getFullYear() : this.query.annee
-        if (this.$store.getters.isAuth(this.groupAdmin)) {
-            this.formCtrl = new FormController(this.adminForm, this.user)
-        } else {
-            this.formCtrl = new FormController(this.userForm, this.user)
-        }
+        this.formCtrl = new FormController(this.userForm, this.user)
         this.getAllCards(this.listYear)
         if (this.query.fiche) {
             this.getOneCard(this.query.fiche)
