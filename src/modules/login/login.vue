@@ -45,7 +45,8 @@ export default {
                     placement: 'top-right',
                     type: 'success'
                 })
-                this.$router.push({name: 'index'})
+                this.$router.push(this.$store.getters.redirectRoute)
+                this.$store.commit('setRoute', {name: 'index'})
             }).catch(() => {
                 window.sessionStorage.setItem('tizoutis-login', '')
                 this.$store.commit('dataLoaded')

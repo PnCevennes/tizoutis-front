@@ -51,7 +51,7 @@ export default {
             return SCHEMAS[this.data.type_entite]
         },
         user_is_auth () {
-            return this.$store.getters.isAuth('tizoutis-annuaire')
+            return this.$store.getters.isMember('tizoutis-annuaire')
         }
     },
     components: {

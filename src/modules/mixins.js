@@ -2,6 +2,7 @@ import axios from 'axios'
 import {Notification, MessageBox} from 'uiv'
 import {FormController} from '@/components/tools/dynform'
 import {SERVER} from '@/config'
+import {URLS, User} from '@/modules/login'
 
 var GeneralMixin = {
     data () {
@@ -25,7 +26,7 @@ var GeneralMixin = {
             return this.$store.state.user
         },
         userIsAdmin () {
-            return this.$store.getters.isAuth(this.groupAdmin)
+            return this.$store.getters.isMember(this.groupAdmin)
         },
         full_form () {
             return this.user ? this.userIsAdmin && this.form_content.id !== undefined : false
@@ -130,19 +131,35 @@ var GeneralMixin = {
                     annee: this.listYear
                 }
             })
+        },
+        init () {
+            this.getAllCards(this.listYear)
+            if (this.query.fiche) {
+                this.getOneCard(this.query.fiche)
+                this.formCtrl.show_buttons = this.formCtrl.user_is_admin = this.userIsAdmin
+            } else {
+                this.form_content = {}
+                this.formCtrl.show_buttons = true
+            }
         }
     },
     mounted () {
         this.formCtrl.user_is_admin = this.userIsAdmin
         this.listYear = this.query.annee === undefined ? new Date().getFullYear() : this.query.annee
         this.formCtrl = new FormController(this.userForm, this.user)
-        this.getAllCards(this.listYear)
-        if (this.query.fiche) {
-            this.getOneCard(this.query.fiche)
-            this.formCtrl.show_buttons = this.formCtrl.user_is_admin = this.userIsAdmin
+        if (this.groupAccept) {
+            if (!this.$store.getters.isMember(this.groupAccept)) {
+                MessageBox.alert({
+                    title: 'Alerte intrusion !',
+                    content: "Vous n'avez pas les droits nécéssaires pour visiter cette section !"
+                }, () => {
+                    this.$router.push({name: 'index'})
+                })
+            } else {
+                this.init()
+            }
         } else {
-            this.form_content = {}
-            this.formCtrl.show_buttons = true
+            this.init()
         }
     },
     beforeRouteUpdate (to, from, next) {
@@ -166,4 +183,25 @@ var GeneralMixin = {
         next()
     }
 }
-export {GeneralMixin}
+
+var AuthMixin = {
+    mounted () {
+        if (!this.$store.getters.isAuth) {
+            var loginData = window.sessionStorage.getItem('tizoutis-login')
+            if (loginData) {
+                this.$store.commit('savingData')
+                axios.post(URLS.login, JSON.parse(loginData)).then((res) => {
+                    this.$store.commit('setUser', new User(res.data))
+                    this.$store.commit('dataSaved')
+                }).catch((err) => {
+                    console.error(err)
+                })
+            } else {
+                this.$store.commit('setRoute', this.$router.currentRoute)
+                this.$router.push('login')
+            }
+        }
+    }
+}
+
+export {GeneralMixin, AuthMixin}

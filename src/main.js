@@ -1,11 +1,11 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import axios from 'axios'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import App from './App'
 import router from './router'
-import {URLS, User} from '@/modules/login/'
+import {AuthMixin} from '@/modules/mixins'
+import {User} from '@/modules/login/'
 
 Vue.config.productionTip = false
 
@@ -25,6 +25,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         user: new User(),
+        initialRoute: '',
         loading: false,
         saving: false
     },
@@ -43,13 +44,31 @@ const store = new Vuex.Store({
         },
         dataSaved (state) {
             state.saving = false
+        },
+        setRoute (state, route) {
+            state.initialRoute = route
         }
     },
     getters: {
-        isAuth: (state) => (groupName) => {
-            var grps = [groupName, 'admin-tizoutis']
+        isAuth: (state) => {
+            return !!state.user.name.length
+        },
+        isMember: (state) => (groupName) => {
+            var grps = []
+            if (Array.isArray(groupName)) {
+                grps = [...groupName, 'admin-tizoutis']
+            } else {
+                grps = [groupName, 'admin-tizoutis']
+            }
+            if (grps.some(grp => grp === '*')) return true
             var res = grps.some(grp => state.user.groups.indexOf(grp) > -1)
             return res
+        },
+        redirectRoute: (state) => {
+            if (state.initialRoute === '' || state.initialRoute.name === 'logout') {
+                return {name: 'index'}
+            }
+            return {name: state.initialRoute.name, query: state.initialRoute.query}
         }
     }
 })
@@ -61,16 +80,7 @@ new Vue({
     store,
     components: { App },
     template: '<App/>',
-    mounted () {
-        var loginData = window.sessionStorage.getItem('tizoutis-login')
-        if (loginData) {
-            axios.post(URLS.login, JSON.parse(loginData)).then((res) => {
-                store.commit('setUser', new User(res.data))
-            }).catch((err) => {
-                console.error(err)
-            })
-        } else {
-            this.$router.push('login')
-        }
-    }
+    mixins: [
+        AuthMixin
+    ]
 })

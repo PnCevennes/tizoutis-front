@@ -28,7 +28,7 @@
 import {DynForm} from '@/components/tools/dynform'
 import {DynTable, TableController} from '@/components/tools/dyntable'
 import {demTable, headForm, reqForm} from './config'
-import {GeneralMixin} from '@/modules/mixins'
+import {GeneralMixin, AuthMixin} from '@/modules/mixins'
 
 export default {
     name: 'recrutement',
@@ -36,7 +36,7 @@ export default {
         DynTable,
         DynForm
     },
-    mixins: [GeneralMixin],
+    mixins: [GeneralMixin, AuthMixin],
     props: {
         query: {
             default: null

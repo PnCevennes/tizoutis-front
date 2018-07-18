@@ -7,7 +7,7 @@
             {{value}}
         </div>
         <div v-if="config.type=='select'">
-            {{config.choices.find(x => x.value == value).label }}
+            {{select}}
         </div>
         <div v-if="config.type=='autocomplete'">
             {{value}}
@@ -29,6 +29,15 @@ export default {
     props: ['config', 'value'],
     filters: {
         datefr
+    },
+    computed: {
+        select () {
+            try {
+                return this.config.choices.find(x => x.value === this.value).label
+            } catch (err) {
+                return ''
+            }
+        }
     }
 }
 </script>

@@ -35,7 +35,7 @@ import {SERVER} from '@/config'
 import {DynForm} from '@/components/tools/dynform'
 import {DynTable, TableController} from '@/components/tools/dyntable'
 import {demTable, reqForm, planForm, reaForm, refGeo} from './config'
-import {GeneralMixin} from '@/modules/mixins'
+import {GeneralMixin, AuthMixin} from '@/modules/mixins'
 
 export default {
     name: 'fiche',
@@ -43,7 +43,7 @@ export default {
         DynTable,
         DynForm
     },
-    mixins: [GeneralMixin],
+    mixins: [GeneralMixin, AuthMixin],
     props: {
         query: {
             default: null
@@ -52,6 +52,7 @@ export default {
     data () {
         return {
             groupAdmin: 'tizoutis-travaux-batiments-admin',
+            groupAccept: ['tizoutis-travaux-batiments-admin', 'tizoutis-travaux-batiments-user'],
             routeName: 'batiments',
             ressourceUrl: 'travaux_batiments',
             demTableCtrl: new TableController(demTable),

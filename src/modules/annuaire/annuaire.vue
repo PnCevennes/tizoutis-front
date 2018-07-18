@@ -24,6 +24,7 @@ import recherche from '@/components/tools/recherche'
 import listResults from './listresults'
 import editeur from './editeur'
 import {URLS} from './config'
+import {AuthMixin} from '@/modules/mixins'
 
 export default {
     name: 'annuaire',
@@ -38,6 +39,7 @@ export default {
     props: {
         query: { default: null }
     },
+    mixins: [AuthMixin],
     data () {
         return {
             URLS,

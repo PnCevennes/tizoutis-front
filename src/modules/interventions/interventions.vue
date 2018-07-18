@@ -34,7 +34,7 @@ import {SERVER} from '@/config'
 import {DynForm} from '@/components/tools/dynform'
 import {DynTable, TableController} from '@/components/tools/dyntable'
 import {demTable, reqForm, planForm, reaForm} from './config'
-import {GeneralMixin} from '@/modules/mixins'
+import {GeneralMixin, AuthMixin} from '@/modules/mixins'
 
 export default {
     name: 'interventions',
@@ -42,7 +42,7 @@ export default {
         DynTable,
         DynForm
     },
-    mixins: [GeneralMixin],
+    mixins: [GeneralMixin, AuthMixin],
     props: {
         query: {
             default: null
@@ -55,7 +55,7 @@ export default {
             ressourceUrl: 'interventions',
             csvUrl: [SERVER, 'interventions', '?format=csv'].join('/'),
             demTableCtrl: new TableController(demTable),
-            userForm: [reqForm, planForm, reaForm],
+            userForm: [reqForm, planForm, reaForm]
         }
     },
     methods: {
