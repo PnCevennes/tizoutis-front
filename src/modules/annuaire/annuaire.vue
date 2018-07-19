@@ -3,7 +3,7 @@
         <h1 class="titlebar">Annuaire</h1>
         <div class="container-fluid">
             <div class="row recherche dynform">
-                <recherche v-model="params_recherche" :url="URLS['recherche']" />
+                <recherche v-model="params_recherche" :url="URLS['recherche']" :format="formatListClbk" />
                 <btn type="success" size="xs" class="pull-right" @click="search">Go !</btn>
             </div>
             <div class="row">
@@ -62,6 +62,13 @@ export default {
         }
     },
     methods: {
+        formatListClbk (item) {
+            if (item.fonction) {
+                return '<b>' + item.label + '</b> <small>(' + item.fonction + ')</small>'
+            } else {
+                return '<b>' + item.label + '</b>'
+            }
+        },
         save (data) {
             if (!data.id) {
                 axios.post(this.URLS.save, data).then(

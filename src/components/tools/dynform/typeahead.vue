@@ -24,7 +24,8 @@
                 v-for="(item, index) in formattedSearchRes"
                 @click="select(index)"
                 :class="{current: index==idx}"
-                >{{item}}</li>
+                v-html="item"
+                ></li>
         </ul>
         <div :class="{'errmsg': invalid, 'errmsg-off': !invalid}">
             {{config.errmsg}}
@@ -56,7 +57,12 @@ export default {
         },
         formattedSearchRes () {
             var out = this.searchRes.map(
-                x => { return this.getFormattedValue(x) }
+                x => {
+                    if (this.config.formatListClbk) {
+                        return this.config.formatListClbk(x)
+                    }
+                    return this.getFormattedValue(x)
+                }
             )
             return out
         },

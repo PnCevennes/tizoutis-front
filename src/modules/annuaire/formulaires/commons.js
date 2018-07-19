@@ -71,6 +71,13 @@ var FormMixin = {
         }
     },
     methods: {
+        formatListClbk (item) {
+            if (item.fonction) {
+                return '<b>' + item.label + '</b> <small>(' + item.fonction + ')</small>'
+            } else {
+                return '<b>' + item.label + '</b>'
+            }
+        },
         save () {
             this.$emit('save', this.copy)
         },

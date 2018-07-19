@@ -17,12 +17,13 @@ export default {
     components: {
         Typeahead
     },
-    props: ['value', 'url', 'filters'],
+    props: ['value', 'url', 'filters', 'format'],
     data () {
         return {
             config: {
                 url: this.url,
                 urlfilters: this.filters ? this.filters : '',
+                formatListClbk: this.format,
                 property: 'label',
                 placeholder: 'Tapez votre recherche ici'
             }

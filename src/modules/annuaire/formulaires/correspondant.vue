@@ -58,13 +58,13 @@
             <tr>
                 <th>groupes</th>
                 <td>
-                    <recherche v-model="copy.parents" :url="recherche_url" />
+                    <recherche v-model="copy.parents" :url="recherche_url" :format="formatListClbk" />
                 </td>
             </tr>
             <tr>
                 <th>Éléments rattachés</th>
                 <td>
-                    <recherche v-model="copy.relations" :url="recherche_url" />
+                    <recherche v-model="copy.relations" :url="recherche_url" :format="formatListClbk" />
                 </td>
             </tr>
         </table>
