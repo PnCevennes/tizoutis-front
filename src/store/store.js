@@ -1,0 +1,57 @@
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+import {User} from '@/modules/login/'
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+    state: {
+        user: new User(),
+        initialRoute: '',
+        loading: false,
+        saving: false
+    },
+    mutations: {
+        setUser (state, userData) {
+            state.user = userData
+        },
+        loadingData (state) {
+            state.loading = true
+        },
+        dataLoaded (state) {
+            state.loading = false
+        },
+        savingData (state) {
+            state.saving = true
+        },
+        dataSaved (state) {
+            state.saving = false
+        },
+        setRoute (state, route) {
+            state.initialRoute = route
+        }
+    },
+    getters: {
+        isAuth: (state) => {
+            return !!state.user.name.length
+        },
+        isMember: (state) => (groupName) => {
+            var grps = []
+            if (Array.isArray(groupName)) {
+                grps = [...groupName, 'admin-tizoutis']
+            } else {
+                grps = [groupName, 'admin-tizoutis']
+            }
+            if (grps.some(grp => grp === '*')) return true
+            var res = grps.some(grp => state.user.groups.indexOf(grp) > -1)
+            return res
+        },
+        redirectRoute: (state) => {
+            if (state.initialRoute === '' || state.initialRoute.name === 'logout' || state.initialRoute.name === 'login') {
+                return {name: 'index'}
+            }
+            return {name: state.initialRoute.name, query: state.initialRoute.query}
+        }
+    }
+})

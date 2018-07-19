@@ -23,10 +23,10 @@
                 <td v-if="field.type=='www'">
                     <a :href="data[field.name]">{{data[field.name]}}</a>
                 </td>
-                <td v-if="field.type=='telephone'">{{data[field.name]|format_tel}}</td>
+                <td v-if="field.type=='telephone'">{{data[field.name]|formatTelephone}}</td>
                 <td v-if="field.type=='mul-tel'">
                     <ul class="list-unstyled">
-                        <li v-for="line in field.refs" :key="line">{{data[line]|format_tel}}</li>
+                        <li v-for="line in field.refs" :key="line">{{data[line]|formatTelephone}}</li>
                     </ul>
                 </td>
                 <td v-if="field.type=='list'">
@@ -41,8 +41,13 @@
     </div>
 </template>
 <script>
+import {formatTelephone} from '@/commons'
+
 export default {
     name: 'fiche',
-    props: ['fields', 'data']
+    props: ['fields', 'data'],
+    filters: {
+        formatTelephone
+    }
 }
 </script>

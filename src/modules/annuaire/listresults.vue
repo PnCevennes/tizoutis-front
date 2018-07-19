@@ -21,9 +21,9 @@
                     <td>{{item.label}}</td>
                     <td>
                         {{item.fonction}}<br />
-                        <span v-if="item.telephone"><span class="glyphicon glyphicon-earphone"></span> {{item.telephone | format_tel}}</span>
+                        <span v-if="item.telephone"><span class="glyphicon glyphicon-earphone"></span> {{item.telephone | formatTelephone}}</span>
                         <span v-if="item.telephone && item.mobile"> - </span>
-                        <span v-if="item.mobile"><span class="glyphicon glyphicon-phone"></span> {{item.mobile | format_tel}}</span><br />
+                        <span v-if="item.mobile"><span class="glyphicon glyphicon-phone"></span> {{item.mobile | formatTelephone}}</span><br />
                         <a :href="'mailto:'+item.email">{{item.email}}</a></td>
                 </tr>
                 <tr v-if="communes.length">
@@ -38,7 +38,7 @@
                 <tr :key="item.id" v-for="item in communes" @click="edit(item.id)">
                     <td>{{item.nom}}</td>
                     <td>
-                        <span><span class="glyphicon glyphicon-earphone"></span>{{item.telephone | format_tel}}</span><br />
+                        <span><span class="glyphicon glyphicon-earphone"></span>{{item.telephone | formatTelephone}}</span><br />
                         <a :href="'mailto:'+item.email">{{item.email}}</a>
                     </td>
                 </tr>
@@ -54,7 +54,7 @@
                 <tr :key="item.id" v-for="item in entreprises" @click="edit(item.id)">
                     <td>{{item.nom}}</td>
                     <td>
-                        <span>{{item.telephone | format_tel}}</span><br />
+                        <span>{{item.telephone | formatTelephone}}</span><br />
                         <a :ref="'mailto:'+item.email">{{item.email}}</a>
                     </td>
                 </tr>
@@ -72,6 +72,7 @@
 </template>
 <script>
 import copyBtn from '@/components/tools/copybtn'
+import {formatTelephone} from '@/commons'
 import {URLS} from './config'
 
 export default {
@@ -80,10 +81,8 @@ export default {
         copyBtn
     },
     props: ['data', 'searchParams'],
-    data () {
-        return {
-            URLS
-        }
+    filters: {
+        formatTelephone
     },
     computed: {
         correspondants () {
@@ -122,7 +121,7 @@ export default {
             var params = this.getSearchParams(this.searchParams)
             params.append('type', type)
             params.append('format', format)
-            return this.URLS.entites + params.toString()
+            return URLS.entites + params.toString()
         },
         edit (id) {
             this.$emit('select', id)
