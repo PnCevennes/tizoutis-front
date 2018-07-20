@@ -1,5 +1,5 @@
 <template>
-    <div class="nav">
+    <div class="dyntable-nav">
         <div class="navl">
             <button type="button" @click="controller.setPage(0)" :disabled="controller.page<1">&laquo;</button>
             <button type="button" @click="controller.pageDown()" :disabled="controller.page<1">&lsaquo;</button>

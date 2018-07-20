@@ -1,5 +1,5 @@
 <template>
-    <div class="editform">
+    <div class="fiche">
         <h1>{{copy.label}}</h1>
         <table class="table">
             <tr>

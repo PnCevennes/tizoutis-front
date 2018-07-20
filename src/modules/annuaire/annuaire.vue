@@ -3,15 +3,23 @@
         <h1 class="titlebar">Annuaire</h1>
         <div class="container-fluid">
             <div class="row recherche dynform">
-                <recherche v-model="params_recherche" :url="URLS['recherche']" :format="formatListClbk" />
-                <btn type="success" size="xs" class="pull-right" @click="search">Go !</btn>
+                <recherche v-model="searchParams" :url="URLS['recherche']" :format="formatListClbk" />
+                <btn
+                    :disabled="!searchInputValid"
+                    type="success"
+                    size="xs"
+                    class="pull-right"
+                    @click="search">Go !</btn>
             </div>
             <div class="row">
                 <div>
                     <editeur :data="current" @close="close" @save="save($event)" @remove="remove($event)" @editing="switch_editing" />
                 </div>
-                <div class="main-list" v-if="results.length">
-                    <list-results :data="results" :search-params="query.s" @select="edit($event)" />
+                <div class="col-lg-10 col-lg-offset-1">
+                    <div class="main-list" v-if="query.s">
+                        <list-results :data="results" :search-params="query.s" @select="edit($event)" />
+                    </div>
+                    <information v-else />
                 </div>
             </div>
         </div>
@@ -22,6 +30,7 @@ import axios from 'axios'
 import {Notification, MessageBox, Btn} from 'uiv'
 import recherche from '@/components/tools/recherche'
 import listResults from './listresults'
+import information from './informations'
 import editeur from './editeur'
 import {URLS} from './config'
 import {AuthMixin} from '@/modules/mixins'
@@ -34,6 +43,7 @@ export default {
         Btn,
         recherche,
         listResults,
+        information,
         editeur
     },
     props: {
@@ -43,18 +53,26 @@ export default {
     data () {
         return {
             URLS,
-            params_recherche: [''],
+            searchParams: [''],
             current: '',
             results: [],
             prevSearch: '',
             editing: false,
-            allSearchResults: []
+            searchResults: {
+                correspondants: [],
+                communes: [],
+                entites: [],
+                entreprises: []
+            }
         }
     },
     computed: {
+        searchInputValid () {
+            return this.searchParams.every(x => typeof (x) === 'object')
+        },
         urlParams () {
             var params = new URLSearchParams()
-            this.params_recherche.forEach(x => { params.append('params', x.id) })
+            this.searchParams.forEach(x => { params.append('params', x.id) })
             return params
         },
         user () {
@@ -157,7 +175,7 @@ export default {
                     this.prevSearch = JSON.stringify(query)
                     axios.get(URLS['labels'] + this.getSearchParams(query)).then(
                         res => {
-                            this.params_recherche = res.data
+                            this.searchParams = res.data
                             this.get_xhr(idEdit * 1)
                         }
                     ).catch(
@@ -169,7 +187,7 @@ export default {
                     }
                 }
             } else {
-                this.params_recherche = ['']
+                this.searchParams = ['']
                 this.searchResults = {
                     correspondants: [],
                     communes: [],
@@ -204,7 +222,7 @@ export default {
             }
         },
         search () {
-            this.$router.push({ name: 'annuaire', query: { s: this.params_recherche.map(x => x.id) } })
+            this.$router.push({ name: 'annuaire', query: { s: this.searchParams.map(x => x.id) } })
         },
         edit (id) {
             if (id === this.query.e) {
@@ -212,7 +230,7 @@ export default {
                 this.$router.push({
                     name: 'annuaire',
                     query: {
-                        s: this.params_recherche.map(x => x.id),
+                        s: this.searchParams.map(x => x.id),
                         e: id
                     }
                 })

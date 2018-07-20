@@ -74,12 +74,11 @@
             </tr>
         </table>
         <div class="toolbox">
-            <div>
-                <button type="button" class="btn btn-xs btn-danger" v-if="copy.id" @click="remove">Supprimer</button>
-                <div class="pull-right">
-                    <button type="button" class="btn btn-xs btn-default" @click="cancel">Annuler</button>
-                    <button type="button" class="btn btn-xs btn-success" @click="save">Enregistrer</button>
-                </div>
+            <button type="button" class="btn btn-xs btn-danger" v-if="copy.id" @click="remove">Supprimer</button>
+            <div class="separator"></div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-xs btn-default" @click="cancel">Annuler</button>
+                <button type="button" class="btn btn-xs btn-success" @click="save">Enregistrer</button>
             </div>
         </div>
     </div>

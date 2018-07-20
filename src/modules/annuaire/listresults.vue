@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="listresults">
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -12,12 +12,12 @@
                     <th>Correspondants <span class="badge">{{correspondants.length}}</span></th>
                     <td>
                         <a title="Écrire à tous" class="btn btn-xs btn-primary" :href="'mailto:'+correspondantsMails"><span class="glyphicon glyphicon-envelope"></span></a>
-                        <copy-btn id="cp_mail_corresps" css-class="btn btn-xs btn-success" v-model="correspondantsMails" />
-                            <a title="Exporter au format CSV (excel, LibreOffice)" :href="getFormated('correspondant', 'csv')" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-download-alt"></span></a>
-                            <a title="Exporter au format VCARD (thunderbird, téléphones)" :href="getFormated('correspondant', 'vcard')" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-phone"></span></a>
+                        <copy-btn id="cp_mail_corresps" title="Copier la liste d'e-mails" css-class="btn btn-xs btn-success" v-model="correspondantsMails" />
+                            <a title="Exporter la liste au format CSV (excel, LibreOffice)" :href="getFormated('correspondant', 'csv')" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-download-alt"></span></a>
+                            <a title="Exporter la liste au format VCARD (thunderbird, téléphones)" :href="getFormated('correspondant', 'vcard')" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-phone"></span></a>
                     </td>
                 </tr>
-                <tr :key="item.id" v-for="item in correspondants" @click="edit(item.id)">
+                <tr class="selectable" :key="item.id" v-for="item in correspondants" @dblclick="edit(item.id)">
                     <td>{{item.label}}</td>
                     <td>
                         {{item.fonction}}<br />
@@ -30,12 +30,12 @@
                     <th>Communes <span class="badge">{{communes.length}}</span></th>
                     <td>
                         <a class="btn btn-xs btn-primary" :href="'mailto:'+communesMails"><span class="glyphicon glyphicon-envelope"></span></a>
-                        <copy-btn id="cp_mail_communes" css-class="btn btn-xs btn-success" v-model="communesMails" />
+                        <copy-btn id="cp_mail_communes" title="Copier la liste d'e-mails" css-class="btn btn-xs btn-success" v-model="communesMails" />
                         <a :href="getFormated('commune', 'csv')" class="btn btn-xs btn-warning">CSV</a>
                         <a :href="getFormated('commune', 'vcard')" class="btn btn-xs btn-info">VCARD</a>
                     </td>
                 </tr>
-                <tr :key="item.id" v-for="item in communes" @click="edit(item.id)">
+                <tr class="selectable" :key="item.id" v-for="item in communes" @dblclick="edit(item.id)">
                     <td>{{item.nom}}</td>
                     <td>
                         <span><span class="glyphicon glyphicon-earphone"></span>{{item.telephone | formatTelephone}}</span><br />
@@ -46,12 +46,12 @@
                     <th>Entreprises <span class="badge">{{entreprises.length}}</span></th>
                     <td>
                         <a class="btn btn-xs btn-primary" :href="'mailto:'+entreprisesMails"><span class="glyphicon glyphicon-envelope"></span></a>
-                        <copy-btn id="cp_mail_entreprises" css-class="btn btn-xs btn-success" v-model="entreprisesMails" />
+                        <copy-btn id="cp_mail_entreprises" title="Copier la liste d'e-mails" css-class="btn btn-xs btn-success" v-model="entreprisesMails" />
                         <a :href="getFormated('entreprise', 'csv')" class="btn btn-xs btn-warning">CSV</a>
                         <a :href="getFormated('entreprise', 'vcard')" class="btn btn-xs btn-info">VCARD</a>
                     </td>
                 </tr>
-                <tr :key="item.id" v-for="item in entreprises" @click="edit(item.id)">
+                <tr class="selectable" :key="item.id" v-for="item in entreprises" @dblclick="edit(item.id)">
                     <td>{{item.nom}}</td>
                     <td>
                         <span>{{item.telephone | formatTelephone}}</span><br />
@@ -63,7 +63,7 @@
                         Groupes <span class="badge">{{entites.length}}</span>
                     </th>
                 </tr>
-                <tr :key="item.id" v-for="item in entites">
+                <tr class="selectable" :key="item.id" v-for="item in entites">
                     <td colspan="2"><router-link :to="{name: 'annuaire', query: {s: item.id, e: item.id}}">{{item.label}}</router-link></td>
                 </tr>
             </tbody>

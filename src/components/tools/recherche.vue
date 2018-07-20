@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="compo-recherche">
         <div :key="index" v-for="(item, index) in value" class="sline">
             <typeahead v-model="value[index]" :config="config" class="thd" />
             <div slot="btns" class="btns">
