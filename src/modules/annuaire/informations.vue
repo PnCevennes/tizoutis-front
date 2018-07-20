@@ -16,7 +16,7 @@
                     <p>Le bouton de recherche ne se débloque que lorsque toutes les critères de recherche sont des arguments valides.</p>
                     <hr />
                     <h4>Boutons utiles</h4>
-                    <p>Plusieurs boutons sont affichés en tête de la colonne "Adresse email" :</p>
+                    <p>Plusieurs boutons sont affichés en tête de la colonne "Informations" :</p>
                     <ul class="list">
                         <li><span class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-envelope"></span></span> Permet de créer un nouveau message (en utilisant un client mail compatible comme thunderbird par exemple) avec pour destinataires tous les correspondants affichés. <span class="text-danger">Attention ! Cette option souffre d'une limitation sous Windows concernant le nombre de correspondants. Afin de contourner ce problème, il est possible d'utiliser le bouton <span class="btn btn-success btn-xs"><span class="glyphicon glyphicon-copy"></span></span></span>
                         </li>
