@@ -183,9 +183,13 @@ h1 {
     }
 }
 
-.slide-enter, .slide-leave-to {
+.fade-enter, .fade-leave-to {
     opacity: 0;
 }
-.slide-enter-active, .slide-leave-active {
-    transition: all 0.2s linear;
+.fade-enter-active {
+    transition: all 0.1s linear;
+}
+
+.fade-leave-active {
+    transition: all 0.1s linear;
 }
