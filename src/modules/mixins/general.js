@@ -2,9 +2,8 @@ import axios from 'axios'
 import {Notification, MessageBox} from 'uiv'
 import {FormController} from '@/components/tools/dynform'
 import {SERVER} from '@/config'
-import {URLS, User} from '@/modules/login'
 
-var GeneralMixin = {
+export default {
     data () {
         return {
             listYear: '',
@@ -153,7 +152,7 @@ var GeneralMixin = {
                     title: 'Alerte intrusion !',
                     content: "Vous n'avez pas les droits nécéssaires pour visiter cette section !"
                 }, () => {
-                    this.$router.push({name: 'index'})
+                    this.$router.push({name: 'login'})
                 })
             } else {
                 this.init()
@@ -183,25 +182,3 @@ var GeneralMixin = {
         next()
     }
 }
-
-var AuthMixin = {
-    mounted () {
-        if (!this.$store.getters.isAuth) {
-            var loginData = window.sessionStorage.getItem('tizoutis-login')
-            if (loginData) {
-                this.$store.commit('savingData')
-                axios.post(URLS.login, JSON.parse(loginData)).then((res) => {
-                    this.$store.commit('setUser', new User(res.data))
-                    this.$store.commit('dataSaved')
-                }).catch((err) => {
-                    console.error(err)
-                })
-            } else {
-                this.$store.commit('setRoute', this.$router.currentRoute)
-                this.$router.push('login')
-            }
-        }
-    }
-}
-
-export {GeneralMixin, AuthMixin}
