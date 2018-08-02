@@ -12,7 +12,7 @@
             </dropdown>
         </div>
         <div>
-            <modal v-model="opened" :header="false" :footer="false" @hide="close" size="lg">
+            <modal v-model="opened" :header="false" :footer="false" @hide="close" :backdrop="!edit" size="lg">
                 <div v-if="!edit">
                     <fiche :fields="fields" :data="data" />
                     <div class="toolbox" v-if="!edit && !!data.type_entite">
