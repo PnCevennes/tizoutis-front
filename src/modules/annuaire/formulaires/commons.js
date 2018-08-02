@@ -1,4 +1,5 @@
 import recherche from '@/components/tools/recherche'
+import {SERVER} from '@/config'
 
 const DEFAULTS = {
     correspondant: {
@@ -66,7 +67,7 @@ var FormMixin = {
     },
     data () {
         return {
-            recherche_url: 'http://devel.pnc.int:8000/annuaire/entites/',
+            recherche_url: SERVER + '/annuaire/entites/',
             copy: ''
         }
     },
