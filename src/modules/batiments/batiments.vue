@@ -95,6 +95,12 @@ export default {
                 this.demTableCtrl.select(res, true)
             }
         }
+    },
+    mounted () {
+        var dmdr = reqForm.fields.filter(x => x.name == 'dmdr_contact_nom')[0]
+        var dmdr_mail = reqForm.fields.filter(x => x.name == 'dmdr_contact_email')[0]
+        dmdr.default = this.user.name
+        dmdr_mail.default = [this.user.mail]
     }
 }
 </script>
