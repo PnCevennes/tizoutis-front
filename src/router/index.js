@@ -5,6 +5,7 @@ import {
     batiments,
     interventions,
     recrutement,
+    supervision,
     Login,
     Logout,
     Err404
@@ -51,6 +52,12 @@ export default new Router({
             path: '/batiments',
             name: 'batiments',
             component: batiments,
+            props: (route) => ({ query: route.query })
+        },
+        {
+            path: '/supervision',
+            name: 'supervision',
+            component: supervision,
             props: (route) => ({ query: route.query })
         },
         {

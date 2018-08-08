@@ -20,6 +20,7 @@ var reqForm = {
             label: 'nom',
             type: 'line',
             validators: [Validators.minLength(2)],
+            errmsg: 'Le nom doit au minimum avoir deux lettres',
             default: ''
         },
         {
