@@ -14,7 +14,7 @@ export default {
     name: 'Logout',
     mounted () {
         this.$store.commit('setUser', new User())
-        window.sessionStorage.setItem('tizoutis-login', '')
+        window.localStorage.setItem('tizoutis-userdata', '')
     }
 }
 </script>

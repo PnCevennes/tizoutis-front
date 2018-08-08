@@ -36,19 +36,19 @@ export default {
         loginfn () {
             this.$store.commit('loadingData')
             axios.post(URLS.login, {login: this.login, passwd: this.passwd}).then((res) => {
-                window.sessionStorage.setItem('tizoutis-login', JSON.stringify({login: this.login, passwd: this.passwd}))
+                window.localStorage.setItem('tizoutis-userdata', JSON.stringify({uid: res.data.id, token: res.data.token}))
                 this.$store.commit('dataLoaded')
-                this.$store.commit('setUser', new User(res.data))
+                this.$store.commit('setUser', new User(res.data.userdata))
                 Notification.notify({
                     title: 'Authentification',
-                    content: 'Bienvenue ' + res.data.name,
+                    content: 'Bienvenue ' + res.data.userdata.name,
                     placement: 'top-right',
                     type: 'success'
                 })
                 this.$router.push(this.$store.getters.redirectRoute)
                 this.$store.commit('setRoute', {name: 'index'})
             }).catch(() => {
-                window.sessionStorage.setItem('tizoutis-login', '')
+                window.sessionStorage.setItem('tizoutis-userdata', '')
                 this.$store.commit('dataLoaded')
                 Notification.notify({
                     title: 'Authentification',

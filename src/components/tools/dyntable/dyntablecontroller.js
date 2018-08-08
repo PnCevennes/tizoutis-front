@@ -125,6 +125,18 @@ class TableController {
         }
     }
 
+    selectSingle (item, muted) {
+        if (!this.config.disallowSingleSelect) {
+            this.select(item, muted)
+        }
+    }
+
+    selectDouble (item, muted) {
+        if (this.config.disallowSingleSelect) {
+            this.select(item, muted)
+        }
+    }
+
     selectByIndex (idx, muted) {
         this.select(this.filteredData[idx], muted)
     }

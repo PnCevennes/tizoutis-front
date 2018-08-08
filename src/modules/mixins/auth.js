@@ -4,10 +4,14 @@ import {URLS, User} from '@/modules/login'
 export default {
     mounted () {
         if (!this.$store.getters.isAuth) {
-            var loginData = window.sessionStorage.getItem('tizoutis-login')
+            var loginData = JSON.parse(window.localStorage.getItem('tizoutis-userdata'))
+            console.log(loginData)
             if (loginData) {
+                console.log('reco')
                 this.$store.commit('savingData')
-                axios.post(URLS.login, JSON.parse(loginData)).then((res) => {
+                var postdata = {id: loginData.uid, token: loginData.token}
+                console.log(postdata)
+                axios.post(URLS.reconnect, postdata).then((res) => {
                     this.$store.commit('setUser', new User(res.data))
                     this.$store.commit('dataSaved')
                 }).catch((err) => {
