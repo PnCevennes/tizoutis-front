@@ -58,10 +58,10 @@ export default {
     },
     mounted () {
         // eslint-disable-next-line
-        var meta_createur_fiche = headForm.fields.filter(x => x.name == 'meta_createur_fiche')[0]
-        var notif_list = headForm.fields.filter(x => x.name == 'notif_list')[0]
+        var meta_createur_fiche = headForm.fields.filter(x => x.name === 'meta_createur_fiche')[0]
+        var notifList = headForm.fields.filter(x => x.name === 'notif_list')[0]
         meta_createur_fiche.default = this.user.name
-        notif_list.default = [this.user.mail]
+        notifList.default = [this.user.mail]
     }
 }
 </script>

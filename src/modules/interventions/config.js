@@ -21,7 +21,7 @@ var reqForm = {
         },
         {
             name: 'dmdr_contact_nom',
-            label: 'nom',
+            label: 'Créateur de la fiche',
             type: 'line',
             default: ''
         },

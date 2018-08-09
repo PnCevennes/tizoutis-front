@@ -17,7 +17,7 @@ var reqForm = {
         },
         {
             name: 'dmdr_contact_nom',
-            label: 'nom',
+            label: 'Créateur de la fiche',
             type: 'line',
             validators: [Validators.minLength(2)],
             errmsg: 'Le nom doit au minimum avoir deux lettres',
