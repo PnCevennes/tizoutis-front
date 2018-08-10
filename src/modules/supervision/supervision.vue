@@ -7,7 +7,7 @@
             </div>
             <div class="side-form">
                 <div class="dynform right-align">
-                    <button type="button" @click="new_fiche">Nouvel équipement</button>
+                    <button type="button" @click="newCard">Nouvel équipement</button>
                 </div>
                 <div>
                     <dyn-form :config="formCtrl" v-model="form_content" @commit="save($event)" @remove="remove($event)" />

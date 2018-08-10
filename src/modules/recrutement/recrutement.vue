@@ -15,7 +15,7 @@
             </div>
             <div class="side-form">
                 <div class="dynform right-align">
-                    <button type="button" @click="new_fiche">Nouvelle fiche</button>
+                    <button type="button" @click="newCard">Nouvelle fiche</button>
                 </div>
                 <div>
                     <dyn-form :config="formCtrl" v-model="form_content" @commit="save($event)" @remove="remove($event)" />
@@ -36,7 +36,7 @@ export default {
         DynTable,
         DynForm
     },
-    mixins: [GeneralMixin, AuthMixin],
+    mixins: [AuthMixin, GeneralMixin],
     props: {
         query: {
             default: null
@@ -52,15 +52,14 @@ export default {
         }
     },
     methods: {
-        _routeUdatedClbk (to, from) {
+        _routeUpdatedClbk (to, from) {
             this.formCtrl.show_buttons = true
         }
     },
     mounted () {
-        // eslint-disable-next-line
-        var meta_createur_fiche = headForm.fields.filter(x => x.name === 'meta_createur_fiche')[0]
+        var metaCreateurFiche = headForm.fields.filter(x => x.name === 'meta_createur_fiche')[0]
         var notifList = headForm.fields.filter(x => x.name === 'notif_list')[0]
-        meta_createur_fiche.default = this.user.name
+        metaCreateurFiche.default = this.user.name
         notifList.default = [this.user.mail]
     }
 }

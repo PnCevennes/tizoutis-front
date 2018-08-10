@@ -106,7 +106,7 @@ export default {
                 })
             })
         },
-        new_fiche () {
+        newCard () {
             this.$router.push({
                 name: this.routeName,
                 query: {
@@ -146,13 +146,25 @@ export default {
         this.formCtrl.user_is_admin = this.userIsAdmin
         this.listYear = this.query.annee === undefined ? new Date().getFullYear() : this.query.annee
         this.formCtrl = new FormController(this.userForm, this.user)
+        this.$store.commit('setRoute', this.$router.currentRoute)
+        if (!this.$store.getters.isAuth) {
+            setTimeout(() => {
+                if (!this.user.name || this.user.name === '') {
+                    this.$router.push({name: 'login'})
+                }
+            }, 200)
+        }
         if (this.groupAccept) {
             if (!this.$store.getters.isMember(this.groupAccept)) {
                 MessageBox.alert({
                     title: 'Alerte intrusion !',
                     content: "Vous n'avez pas les droits nécéssaires pour visiter cette section !"
                 }, () => {
-                    this.$router.push({name: 'login'})
+                    if (!this.$store.getters.isMember(this.groupAccept)) {
+                        this.$router.push({name: 'login'})
+                    } else {
+                        this.init()
+                    }
                 })
             } else {
                 this.init()
@@ -176,8 +188,8 @@ export default {
         if (to.query.annee !== from.query.annee) {
             this.getAllCards(to.query.annee)
         }
-        if (this._routeUdatedClbk !== undefined) {
-            this._routeUdatedClbk(to, from)
+        if (this._routeUpdatedClbk !== undefined) {
+            this._routeUpdatedClbk(to, from)
         }
         next()
     }

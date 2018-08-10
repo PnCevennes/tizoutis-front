@@ -20,7 +20,7 @@
             </div>
             <div class="side-form">
                 <div class="dynform right-align">
-                    <button type="button" @click="new_fiche">Nouvelle demande de travaux</button>
+                    <button type="button" @click="newCard">Nouvelle demande de travaux</button>
                 </div>
                 <div>
                     <dyn-form :config="formCtrl" v-model="form_content" @commit="save($event)" @remove="remove($event)" @commune-changed="communeChange($event)" />
@@ -43,7 +43,7 @@ export default {
         DynTable,
         DynForm
     },
-    mixins: [GeneralMixin, AuthMixin],
+    mixins: [AuthMixin, GeneralMixin],
     props: {
         query: {
             default: null
