@@ -112,6 +112,11 @@ export default {
     watch: {
         value (nv) {
             this.init(nv)
+        },
+        config () {
+            if (this.value !== undefined) {
+                this.init(this.value)
+            }
         }
     }
 }

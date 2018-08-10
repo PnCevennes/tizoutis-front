@@ -6,6 +6,7 @@ class TableController {
     page = 0
     pages = 0
     selected = {}
+    selected_id = ''
     sorting = {}
     filters = {}
     filterData = {}
