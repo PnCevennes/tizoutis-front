@@ -29,7 +29,9 @@ export default new Vuex.Store({
             state.saving = false
         },
         setRoute (state, route) {
-            state.initialRoute = route
+            if (route.name !== 'login') {
+                state.initialRoute = route
+            }
         }
     },
     getters: {
