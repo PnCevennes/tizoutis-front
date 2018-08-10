@@ -6,6 +6,7 @@ class TableController {
     page = 0
     pages = 0
     selected = {}
+    // eslint-disable-next-line
     selected_id = ''
     sorting = {}
     filters = {}

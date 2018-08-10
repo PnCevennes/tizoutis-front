@@ -79,9 +79,11 @@ export default {
     },
     mounted () {
         var dmdr = reqForm.fields.filter(x => x.name === 'dmdr_contact_nom')[0]
-        var dmdrMail = reqForm.fields.filter(x => x.name === 'dmdr_contact_email')[0]
         dmdr.default = this.user.name
+        var dmdrMail = reqForm.fields.filter(x => x.name === 'dmdr_contact_email')[0]
         dmdrMail.default = [this.user.mail]
+        var dmdrService = reqForm.fields.filter(x => x.name === 'dmdr_service')[0]
+        dmdrService.default = dmdrService.choices.find(v => this.user.groups.indexOf(v.label) !== -1).id
     }
 }
 </script>
