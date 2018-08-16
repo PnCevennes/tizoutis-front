@@ -8,7 +8,7 @@
                 <router-link class="main-nav-btn" to="/recrutement">Recrutement</router-link>
                 <router-link class="main-nav-btn" to="/interventions">Interventions</router-link>
                 <router-link v-if="isMember(batimentsGroups)" class="main-nav-btn" to="/batiments">Bâtiments</router-link>
-                <router-link v-if="isMember('admin-tizoutis')" class="main-nav-btn" to="/supervision">Supervision</router-link>
+                <router-link v-if="isMember('tizoutis-supervision')" class="main-nav-btn" to="/supervision">Supervision</router-link>
                 <div class="main-nav-sep"></div>
                 <div class="msg loading" v-if="loadingData"><span class="glyphicon glyphicon-time"></span> Chargement des données...</div>
                 <div class="msg saving" v-if="savingData"><span class="glyphicon glyphicon-time"></span> Enregistrement des données...</div>
