@@ -13,6 +13,12 @@
                 <button class="btn btn-xs btn-success" type="button" @click="loginfn">Login</button>
             </div>
         </div>
+        <div class="login-form">
+            <h1>Se connecter à TiZouTis</h1>
+            <p>Afin d'éviter la prolifération des mots de passe, TiZouTis utilise le même système d'authentification des utilisateurs que votre ordinateur.</p>
+            <p>À quelques exceptions près, votre login est donc votre nom en minuscules et le mot de passe est celui que vous tapez tous les matins pour démarrer votre ordinateur.</p>
+            <p class="text-danger">Attention ! Si vous modifiez votre mot de passe sur votre ordinateur, celui de TiZouTis changera également.</p>
+        </div>
     </div>
 </template>
 <script>

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {URLS, User} from '@/modules/login'
+import {URLS, User} from '@/modules/authentification'
 
 export default {
     mounted () {

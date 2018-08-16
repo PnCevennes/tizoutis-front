@@ -1,7 +1,7 @@
 export {annuaire} from './annuaire'
 export {batiments} from './batiments/'
 export {interventions} from './interventions/'
-export {Login, Logout} from './login/'
+export {Login, Logout} from './authentification/'
 export {recrutement} from './recrutement/'
 export {supervision} from './supervision/'
 export {default as Err404} from './err404.vue'
