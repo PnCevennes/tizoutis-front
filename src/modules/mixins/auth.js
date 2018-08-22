@@ -18,6 +18,7 @@ export default {
                     axios.post(URLS.reconnect, postdata).then((res) => {
                         if (res) {
                             this.$store.commit('setUser', new User(res.data.userdata))
+                            this.$store.commit('setUserToken', res.data.token)
                             this.$store.commit('dataSaved')
                         }
                     }).catch(() => {

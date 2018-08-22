@@ -57,14 +57,14 @@ export default {
             ressourceUrl: 'travaux_batiments',
             demTableCtrl: new TableController(demTable),
             userForm: [reqForm, planForm, reaForm],
-            csvUrl: [SERVER, 'travaux_batiments', '?format=csv'].join('/'),
+            csvUrl: [SERVER, 'travaux_batiments', '?format=csv&token=' + this.$store.state.userToken].join('/'),
             refGeo
         }
     },
     methods: {
         getOneCard (fiche) {
             // charge le détail d'une fiche
-            axios.get(SERVER + '/travaux_batiments/' + fiche).then(res => {
+            axios.get(SERVER + '/travaux_batiments/' + fiche + '?token=' + this.$store.state.userToken).then(res => {
                 this.refGeo.getBatiments(res.data.dem_commune, reqForm, 'dem_designation')
                 this.demTableCtrl.selected_id = fiche
                 setTimeout(() => {

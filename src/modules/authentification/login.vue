@@ -43,6 +43,7 @@ export default {
             this.$store.commit('loadingData')
             axios.post(URLS.login, {login: this.login, passwd: this.passwd}).then((res) => {
                 window.localStorage.setItem('tizoutis-userdata', JSON.stringify({uid: res.data.id, token: res.data.token}))
+                this.$store.commit('setUserToken', res.data.token)
                 this.$store.commit('dataLoaded')
                 this.$store.commit('setUser', new User(res.data.userdata))
                 Notification.notify({

@@ -34,7 +34,8 @@ export default {
     methods: {
         getAllCards (year) {
             this.$store.commit('loadingData')
-            axios.get([SERVER, this.ressourceUrl, '?annee=' + year].join('/')).then(res => {
+            var token = this.$store.state.userToken
+            axios.get([SERVER, this.ressourceUrl, '?token=' + token + '&annee=' + year].join('/')).then(res => {
                 this.demTableCtrl.setData(res.data)
                 this.$store.commit('dataLoaded')
                 window.scrollTo({top: 0})
@@ -43,7 +44,8 @@ export default {
         getOneCard (intervention) {
             // charge le détail d'une intervention
             this.$store.commit('loadingData')
-            axios.get([SERVER, this.ressourceUrl, intervention].join('/')).then(res => {
+            var token = this.$store.state.userToken
+            axios.get([SERVER, this.ressourceUrl, intervention].join('/') + '?token=' + token).then(res => {
                 this.demTableCtrl.selected_id = intervention
                 this.form_content = res.data
                 this.$store.commit('dataLoaded')
@@ -55,7 +57,7 @@ export default {
         save (data) {
             var theUrl = data.id !== undefined ? [SERVER, this.ressourceUrl, data.id] : [SERVER, this.ressourceUrl, '']
             this.$store.commit('savingData')
-            axios.post(theUrl.join('/'), data).then(res => {
+            axios.post(theUrl.join('/') + '?token=' + this.$store.state.userToken, data).then(res => {
                 Notification.notify({
                     content: 'Fiche enregistrée',
                     placement: 'top-right',
@@ -89,7 +91,7 @@ export default {
         _remove (data) {
             // supprime une intervention
             this.$store.commit('savingData')
-            axios.delete([SERVER, this.ressourceUrl, data.id].join('/')).then(() => {
+            axios.delete([SERVER, this.ressourceUrl, data.id].join('/') + '?token=' + this.$store.state.userToken).then(() => {
                 this.$store.commit('dataSaved')
                 Notification.notify({
                     content: 'Fiche supprimée !',

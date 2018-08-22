@@ -121,6 +121,7 @@ export default {
             var params = this.getSearchParams(this.searchParams)
             params.append('type', type)
             params.append('format', format)
+            params.append('token', this.$store.state.userToken)
             return URLS.entites + params.toString()
         },
         edit (id) {

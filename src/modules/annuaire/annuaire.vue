@@ -89,7 +89,7 @@ export default {
         },
         save (data) {
             if (!data.id) {
-                axios.post(this.URLS.save, data).then(
+                axios.post(this.URLS.save + '?token=' + this.$store.state.userToken, data).then(
                     res => {
                         Notification.notify({
                             content: 'Données enregistrées',
@@ -112,7 +112,7 @@ export default {
                     }
                 )
             } else {
-                axios.put(this.URLS.save + '/' + data.id, data).then(
+                axios.put(this.URLS.save + '/' + data.id + '?token=' + this.$store.state.userToken, data).then(
                     res => {
                         Notification.notify({
                             content: 'Données enregistrées',
@@ -135,7 +135,7 @@ export default {
                 title: "Suppression d'une fiche",
                 content: 'Êtes vous certain de vouloir supprimer cette fiche ?'
             }).then(() => {
-                axios.delete(this.URLS.save + '/' + data.id).then((res) => {
+                axios.delete(this.URLS.save + '/' + data.id + '?token=' + this.$store.state.userToken).then((res) => {
                     Notification.notify({
                         content: 'Fiche supprimée',
                         placement: 'top-right',
@@ -166,6 +166,7 @@ export default {
             return params
         },
         init_page (query, idEdit, reload) {
+            var token = this.$store.state.userToken
             this.current = {}
             if (query !== null && query !== undefined) {
                 if (typeof (query) === 'string') {
@@ -173,7 +174,7 @@ export default {
                 }
                 if (!!reload || JSON.stringify(query) !== this.prevSearch) {
                     this.prevSearch = JSON.stringify(query)
-                    axios.get(URLS['labels'] + this.getSearchParams(query)).then(
+                    axios.get(URLS['labels'] + this.getSearchParams(query) + '&token=' + token).then(
                         res => {
                             this.searchParams = res.data
                             this.get_xhr(idEdit * 1)
@@ -197,8 +198,9 @@ export default {
             }
         },
         get_xhr (idEdit) {
+            var token = this.$store.state.userToken
             this.$store.commit('loadingData')
-            axios.get(URLS['entites'] + this.urlParams).then(
+            axios.get(URLS['entites'] + this.urlParams + '&token=' + token).then(
                 res => {
                     this.results = res.data
                     this.extract(idEdit)

@@ -6,6 +6,7 @@
                     v-for="field in controller.fields"
                     :key="field.name"
                     @click="controller.setSorting(field.name)"
+                    title="cliquez pour trier"
                     >{{field.label}}&nbsp;&nbsp;<span
                         class="glyphicon"
                         :class="{'glyphicon-triangle-bottom': controller.sorting[field.name] == 1, 'glyphicon-triangle-top': controller.sorting[field.name] == -1}"></span></th>
