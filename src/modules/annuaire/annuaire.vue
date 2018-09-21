@@ -95,13 +95,16 @@ export default {
                             content: 'Données enregistrées',
                             placement: 'top-right',
                             type: 'success'})
-                        this.$router.push({
+                        this.init_page(JSON.parse(this.prevSearch), res.data.id, true)
+                        /*
+                            this.$router.push({
                             name: 'annuaire',
                             query: {
                                 s: JSON.parse(this.prevSearch),
                                 e: res.data.id
                             }
                         })
+                        */
                     }
                 ).catch(
                     () => {
