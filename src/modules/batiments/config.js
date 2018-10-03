@@ -9,6 +9,11 @@ var reqForm = {
     label: 'Demande',
     fields: [
         {
+            name: 'id',
+            label: 'Numéro de demande :',
+            type: 'hidden'
+        },
+        {
             name: 'dmdr_service',
             label: 'Service demandeur',
             type: 'select',
@@ -182,6 +187,11 @@ var demTable = {
         }
     },
     fields: [
+        {
+            name: 'id',
+            label: 'Numéro',
+            nofilter: true
+        },
         {
             name: 'dem_designation',
             label: 'Désignation',
