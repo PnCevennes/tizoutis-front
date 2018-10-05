@@ -164,9 +164,9 @@ var reaForm = {
 var thesaurus = new Thesaurus()
 var refGeo = new RefGeo()
 
-thesaurus.getThesaurusRef(74, reqForm, 'dmdr_service')
-thesaurus.getThesaurusRef(75, reqForm, 'dem_type_travaux')
-thesaurus.getThesaurusRef(76, planForm, 'plan_service')
+thesaurus.getThesaurusRef('services_travaux', reqForm, 'dmdr_service')
+thesaurus.getThesaurusRef('types_travaux', reqForm, 'dem_type_travaux')
+thesaurus.getThesaurusRef('charges_travaux', planForm, 'plan_service')
 refGeo.getAllBatiments()
 refGeo.getCommunes(reqForm, 'dem_commune')
 

@@ -201,13 +201,13 @@ var reqForm = {
 
 var thesaurus = new Thesaurus()
 
-thesaurus.getThesaurusRef(1, reqForm, 'lieu')
-thesaurus.getThesaurusRef(2, reqForm, 'service_id')
-thesaurus.getThesaurusRef(3, reqForm, 'logement')
-thesaurus.getThesaurusRef(4, reqForm, 'type_contrat')
-thesaurus.getThesaurusRef(38, reqForm, 'categorie')
-thesaurus.getThesaurusRef(32, reqForm, 'temps_travail')
-thesaurus.getThesaurusRef(26, reqForm, 'materiel')
+thesaurus.getThesaurusRef('lieu_affectation', reqForm, 'lieu')
+thesaurus.getThesaurusRef('services', reqForm, 'service_id')
+thesaurus.getThesaurusRef('logements', reqForm, 'logement')
+thesaurus.getThesaurusRef('type_contrat', reqForm, 'type_contrat')
+thesaurus.getThesaurusRef('categorie', reqForm, 'categorie')
+thesaurus.getThesaurusRef('temps_travail', reqForm, 'temps_travail')
+thesaurus.getThesaurusRef('materiel', reqForm, 'materiel')
 
 var demTable = {
     selected_id: '',

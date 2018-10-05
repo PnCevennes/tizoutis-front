@@ -139,9 +139,9 @@ var reaForm = {
 
 var thesaurus = new Thesaurus()
 
-thesaurus.getThesaurusRef(2, reqForm, 'dmdr_service')
-thesaurus.getThesaurusRef(46, reqForm, 'dem_objet')
-thesaurus.getThesaurusRef(51, reqForm, 'dem_localisation')
+thesaurus.getThesaurusRef('services', reqForm, 'dmdr_service')
+thesaurus.getThesaurusRef('type_intervention', reqForm, 'dem_objet')
+thesaurus.getThesaurusRef('massifs', reqForm, 'dem_localisation')
 
 var demTable = {
     selected_id: '',
