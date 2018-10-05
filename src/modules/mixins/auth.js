@@ -5,7 +5,7 @@ export default {
     mounted () {
         if (!this.$store.getters.isAuth) {
             var rawLoginData = window.localStorage.getItem('tizoutis-userdata')
-            if (!rawLoginData.length) {
+            if (!rawLoginData || !rawLoginData.length) {
                 if (this.$router.currentRoute.name !== 'login') {
                     this.$store.commit('setRoute', this.$router.currentRoute)
                     this.$router.push('login')
