@@ -45,6 +45,9 @@ export default new Vuex.Store({
         isMember: (state) => (groupName) => {
             var grps = []
             if (Array.isArray(groupName)) {
+                if (!groupName.length) {
+                    return true
+                }
                 grps = [...groupName, 'admin-tizoutis']
             } else {
                 grps = [groupName, 'admin-tizoutis']
