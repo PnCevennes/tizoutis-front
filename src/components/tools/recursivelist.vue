@@ -1,0 +1,58 @@
+<template>
+    <ul class="th-list">
+        <li v-for="item in items" v-if="item.id_ref==idref" :key="item.id">
+            <div class="th-row" v-if="item.id !== editid">
+                <div class="th-label">{{item.label}}</div>
+                <button type="button" class="btn btn-xs btn-warning" @click="edit(item.id)">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+                <button type="button" class="btn btn-xs btn-success" @click="add(item.id)">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+            <div class="th-row" v-else>
+                <input type="text" v-model="item.label">
+                <button type="button" class="btn btn-xs btn-success" @click="save(item.label)"><span class="glyphicon glyphicon-ok"></span></button>
+                <button type="button" class="btn btn-xs btn-warning" @click="close"><span class="glyphicon glyphicon-remove"></span></button>
+                <button type="button" class="btn btn-xs btn-danger" @click="remove"><span class="glyphicon glyphicon-trash"></span></button>
+            </div>
+            <div class="th-row" v-if="item.id==addref">
+                <input type="text" v-model="addval">
+                <button type="button" class="btn btn-xs btn-success" @click="save(addval)"><span class="glyphicon glyphicon-ok"></span></button>
+                <button type="button" class="btn btn-xs btn-warning" @click="close"><span class="glyphicon glyphicon-remove"></span></button>
+                <button type="button" class="btn btn-xs btn-danger" @click="remove"><span class="glyphicon glyphicon-trash"></span></button>
+            </div>
+            <recursive-list :items="items" :idref="item.id" :editid="editid" :addref="addref" @edit="edit($event)" @add="add($event)" @save="save($event)" @remove="remove" />
+        </li>
+    </ul>
+</template>
+<script>
+export default {
+    name: 'RecursiveList',
+    props: ['items', 'idref', 'editid', 'addref'],
+    data () {
+        return {
+            addval: ''
+        }
+    },
+    methods: {
+        edit (id) {
+            this.$emit('edit', id)
+        },
+        add (idref) {
+            this.$emit('add', idref)
+        },
+        close () {
+            this.addval = ''
+            this.$emit('edit', null)
+        },
+        save (label) {
+            this.$emit('save', label)
+            this.addval = ''
+        },
+        remove () {
+            this.$emit('remove')
+        }
+    }
+}
+</script>

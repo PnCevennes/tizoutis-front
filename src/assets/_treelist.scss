@@ -1,0 +1,27 @@
+.tree-list {
+    margin-top: 3px;
+    list-style-type: none;
+
+    li {
+        border: 1px solid #CCC;
+        padding: 3px;
+        background-color: white;
+        margin-top: 2px;
+    }
+    li:nth-of-type(2n) {
+        background-color: #EEE;
+    }
+    .th-label {
+        display: inline-block;
+        min-width: 30em;
+    }
+    ul {
+        margin-top: 3px;
+        list-style-type: none;
+    }
+    input {
+        border: 0;
+        border-bottom: 2px solid #FF0000;
+        min-width: 27em;
+    }
+}
