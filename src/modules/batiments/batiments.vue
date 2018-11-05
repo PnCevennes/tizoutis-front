@@ -23,7 +23,7 @@
                     <button type="button" @click="newCard">Nouvelle demande de travaux</button>
                 </div>
                 <div>
-                    <dyn-form :config="formCtrl" v-model="form_content" @commit="save($event)" @remove="remove($event)" @commune-changed="communeChange($event)" />
+                    <dyn-form ref="batForm" :config="formCtrl" v-model="form_content" @commit="save($event)" @remove="remove($event)" @commune-changed="communeChange($event)" />
                 </div>
             </div>
         </div>
@@ -76,7 +76,8 @@ export default {
             })
         },
         communeChange (evt) {
-            this.refGeo.getBatiments(evt, reqForm, 'dem_designation')
+            var choices = this.refGeo.getBatiments(evt, reqForm, 'dem_designation')
+            this.$refs.batForm.values.dem_designation = choices[0].value
         },
         hide_finished (evt) {
             this.hideFinished = evt.target.checked

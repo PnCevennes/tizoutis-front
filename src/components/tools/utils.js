@@ -78,6 +78,7 @@ class RefGeo {
     getBatiments (id, config, fieldName) {
         var item = config.fields.filter(itm => itm.name === fieldName)[0]
         item.choices = this.cache.batiments.commune[id]
+        return item.choices
     }
 
     getBatimentLabel (id) {
