@@ -33,7 +33,7 @@ import listResults from './listresults'
 import information from './informations'
 import editeur from './editeur'
 import {URLS} from './config'
-import {AuthMixin} from '@/modules/mixins'
+import {AuthMixin} from '@/core/mixins'
 
 export default {
     name: 'annuaire',

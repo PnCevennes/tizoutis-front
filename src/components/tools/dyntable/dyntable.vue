@@ -15,12 +15,23 @@
                 <th
                     :key="field.name"
                     v-for="field in controller.fields">
-                    <input
-                        type="text"
-                        v-if="!field.nofilter"
-                        :placeholder="field.filterLabel ? field.filterLabel : ''"
-                        v-model="controller.filterData[field.name]"
-                        @input="controller.update()" />
+                    <div v-if="!field.nofilter">
+                        <input
+                            type="text"
+                            v-if="!field.filterType || field.filterType === 'text'"
+                            :placeholder="field.filterLabel ? field.filterLabel : ''"
+                            v-model="controller.filterData[field.name]"
+                            @input="controller.update()" />
+                        <select v-if="field.filterType === 'select'"
+                                v-model="controller.filterData[field.name]"
+                                @change="controller.update()" >
+                                <option :key="option.value"
+                                        v-for="option in field.choices"
+                                        :value="option.value">
+                                    {{option.label}}
+                                </option>
+                        </select>
+                    </div>
                 </th>
             </tr>
             <tr

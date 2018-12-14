@@ -3,7 +3,6 @@ import {batiments} from './batiments/'
 import {interventions} from './interventions/'
 import {recrutement} from './recrutement/'
 import {supervision} from './supervision/'
-import {Thesaurus} from './thesaurus'
 
 const MODULES = [
     {
@@ -45,17 +44,7 @@ const MODULES = [
         name: 'supervision',
         component: supervision,
         props: (route) => ({ query: route.query })
-    },
-    {
-        path: '/thesaurus',
-        label: 'Thésaurus',
-        access: ['tizoutis-admin'],
-        name: 'thesaurus',
-        component: Thesaurus,
-        props: (route) => ({ query: route.query })
     }
 ]
 
 export {MODULES}
-export {Login, Logout} from './authentification/'
-export {default as Err404} from './err404.vue'

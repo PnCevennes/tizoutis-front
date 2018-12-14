@@ -3,8 +3,18 @@ import {Validators} from '@/components/tools/dynform'
 import {Thesaurus, RefGeo, datefr} from '@/components/tools'
 
 /*
+ * Nomenclature réclamées :
+ *  + service_travaux
+ *  + type_travaux
+ *  + charges_travaux
+ *
+ *  + RefGeo
+ *
+ *
+ *
  * Configuration du formulaire partie demande
  */
+
 var reqForm = {
     label: 'Demande',
     fields: [
@@ -93,6 +103,7 @@ var reqForm = {
 /*
  * Configuration du formulaire partie planification
  */
+
 var planForm = {
     label: 'Planification',
     readonly: true,
@@ -132,6 +143,7 @@ var planForm = {
 /*
  * Configuration du formulaire partie réalisation
  */
+
 var reaForm = {
     label: 'Réalisation',
     readonly: true,
@@ -173,6 +185,7 @@ refGeo.getCommunes(reqForm, 'dem_commune')
 /*
  * Configuration du tableau
  */
+
 var demTable = {
     selected_id: '',
     limit: 0,

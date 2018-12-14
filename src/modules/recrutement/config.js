@@ -2,6 +2,17 @@ import {SERVER} from '@/config'
 import {Validators} from '@/components/tools/dynform'
 import {Thesaurus, datefr} from '@/components/tools'
 
+/*
+ * Nomenclatures réclamées :
+ *  + lieu_affectation
+ *  + services
+ *  + logements
+ *  + type_contrat
+ *  + categorie
+ *  + temps_travail
+ *  + materiel
+ */
+
 var headForm = {
     label: 'Fiche',
     fields: [

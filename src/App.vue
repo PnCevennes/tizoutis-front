@@ -25,9 +25,12 @@
 
 <script>
 import {MODULES} from '@/modules'
+import {CORE_MODULES} from '@/core'
+import {AuthMixin} from '@/core/mixins'
 
 export default {
     name: 'App',
+    mixins: [AuthMixin],
     computed: {
         user () {
             return this.$store.state.user
@@ -44,7 +47,7 @@ export default {
     },
     data () {
         return {
-            MODULES
+            MODULES: [...MODULES, ...CORE_MODULES]
         }
     }
 }

@@ -11,7 +11,7 @@ export default {
     name: 'Err404',
     data () {
         return {
-            msg: "La page que vous avez demandé n'existe pas !"
+            msg: "La page que vous avez demandée n'existe pas !"
         }
     }
 }

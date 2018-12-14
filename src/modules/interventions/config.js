@@ -2,6 +2,13 @@ import {SERVER} from '@/config'
 import {Validators} from '@/components/tools/dynform'
 import {Thesaurus, datefr} from '@/components/tools'
 
+/*
+ * Nomenclatures réclamées
+ *  + services
+ *  + type_intervention
+ *  + massifs
+ */
+
 var reqForm = {
     label: 'Demande',
     fields: [
@@ -172,7 +179,11 @@ var demTable = {
             name: 'dem_objet',
             label: "Type d'intervention",
             transform: (val) => thesaurus.getLabel(val),
-            nofilter: true
+            filterType: 'select',
+            choices: [],
+            filter: (val, filterVal) => {
+                return parseInt(val) === parseInt(filterVal)
+            }
         },
         {
             name: 'dem_loc_libelle',
@@ -181,4 +192,5 @@ var demTable = {
     ]
 }
 
+thesaurus.getThesaurusRef('type_intervention', demTable, 'dem_objet')
 export {reqForm, planForm, reaForm, demTable}

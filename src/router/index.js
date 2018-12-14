@@ -4,7 +4,8 @@ import {
     Login,
     Logout,
     Err404
-} from '@/modules/'
+} from '@/core/'
+import {CORE_MODULES} from '@/core'
 import {MODULES} from '@/modules'
 
 Vue.use(Router)
@@ -34,5 +35,5 @@ const defaultRoutes = [
 ]
 
 export default new Router({
-    routes: [...defaultRoutes, ...MODULES]
+    routes: [...defaultRoutes, ...MODULES, ...CORE_MODULES]
 })

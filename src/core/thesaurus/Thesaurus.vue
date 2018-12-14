@@ -23,7 +23,7 @@
 import axios from 'axios'
 import {Notification} from 'uiv'
 import {SERVER} from '@/config'
-import {AuthMixin} from '@/modules/mixins'
+import {AuthMixin} from '@/core/mixins'
 import RecursiveList from '@/components/tools/recursivelist'
 
 export default {

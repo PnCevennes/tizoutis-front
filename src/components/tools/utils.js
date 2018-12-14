@@ -19,12 +19,13 @@ class Thesaurus {
     }
     getThesaurusRef (idRef, config, fieldName) {
         axios.get(SERVER + '/thesaurus/ref/' + idRef).then(res => {
-            var item = config.fields.filter(itm => itm.name === fieldName)[0]
+            var item = config.fields.find(itm => itm.name === fieldName)
             item.choices = res.data.map(v => {
                 v.value = v.id
                 this.cache[v.id] = v.label
                 return v
             })
+            item.choices.unshift({0: ''})
         }).catch(err => { console.error(err) })
     }
     getLabel (idRef) {

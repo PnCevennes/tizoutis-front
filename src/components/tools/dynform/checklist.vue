@@ -1,7 +1,7 @@
 <template>
     <div>
             <ul class="checklist">
-                <li v-for="item in config.choices" :key="item.value">
+                <li v-for="item in choices" :key="item.value">
                 <label>
                     <input type="checkbox" @change="check(item)" :checked="values.indexOf(item.value) > -1" />
                     {{item.label}}
@@ -22,6 +22,11 @@ export default {
         return {
             values: this.value ? [...this.value] : [],
             errmsg: this.config.errmsg
+        }
+    },
+    computed: {
+        choices () {
+            return this.config.choices.filter(x => x.value !== undefined)
         }
     },
     methods: {

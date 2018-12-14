@@ -28,7 +28,7 @@
 import {DynForm} from '@/components/tools/dynform'
 import {DynTable, TableController} from '@/components/tools/dyntable'
 import {demTable, headForm, reqForm} from './config'
-import {GeneralMixin, AuthMixin} from '@/modules/mixins'
+import {GeneralMixin, AuthMixin} from '@/core/mixins'
 
 export default {
     name: 'recrutement',

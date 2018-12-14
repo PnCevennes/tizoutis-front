@@ -19,7 +19,7 @@
 <script>
 import {DynTable, TableController} from '@/components/tools/dyntable'
 import {DynForm, Validators} from '@/components/tools/dynform'
-import {GeneralMixin, AuthMixin} from '@/modules/mixins'
+import {GeneralMixin, AuthMixin} from '@/core/mixins'
 import {datefr} from '@/components/tools'
 
 const typeChoices = [

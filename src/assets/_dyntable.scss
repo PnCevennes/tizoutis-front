@@ -31,7 +31,11 @@
         border-right: 1px solid lightgrey;
     }
 
-    input {
+    select {
+        background-color: #FBFBFB;
+    }
+
+    input, select {
         border: 0;
         outline: 0;
         width: 96%;

@@ -34,7 +34,7 @@ import {SERVER} from '@/config'
 import {DynForm} from '@/components/tools/dynform'
 import {DynTable, TableController} from '@/components/tools/dyntable'
 import {demTable, reqForm, planForm, reaForm} from './config'
-import {GeneralMixin, AuthMixin} from '@/modules/mixins'
+import {GeneralMixin, AuthMixin} from '@/core/mixins'
 
 export default {
     name: 'interventions',
@@ -83,7 +83,11 @@ export default {
         var dmdrMail = reqForm.fields.filter(x => x.name === 'dmdr_contact_email')[0]
         dmdrMail.default = [this.user.mail]
         var dmdrService = reqForm.fields.filter(x => x.name === 'dmdr_service')[0]
-        dmdrService.default = dmdrService.choices.find(v => this.user.groups.indexOf(v.label) !== -1).id
+        try {
+            dmdrService.default = dmdrService.choices.find(v => this.user.groups.indexOf(v.label) !== -1).id
+        } catch (e) {
+            dmdrService.default = null
+        }
     }
 }
 </script>
