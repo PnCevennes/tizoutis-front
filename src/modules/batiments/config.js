@@ -111,7 +111,7 @@ var planForm = {
         {
             name: 'plan_date',
             label: 'Date de début prévisionnelle',
-            type: 'date'
+            type: 'line'
         },
         {
             name: 'plan_service',

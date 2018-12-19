@@ -24,9 +24,11 @@
 </template>
 
 <script>
-import {MODULES} from '@/modules'
-import {CORE_MODULES} from '@/core'
+import axios from 'axios'
 import {AuthMixin} from '@/core/mixins'
+import {CORE_MODULES} from '@/core'
+import {MODULES} from '@/modules'
+import {User, URLS} from '@/core/authentification'
 
 export default {
     name: 'App',
@@ -48,6 +50,32 @@ export default {
     data () {
         return {
             MODULES: [...MODULES, ...CORE_MODULES]
+        }
+    },
+    mounted () {
+        var rawLoginData = window.localStorage.getItem('tizoutis-userdata')
+        var currentRouteName = this.$router.currentRoute.name
+        if (!rawLoginData || !rawLoginData.length) {
+            console.log('delog')
+        } else {
+            var loginData = JSON.parse(rawLoginData)
+            var postdata = {id: loginData.uid, token: loginData.token}
+            axios.post(URLS.reconnect, postdata).then((res) => {
+                if (res) {
+                    console.log('reconnex OK')
+                    console.log(res.data)
+                    this.$store.commit('setUser', new User(res.data.userdata))
+                    this.$store.commit('setUserToken', res.data.token)
+                    this.$store.commit('dataSaved')
+                    this.$router.push({name: currentRouteName})
+                }
+            }).catch(() => {
+                this.$store.commit('dataSaved')
+                if (this.$router.currentRoute.name !== 'login') {
+                    this.$store.commit('setRoute', this.$router.currentRoute)
+                    this.$router.push('login')
+                }
+            })
         }
     }
 }

@@ -162,6 +162,10 @@
         outline: none;
     }
 
+    button[disabled] {
+        color: #999;
+    }
+
     .repeated-item {
         width: 100%;
         display: flex;

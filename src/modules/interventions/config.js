@@ -23,6 +23,7 @@ var reqForm = {
             name: 'dmdr_service',
             label: 'Service demandeur',
             type: 'select',
+            validators: [(v) => v !== ''],
             choices: [],
             default: '13'
         },
@@ -58,7 +59,7 @@ var reqForm = {
             label: 'Massif',
             type: 'select',
             choices: [],
-            default: ''
+            default: 52
         },
         {
             name: 'dem_loc_commune',

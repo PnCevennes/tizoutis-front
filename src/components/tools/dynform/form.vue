@@ -29,6 +29,11 @@
                     <button type="button" class="success" :disabled="!valid" @click="commit">Enregistrer</button>
                 </div>
             </div>
+            <div v-if="config.DEBUG">
+                <pre>
+                    {{values}}
+                </pre>
+            </div>
         </div>
     </div>
 </template>

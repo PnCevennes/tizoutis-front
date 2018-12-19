@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {Notification, MessageBox} from 'uiv'
 import {FormController} from '@/components/tools/dynform'
-import {SERVER} from '@/config'
+import {SERVER, DEBUG} from '@/config'
 
 export default {
     data () {
@@ -145,9 +145,10 @@ export default {
         }
     },
     mounted () {
-        this.formCtrl.user_is_admin = this.userIsAdmin
         this.listYear = this.query.annee === undefined ? new Date().getFullYear() : this.query.annee
         this.formCtrl = new FormController(this.userForm, this.user)
+        this.formCtrl.user_is_admin = this.userIsAdmin
+        this.formCtrl.DEBUG = DEBUG
         this.$store.commit('setRoute', this.$router.currentRoute)
         if (!this.$store.getters.isAuth) {
             setTimeout(() => {
@@ -156,27 +157,11 @@ export default {
                 }
             }, 200)
         }
-        if (this.groupAccept) {
-            if (!this.$store.getters.isMember(this.groupAccept)) {
-                MessageBox.alert({
-                    title: 'Alerte intrusion !',
-                    content: "Vous n'avez pas les droits nécéssaires pour visiter cette section !"
-                }, () => {
-                    if (!this.$store.getters.isMember(this.groupAccept)) {
-                        this.$router.push({name: 'login'})
-                    } else {
-                        this.init()
-                    }
-                })
-            } else {
-                this.init()
-            }
-        } else {
-            this.init()
-        }
+        this.init()
     },
     beforeRouteUpdate (to, from, next) {
         this.listYear = (to.query.annee === undefined || to.query.annee === null) ? new Date().getFullYear() : to.query.annee
+        this.formCtrl.DEBUG = DEBUG
         if (to.query.fiche !== undefined) {
             this.getOneCard(to.query.fiche)
             this.demTableCtrl.selected_id = to.query.fiche

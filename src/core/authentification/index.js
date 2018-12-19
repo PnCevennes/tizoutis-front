@@ -1,4 +1,5 @@
 export {default as Login} from './login'
 export {default as Logout} from './logout'
 export {default as User} from './User'
+export {default as AdminAuth} from './admin'
 export {URLS} from './config'

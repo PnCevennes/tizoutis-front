@@ -1,4 +1,10 @@
 // url de l'API tizoutis
 const SERVER = 'http://127.0.0.1'
 
+// afficher les données de débogage dans les pages
+const DEBUG = false
+
+// administration des utilisateurs depuis l'app (désactiver si ldap)
+const ADMIN_AUTH = true
+
 export {SERVER}

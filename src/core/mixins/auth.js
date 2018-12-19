@@ -1,40 +1,23 @@
-import axios from 'axios'
-import {URLS, User} from '@/core/authentification'
+import {MessageBox} from 'uiv'
 
 export default {
-    mounted () {
-        if (!this.$store.getters.isAuth) {
-            var rawLoginData = window.localStorage.getItem('tizoutis-userdata')
-            if (!rawLoginData || !rawLoginData.length) {
-                if (this.$router.currentRoute.name !== 'login') {
-                    this.$store.commit('setRoute', this.$router.currentRoute)
-                    this.$router.push('login')
-                }
-            } else {
-                var loginData = JSON.parse(rawLoginData)
-                if (loginData) {
-                    this.$store.commit('savingData')
-                    var postdata = {id: loginData.uid, token: loginData.token}
-                    axios.post(URLS.reconnect, postdata).then((res) => {
-                        if (res) {
-                            this.$store.commit('setUser', new User(res.data.userdata))
-                            this.$store.commit('setUserToken', res.data.token)
-                            this.$store.commit('dataSaved')
-                        }
-                    }).catch(() => {
-                        this.$store.commit('dataSaved')
-                        if (this.$router.currentRoute.name !== 'login') {
-                            this.$store.commit('setRoute', this.$router.currentRoute)
-                            this.$router.push('login')
-                        }
-                    })
-                } else {
-                    if (this.$router.currentRoute.name !== 'login') {
-                        this.$store.commit('setRoute', this.$router.currentRoute)
-                        this.$router.push('login')
+    beforeRouteEnter (to, from, next) {
+        next(vm => {
+            console.log(vm.groupAccept)
+            if (!vm.$store.getters.isMember(vm.groupAccept)) {
+                vm.$store.commit('setRoute', vm.$router.currentRoute.name)
+                MessageBox.alert({
+                    title: 'Alerte intrusion !',
+                    content: "Vous n'avez pas les droits nécéssaires pour visiter cette section !"
+                }, () => {
+                    if (!this.$store.getters.isMember(this.groupAccept)) {
+                        this.$router.push({name: 'login'})
+                    } else {
+                        this.init()
                     }
-                }
+                })
+                vm.$router.push({name: 'login'})
             }
-        }
+        })
     }
 }

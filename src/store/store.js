@@ -40,7 +40,7 @@ export default new Vuex.Store({
     },
     getters: {
         isAuth: (state) => {
-            return !!state.user.name.length
+            return !!state.user.id
         },
         isMember: (state) => (groupName) => {
             var grps = []
