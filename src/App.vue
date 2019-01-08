@@ -2,7 +2,7 @@
     <div id="app">
         <div class="main-nav">
             <img src="static/img/Spirale_orange.png" height="28" width="28" />
-            <span class="main-nav-label">TiZouTis</span>
+            <span class="main-nav-label" :title="buildnbr">TiZouTis</span>
             <div v-if="user.name">
                 <router-link :key="item.path" v-for="item in MODULES" class="main-nav-btn" :to="item.path" v-if="isMember(item.access)">{{item.label}}</router-link>
                 <div class="main-nav-sep"></div>
@@ -29,6 +29,7 @@ import {AuthMixin} from '@/core/mixins'
 import {CORE_MODULES} from '@/core'
 import {MODULES} from '@/modules'
 import {User, URLS} from '@/core/authentification'
+import {BUILD} from '@/config'
 
 export default {
     name: 'App',
@@ -45,6 +46,9 @@ export default {
         },
         savingData () {
             return this.$store.state.saving
+        },
+        buildnbr () {
+            return 'Version: 1.0.' + BUILD
         }
     },
     data () {

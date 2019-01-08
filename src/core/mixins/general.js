@@ -7,6 +7,7 @@ export default {
     data () {
         return {
             listYear: '',
+            groupAccept: ['*'],
             hideFinished: false,
             form_content: {},
             formCtrl: new FormController()

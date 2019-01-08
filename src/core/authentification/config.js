@@ -22,6 +22,11 @@ var userForm = {
             errmsg: 'Le login doit comporter au moins 3 caractères'
         },
         {
+            name: 'password',
+            label: 'Mot de passe',
+            type: 'password'
+        },
+        {
             name: 'name',
             label: 'Nom complet',
             type: 'line',

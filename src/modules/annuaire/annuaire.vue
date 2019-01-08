@@ -52,6 +52,7 @@ export default {
     mixins: [AuthMixin],
     data () {
         return {
+            groupAccept: ['*'],
             URLS,
             searchParams: [''],
             current: '',

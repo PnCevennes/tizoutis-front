@@ -7,6 +7,10 @@ yarn-error.log*
 /test/unit/coverage/
 static/*
 src/config.js
+cfg/templates/test.js
+cfg/templates/dev.js
+cfg/templates/prod.js
+
 
 # Editor directories and files
 .idea

@@ -53,9 +53,13 @@ export default {
             groupAdmin: 'tizoutis-interventions',
             routeName: 'interventions',
             ressourceUrl: 'interventions',
-            csvUrl: [SERVER, 'interventions', '?format=csv&token=' + this.$store.state.userToken].join('/'),
             demTableCtrl: new TableController(demTable),
             userForm: [reqForm, planForm, reaForm]
+        }
+    },
+    computed: {
+        csvUrl () {
+            return [SERVER, 'interventions', '?format=csv&token=' + this.$store.state.userToken + '&annee=' + this.listYear].join('/')
         }
     },
     methods: {
