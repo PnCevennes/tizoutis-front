@@ -9,6 +9,10 @@
                         @input="changeYear"
                         v-model="listYear" />
                 </div>
+                <div class="right-align">
+                    <a class="btn btn-success btn-xs" :href="csvUrl">Export CSV</a>
+                </div>
+                <hr />
                 <div>
                     <dyn-table :controller="demTableCtrl" @select="select" />
                 </div>
@@ -25,6 +29,7 @@
     </div>
 </template>
 <script>
+import {SERVER} from '@/config'
 import {DynForm} from '@/components/tools/dynform'
 import {DynTable, TableController} from '@/components/tools/dyntable'
 import {demTable, headForm, reqForm} from './config'
@@ -49,6 +54,11 @@ export default {
             ressourceUrl: 'recrutement',
             demTableCtrl: new TableController(demTable),
             userForm: [headForm, reqForm]
+        }
+    },
+    computed: {
+        csvUrl () {
+            return [SERVER, 'recrutement', '?format=csv&token=' + this.$store.state.userToken + '&annee=' + this.listYear].join('/')
         }
     },
     methods: {
