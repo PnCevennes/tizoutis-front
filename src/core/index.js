@@ -1,15 +1,8 @@
 import {Thesaurus} from './thesaurus'
 import {AdminAuth} from './authentification'
+import {ADMIN_AUTH} from '@/config'
 
 const CORE_MODULES = [
-    {
-        path: '/users',
-        label: 'Utilisateurs',
-        access: ['tizoutis-admin'],
-        name: 'users',
-        component: AdminAuth,
-        props: (route) => ({ query: route.query })
-    },
     {
         path: '/thesaurus',
         label: 'Thésaurus',
@@ -19,6 +12,19 @@ const CORE_MODULES = [
         props: (route) => ({ query: route.query })
     }
 ]
+
+if (ADMIN_AUTH) {
+    CORE_MODULES.push(
+        {
+            path: '/users',
+            label: 'Utilisateurs',
+            access: ['tizoutis-admin'],
+            name: 'users',
+            component: AdminAuth,
+            props: (route) => ({ query: route.query })
+        }
+    )
+}
 
 export {CORE_MODULES}
 export {Login, Logout, Auth} from './authentification/'

@@ -56,29 +56,28 @@ export default {
             MODULES: [...MODULES, ...CORE_MODULES]
         }
     },
-    mounted () {
+    created () {
         var rawLoginData = window.localStorage.getItem('tizoutis-userdata')
-        var currentRouteName = this.$router.currentRoute.name
         if (!rawLoginData || !rawLoginData.length) {
-            console.log('delog')
+            if (this.$router.currentRoute.name !== 'login') {
+                this.$store.commit('setRoute', this.$router.currentRoute)
+            }
+            this.$router.push({name: 'login'})
         } else {
             var loginData = JSON.parse(rawLoginData)
             var postdata = {id: loginData.uid, token: loginData.token}
             axios.post(URLS.reconnect, postdata).then((res) => {
                 if (res) {
-                    console.log('reconnex OK')
-                    console.log(res.data)
                     this.$store.commit('setUser', new User(res.data.userdata))
                     this.$store.commit('setUserToken', res.data.token)
                     this.$store.commit('dataSaved')
-                    this.$router.push({name: currentRouteName})
                 }
             }).catch(() => {
                 this.$store.commit('dataSaved')
                 if (this.$router.currentRoute.name !== 'login') {
                     this.$store.commit('setRoute', this.$router.currentRoute)
-                    this.$router.push('login')
                 }
+                this.$router.push({name: 'login'})
             })
         }
     }

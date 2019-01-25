@@ -16,3 +16,8 @@ test:
 	cp cfg/templates/test.js src/config.js
 	sed -i s/BUILDNO/$(DATE).$(BUILD)/ src/config.js
 	npm run dev
+
+test-prod:
+	cp cfg/templates/prod.js src/config.js
+	sed -i s/BUILDNO/$(DATE).$(BUILD)/ src/config.js
+	npm run dev

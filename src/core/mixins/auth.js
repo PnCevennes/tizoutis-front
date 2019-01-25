@@ -5,7 +5,7 @@ export default {
         next(vm => {
             console.log(vm.groupAccept)
             if (!vm.$store.getters.isMember(vm.groupAccept)) {
-                vm.$store.commit('setRoute', vm.$router.currentRoute.name)
+                vm.$store.commit('setRoute', vm.$router.currentRoute)
                 MessageBox.alert({
                     title: 'Alerte intrusion !',
                     content: "Vous n'avez pas les droits nécéssaires pour visiter cette section !"

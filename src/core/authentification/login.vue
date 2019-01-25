@@ -53,7 +53,6 @@ export default {
                     type: 'success'
                 })
                 this.$router.push(this.$store.getters.redirectRoute)
-                this.$store.commit('setRoute', {name: 'index'})
             }).catch(() => {
                 window.sessionStorage.setItem('tizoutis-userdata', '')
                 this.$store.commit('dataLoaded')

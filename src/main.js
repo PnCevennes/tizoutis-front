@@ -2,8 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import router from './router'
-import {AuthMixin} from '@/core/mixins'
+import router from '@/router'
 import store from '@/store/store'
 
 Vue.config.productionTip = false
@@ -14,8 +13,5 @@ new Vue({
     router,
     store,
     components: { App },
-    template: '<App/>',
-    mixins: [
-        AuthMixin
-    ]
+    template: '<App/>'
 })
