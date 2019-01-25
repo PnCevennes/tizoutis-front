@@ -19,7 +19,8 @@ const defaultRoutes = [
     {
         path: '/login',
         name: 'login',
-        component: Login
+        component: Login,
+        props: (route) => ({ query: route.query })
     },
     {
         path: '/logout',

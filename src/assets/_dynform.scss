@@ -72,6 +72,14 @@
         width: 30px;
     }
 
+    input[type=submit] {
+        margin-top: 3px;
+        width: 80px;
+        color: white;
+        border-radius: 0;
+        border-bottom: 0;
+    }
+
     .upload {
         list-style-type: none;
 

@@ -71,6 +71,11 @@ export default {
                     this.$store.commit('setUser', new User(res.data.userdata))
                     this.$store.commit('setUserToken', res.data.token)
                     this.$store.commit('dataSaved')
+                    var redir = this.$store.state.initialRoute
+                    this.$router.push({
+                        name: redir.name,
+                        query: redir.query
+                    })
                 }
             }).catch(() => {
                 this.$store.commit('dataSaved')

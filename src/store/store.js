@@ -43,6 +43,7 @@ export default new Vuex.Store({
             return !!state.user.id
         },
         isMember: (state) => (groupName) => {
+            if (!state.user.id) return false
             var grps = []
             if (Array.isArray(groupName)) {
                 if (!groupName.length) {

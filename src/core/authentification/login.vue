@@ -2,16 +2,19 @@
     <div class="main-content">
         <h1 class="titlebar">Connexion</h1>
         <div class="login-form dynform">
-            <div>
-                <label for="login">Login : </label><input id="login" type="text" v-model="login" />
-            </div>
-            <div>
-                <label for="pwd">Mot de passe : </label><input id="pwd" type="password" v-model="passwd" />
-            </div>
-            <div class="toolbox">
-                <div class="separator"></div>
-                <button class="btn btn-xs btn-success" type="button" @click="loginfn">Login</button>
-            </div>
+            <form>
+                <alert type="warning" v-if="err403">La page à laquelle vous vouliez accéder requiert des droits que vous n'avez pas</alert>
+                <div>
+                    <label for="login">Login : </label><input id="login" type="text" v-model="login" />
+                </div>
+                <div>
+                    <label for="pwd">Mot de passe : </label><input id="pwd" type="password" v-model="passwd" />
+                </div>
+                <div class="toolbox">
+                    <div class="separator"></div>
+                    <input type="submit" class="btn btn-xs btn-success" @click="loginfn"/>
+                </div>
+            </form>
         </div>
         <div class="login-form">
             <h1>Se connecter à TiZouTis</h1>
@@ -24,18 +27,25 @@
 <script>
 import axios from 'axios'
 import {URLS} from './config'
-import {Notification} from 'uiv'
+import {Notification, Alert} from 'uiv'
 import User from './User'
 
 export default {
     name: 'Login',
     components: {
-        Notification
+        Notification,
+        Alert
+    },
+    props: {
+        query: {
+            default: null
+        }
     },
     data () {
         return {
             login: '',
-            passwd: ''
+            passwd: '',
+            err403: false
         }
     },
     methods: {
@@ -65,6 +75,16 @@ export default {
                 this.passwd = ''
             })
         }
+    },
+    mounted () {
+        this.$store.commit('dataLoaded')
+        this.$store.commit('dataSaved')
+        if (this.query && this.query.err) {
+            if (this.query.err === 403) {
+                this.err403 = true
+            }
+        }
     }
 }
+
 </script>
