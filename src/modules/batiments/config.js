@@ -194,9 +194,9 @@ var demTable = {
         if (!line.rea_date) {
             return selected + 'warning'
         } else if (new Date(line.rea_date) > new Date()) {
-            return selected + 'success'
-        } else {
             return selected + 'danger'
+        } else {
+            return selected + 'success'
         }
     },
     fields: [

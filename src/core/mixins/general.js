@@ -10,7 +10,8 @@ export default {
             groupAccept: ['*'],
             hideFinished: false,
             form_content: {},
-            formCtrl: new FormController()
+            formCtrl: new FormController(),
+            prev_hidden: true
         }
     },
     filters: {
@@ -30,23 +31,66 @@ export default {
         },
         full_form () {
             return this.user ? this.userIsAdmin && this.form_content.id !== undefined : false
+        },
+        httpInstance () {
+            return axios.create({
+                baseURL: SERVER,
+                headers: {token: this.$store.state.userToken}
+            })
+        },
+        ressource () {
+            return this.ressourceUrl.endsWith('/') ? this.ressourceUrl : this.ressourceUrl + '/'
+        },
+        csvUrl () {
+            return [
+                SERVER,
+                this.ressourceUrl,
+                '?format=csv' +
+                '&annee=' + this.listYear +
+                '&add_prev_years=' + !this.prev_hidden +
+                '&token=' + this.$store.state.userToken
+            ].join('/')
         }
     },
     methods: {
         getAllCards (year) {
+            /*
+             * charge la liste des fiches créées dans l'année
+             */
             this.$store.commit('loadingData')
-            var token = this.$store.state.userToken
-            axios.get([SERVER, this.ressourceUrl, '?token=' + token + '&annee=' + year].join('/')).then(res => {
+            this.httpInstance.get(
+                this.ressource,
+                {
+                    params: {annee: year}
+                }
+            ).then(res => {
+                this.demTableCtrl.setData(res.data)
+                this.$store.commit('dataLoaded')
+                window.scrollTo({top: 0})
+            }).catch(() => {})
+        },
+        getOldCards () {
+            /*
+            charge la liste des fiches non fermées au début de l'année
+            */
+            this.$store.commit('loadingData')
+            this.httpInstance.get(this.ressource, {params: {
+                annee: this.listYear,
+                add_prev_years: true
+            }}).then(res => {
                 this.demTableCtrl.setData(res.data)
                 this.$store.commit('dataLoaded')
                 window.scrollTo({top: 0})
             }).catch(() => {})
         },
         getOneCard (intervention) {
-            // charge le détail d'une intervention
+            /*
+             * charge le détail d'une fiche
+             */
             this.$store.commit('loadingData')
-            var token = this.$store.state.userToken
-            axios.get([SERVER, this.ressourceUrl, intervention].join('/') + '?token=' + token).then(res => {
+            var ressource = this.ressource + intervention
+
+            this.httpInstance.get(ressource).then(res => {
                 this.demTableCtrl.selected_id = intervention
                 this.form_content = res.data
                 this.$store.commit('dataLoaded')
@@ -56,9 +100,16 @@ export default {
             })
         },
         save (data) {
-            var theUrl = data.id !== undefined ? [SERVER, this.ressourceUrl, data.id] : [SERVER, this.ressourceUrl, '']
+            /*
+             * Envoie une fiche pour enregistrement
+             */
             this.$store.commit('savingData')
-            axios.post(theUrl.join('/') + '?token=' + this.$store.state.userToken, data).then(res => {
+            var ressource = data.id !== undefined ? this.ressource + data.id : this.ressource
+
+            this.httpInstance.post(
+                ressource,
+                data
+            ).then(res => {
                 Notification.notify({
                     content: 'Fiche enregistrée',
                     placement: 'top-right',
@@ -77,6 +128,9 @@ export default {
             })
         },
         remove (data) {
+            /*
+             * Affiche un message de confirmation avant une suppression
+             */
             MessageBox.confirm({
                 title: "Suppression d'une fiche",
                 content: 'Êtes vous certain de vouloir supprimer cette fiche ?'
@@ -90,9 +144,13 @@ export default {
             })
         },
         _remove (data) {
-            // supprime une intervention
+            /*
+             * Supprime une fiche
+             */
             this.$store.commit('savingData')
-            axios.delete([SERVER, this.ressourceUrl, data.id].join('/') + '?token=' + this.$store.state.userToken).then(() => {
+            var ressource = this.ressource + data.id
+
+            this.httpInstance.delete(ressource).then(() => {
                 this.$store.commit('dataSaved')
                 Notification.notify({
                     content: 'Fiche supprimée !',
@@ -134,8 +192,19 @@ export default {
                 }
             })
         },
+        hide_prev (evt) {
+            if (evt.target.checked) {
+                this.getAllCards(this.listYear)
+            } else {
+                this.getOldCards()
+            }
+        },
         init () {
-            this.getAllCards(this.listYear)
+            if (this.prev_hidden) {
+                this.getAllCards(this.listYear)
+            } else {
+                this.getOldCards()
+            }
             if (this.query.fiche) {
                 this.getOneCard(this.query.fiche)
                 this.formCtrl.show_buttons = this.formCtrl.user_is_admin = this.userIsAdmin
@@ -174,7 +243,8 @@ export default {
             this.demTableCtrl.update()
         }
         if (to.query.annee !== from.query.annee) {
-            this.getAllCards(to.query.annee)
+            // this.getAllCards(to.query.annee)
+            this.init()
         }
         if (this._routeUpdatedClbk !== undefined) {
             this._routeUpdatedClbk(to, from)

@@ -14,7 +14,7 @@ import {Thesaurus, datefr} from '@/components/tools'
  */
 
 var headForm = {
-    label: 'Fiche',
+    label: 'Notification',
     fields: [
         {
             name: 'meta_create',
@@ -61,7 +61,7 @@ var headForm = {
 }
 
 var reqForm = {
-    label: 'Recrutement',
+    label: 'Fiche de recrutement',
     fields: [
         {
             name: 'nom',

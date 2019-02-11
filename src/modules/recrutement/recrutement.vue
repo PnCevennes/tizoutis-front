@@ -9,7 +9,9 @@
                         @input="changeYear"
                         v-model="listYear" />
                 </div>
-                <div class="right-align">
+                <div class="dynform dynform-inline">
+                    <label><input type="checkbox" @input="hide_prev($event)" v-model="prev_hidden" />Afficher uniquement les recrutements de l'année</label>
+                    <div class="separator"></div>
                     <a class="btn btn-success btn-xs" :href="csvUrl">Export CSV</a>
                 </div>
                 <hr />
@@ -29,7 +31,6 @@
     </div>
 </template>
 <script>
-import {SERVER} from '@/config'
 import {DynForm} from '@/components/tools/dynform'
 import {DynTable, TableController} from '@/components/tools/dyntable'
 import {demTable, headForm, reqForm} from './config'
@@ -54,11 +55,6 @@ export default {
             ressourceUrl: 'recrutement',
             demTableCtrl: new TableController(demTable),
             userForm: [headForm, reqForm]
-        }
-    },
-    computed: {
-        csvUrl () {
-            return [SERVER, 'recrutement', '?format=csv&token=' + this.$store.state.userToken + '&annee=' + this.listYear].join('/')
         }
     },
     methods: {

@@ -11,6 +11,7 @@
                 </div>
                 <div class="dynform dynform-inline">
                     <label><input type="checkbox" @input="hide_finished($event)" /> Masquer les demandes terminées</label>
+                    <label><input type="checkbox" @input="hide_prev($event)" v-model="prev_hidden" />Afficher uniquement les demandes de l'année</label>
                     <div class="separator"></div>
                     <a class="btn btn-success btn-xs" :href="csvUrl">Export CSV</a>
                 </div>
@@ -30,8 +31,6 @@
     </div>
 </template>
 <script>
-import axios from 'axios'
-import {SERVER} from '@/config'
 import {DynForm} from '@/components/tools/dynform'
 import {DynTable, TableController} from '@/components/tools/dyntable'
 import {demTable, reqForm, planForm, reaForm, refGeo} from './config'
@@ -57,14 +56,13 @@ export default {
             ressourceUrl: 'travaux_batiments',
             demTableCtrl: new TableController(demTable),
             userForm: [reqForm, planForm, reaForm],
-            csvUrl: [SERVER, 'travaux_batiments', '?format=csv&token=' + this.$store.state.userToken].join('/'),
             refGeo
         }
     },
     methods: {
         getOneCard (fiche) {
             // charge le détail d'une fiche
-            axios.get(SERVER + '/travaux_batiments/' + fiche + '?token=' + this.$store.state.userToken).then(res => {
+            this.httpInstance.get(this.ressource + fiche).then(res => {
                 this.refGeo.getBatiments(res.data.dem_commune, reqForm, 'dem_designation')
                 this.demTableCtrl.selected_id = fiche
                 setTimeout(() => {

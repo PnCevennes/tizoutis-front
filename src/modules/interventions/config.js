@@ -123,7 +123,8 @@ var reaForm = {
         {
             name: 'rea_duree',
             label: 'Durée totales en heures',
-            type: 'number'
+            type: 'number',
+            default: 0
         },
         {
             name: 'rea_nb_agents',

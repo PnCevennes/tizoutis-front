@@ -1,8 +1,7 @@
 <template>
     <div>
-        <div class="dynform">
-            <fieldset :key="fset.label" v-for="fset in config.fieldsets">
-                <legend>{{fset.label}}</legend>
+        <tabs class="dynform">
+            <tab :title="fset.label" :key="fset.label" v-for="fset in config.fieldsets">
                 <div v-if="!fset.readonly || config.user_is_admin">
                     <field
                         class="form-row"
@@ -20,7 +19,7 @@
                         <td><info :config="item" :value="values[item.name]" /></td>
                     </tr>
                 </table>
-            </fieldset>
+            </tab>
             <div class="toolbox" v-if="config.show_buttons">
                 <button type="button" class="danger" v-if="config.user_is_admin && values.id" @click="remove">Supprimer</button>
                 <div class="separator"></div>
@@ -34,17 +33,24 @@
                     {{values}}
                 </pre>
             </div>
-        </div>
+        </tabs>
     </div>
 </template>
 
 <script>
 import Field from './field'
 import Info from './info'
+import {Tab, Tabs} from 'uiv'
 
 export default {
     name: 'dynForm',
     props: ['config', 'value'],
+    components: {
+        Field,
+        Info,
+        Tabs,
+        Tab
+    },
     data () {
         return {
             validationStatus: {},
@@ -102,10 +108,6 @@ export default {
             })
             this.values = {...defaults, ...values}
         }
-    },
-    components: {
-        Field,
-        Info
     },
     mounted () {
         if (this.value !== undefined) {

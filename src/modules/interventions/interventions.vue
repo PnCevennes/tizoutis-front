@@ -10,7 +10,10 @@
                         v-model="listYear" />
                 </div>
                 <div class="dynform dynform-inline">
-                    <label><input type="checkbox" @input="hide_finished($event)" /> Masquer les interventions terminées</label>
+                    <div>
+                        <label><input type="checkbox" @input="hide_finished($event)" /> Masquer les interventions terminées</label>
+                        <label><input type="checkbox" @input="hide_prev($event)" v-model="prev_hidden" />Afficher uniquement les demandes de l'année</label>
+                    </div>
                     <div class="separator"></div>
                     <a class="btn btn-success btn-xs" :href="csvUrl">Export CSV</a>
                 </div>
@@ -30,7 +33,6 @@
     </div>
 </template>
 <script>
-import {SERVER} from '@/config'
 import {DynForm} from '@/components/tools/dynform'
 import {DynTable, TableController} from '@/components/tools/dyntable'
 import {demTable, reqForm, planForm, reaForm} from './config'
@@ -55,11 +57,6 @@ export default {
             ressourceUrl: 'interventions',
             demTableCtrl: new TableController(demTable),
             userForm: [reqForm, planForm, reaForm]
-        }
-    },
-    computed: {
-        csvUrl () {
-            return [SERVER, 'interventions', '?format=csv&token=' + this.$store.state.userToken + '&annee=' + this.listYear].join('/')
         }
     },
     methods: {

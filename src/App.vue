@@ -29,7 +29,7 @@ import {AuthMixin} from '@/core/mixins'
 import {CORE_MODULES} from '@/core'
 import {MODULES} from '@/modules'
 import {User, URLS} from '@/core/authentification'
-import {BUILD} from '@/config'
+import {VERSION, BUILD} from '@/config'
 
 export default {
     name: 'App',
@@ -48,7 +48,7 @@ export default {
             return this.$store.state.saving
         },
         buildnbr () {
-            return 'Version: 1.0.' + BUILD
+            return 'Version: ' + VERSION + BUILD
         }
     },
     data () {
