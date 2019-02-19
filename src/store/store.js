@@ -10,6 +10,7 @@ export default new Vuex.Store({
         user: new User(),
         userToken: '',
         initialRoute: '',
+        acceptedGroups: [],
         loading: false,
         saving: false
     },
@@ -19,6 +20,9 @@ export default new Vuex.Store({
         },
         setUser (state, userData) {
             state.user = userData
+        },
+        setAcceptedGroups (state, groups) {
+            state.acceptedGroups = groups
         },
         loadingData (state) {
             state.loading = true
@@ -33,7 +37,7 @@ export default new Vuex.Store({
             state.saving = false
         },
         setRoute (state, route) {
-            if (route.name !== 'login') {
+            if (route.name !== 'login' && route.name !== 'logout') {
                 state.initialRoute = route
             }
         }

@@ -1,9 +1,11 @@
 <template>
     <div class="main-content">
         <h1 class="titlebar">Déconnexion</h1>
-        <div>
-            <p>Vous êtes maintenant déconnecté</p>
-            <router-link to="login">Reconnectez vous</router-link>
+        <div class="login-form">
+            <h1>Vous êtes maintenant déconnecté</h1>
+            <p>
+                <router-link to="login">Reconnectez vous</router-link>
+            </p>
         </div>
     </div>
 </template>

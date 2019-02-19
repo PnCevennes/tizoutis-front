@@ -5,7 +5,7 @@
         @keyup.right="selectCur()"
         @keyup.enter="selectCur()"
         @keypress.tab="selectCur()"
-        @keyup.tab="selectCur()"
+        @keydown.tab="selectCur()"
         >
         <input
             type="text"

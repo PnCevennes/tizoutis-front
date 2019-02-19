@@ -24,11 +24,9 @@
 </template>
 
 <script>
-import axios from 'axios'
 import {AuthMixin} from '@/core/mixins'
 import {CORE_MODULES} from '@/core'
 import {MODULES} from '@/modules'
-import {User, URLS} from '@/core/authentification'
 import {VERSION, BUILD} from '@/config'
 
 export default {
@@ -57,34 +55,8 @@ export default {
         }
     },
     created () {
-        var rawLoginData = window.localStorage.getItem('tizoutis-userdata')
-        if (!rawLoginData || !rawLoginData.length) {
-            if (this.$router.currentRoute.name !== 'login') {
-                this.$store.commit('setRoute', this.$router.currentRoute)
-            }
-            this.$router.push({name: 'login'})
-        } else {
-            var loginData = JSON.parse(rawLoginData)
-            var postdata = {id: loginData.uid, token: loginData.token}
-            axios.post(URLS.reconnect, postdata).then((res) => {
-                if (res) {
-                    this.$store.commit('setUser', new User(res.data.userdata))
-                    this.$store.commit('setUserToken', res.data.token)
-                    this.$store.commit('dataSaved')
-                    var redir = this.$store.state.initialRoute
-                    this.$router.push({
-                        name: redir.name,
-                        query: redir.query
-                    })
-                }
-            }).catch(() => {
-                this.$store.commit('dataSaved')
-                if (this.$router.currentRoute.name !== 'login') {
-                    this.$store.commit('setRoute', this.$router.currentRoute)
-                }
-                this.$router.push({name: 'login'})
-            })
-        }
+        this.$store.commit('setRoute', this.$router.currentRoute)
+        this.$router.push({name: 'login', query: {reconnect: true}})
     }
 }
 </script>

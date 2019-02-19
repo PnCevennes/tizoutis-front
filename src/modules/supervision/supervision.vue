@@ -139,6 +139,7 @@ export default {
     },
     data () {
         return {
+            groupAccept: ['tizoutis-supervision'],
             groupAdmin: 'tizoutis-supervision',
             routeName: 'supervision',
             ressourceUrl: 'supervision',
