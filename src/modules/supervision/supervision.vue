@@ -12,6 +12,22 @@
                 <div>
                     <dyn-form :config="formCtrl" v-model="form_content" @commit="save($event)" @remove="remove($event)" />
                 </div>
+                <div class="panel panel-default" v-if="form_content.evts && form_content.evts.length">
+                    <div class="panel-heading">
+                        <div class="panel-title">Evenements</div>
+                    </div>
+                    <table class="table">
+                        <tr :key="evt.id" v-for="evt in form_content.evts">
+                            <td style="padding: 5px;">
+                                <span v-if="evt.evt_type==0" class="glyphicon glyphicon-circle-arrow-down text-danger"></span>
+                                <span v-if="evt.evt_type==1" class="glyphicon glyphicon-circle-arrow-up text-success"></span>
+                            </td>
+                            <td style="padding: 5px;">
+                                <span class="text-muted">{{evt.evt_date}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
