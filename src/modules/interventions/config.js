@@ -15,9 +15,7 @@ var reqForm = {
         {
             name: 'num_intv',
             label: "Numéro d'intervention",
-            type: 'line',
-            validators: [Validators.minLength(1)],
-            errmsg: "Saisissez un numéro d'intervention"
+            type: 'hidden'
         },
         {
             name: 'dmdr_service',
@@ -169,7 +167,7 @@ var demTable = {
         {
             name: 'num_intv',
             label: 'Numéro',
-            filter: (val, filterVal) => { return parseInt(val) < parseInt(filterVal) }
+            filter: (val, filterVal) => { return val.endsWith(filterVal) }
         },
         {
             name: 'dem_date',
