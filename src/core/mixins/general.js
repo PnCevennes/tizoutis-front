@@ -64,7 +64,13 @@ export default {
                     params: {annee: year}
                 }
             ).then(res => {
-                this.demTableCtrl.setData(res.data)
+                var results
+                if (this.getAllCardsClbk !== undefined) {
+                    results = this.getAllCardsClbk(res.data)
+                } else {
+                    results = res.data
+                }
+                this.demTableCtrl.setData(results)
                 this.$store.commit('dataLoaded')
                 window.scrollTo({top: 0})
             }).catch(() => {})
@@ -78,7 +84,15 @@ export default {
                 annee: this.listYear,
                 add_prev_years: true
             }}).then(res => {
-                this.demTableCtrl.setData(res.data)
+                var results
+                if (this.getOldCardsClbk !== undefined) {
+                    results = this.getOldCardsClbk(res.data)
+                } else if (this.getAllCardsClbk !== undefined) {
+                    results = this.getAllCardsClbk(res.data)
+                } else {
+                    results = res.data
+                }
+                this.demTableCtrl.setData(results)
                 this.$store.commit('dataLoaded')
                 window.scrollTo({top: 0})
             }).catch(() => {})
@@ -91,8 +105,14 @@ export default {
             var ressource = this.ressource + intervention
 
             this.httpInstance.get(ressource).then(res => {
+                var results
+                if (this.getOneCardClbk !== undefined) {
+                    results = this.getOneCardClbk(res.data)
+                } else {
+                    results = res.data
+                }
                 this.demTableCtrl.selected_id = intervention
-                this.form_content = res.data
+                this.form_content = results
                 this.$store.commit('dataLoaded')
                 window.scrollTo({top: 0})
             }).catch(() => {
