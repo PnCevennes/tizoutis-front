@@ -3,6 +3,7 @@ import {batiments} from './batiments/'
 import {interventions} from './interventions/'
 import {recrutement} from './recrutement/'
 import {supervision} from './supervision/'
+import {subventions} from './subventions/'
 
 const MODULES = [
     {
@@ -35,6 +36,14 @@ const MODULES = [
         access: ['tizoutis-travaux-batiments-admin', 'tizoutis-travaux-batiments-user'],
         name: 'batiments',
         component: batiments,
+        props: (route) => ({ query: route.query })
+    },
+    {
+        path: '/subventions',
+        label: 'Subventions',
+        access: [],
+        name: 'subventions',
+        component: subventions,
         props: (route) => ({ query: route.query })
     },
     {
