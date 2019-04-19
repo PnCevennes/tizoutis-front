@@ -1,7 +1,12 @@
 <template>
     <div>
         <h1 class="titlebar">Subventions</h1>
-        <div class="general-content">
+        <button v-if="userIsAdmin" type="button" class="btn btn-primary" @click="toggle_gestion">Gérer</button>
+        <div v-if="gestion">
+            <admin-form>
+            </admin-form>
+        </div>
+        <div v-else class="general-content">
             <div class="main-list">
                 <div class="dynform dynform-inline">
                     <a class="btn btn-success btn-xs" :href="csvUrl">Export CSV</a>
@@ -14,11 +19,16 @@
             <div class="side-form">
                 <div class="dynform right-align">
                     <button type="button" @click="newCard">Nouvelle fiche</button>
-                    <dropdown append-to-body>
+                    <dropdown append-to-body v-if="form_content.id">
                         <btn class="dropdown-toggle">Fiches <span class="caret"></span></btn>
                         <template slot="dropdown">
-                            <li><a role="button" :href="test1">Test 1</a></li>
-                            <li><a role="button" :href="test2">Test 2</a></li>
+                            <li v-for="item in publicTemplates" :key="item.id"><a role="button" :href="template(item.name)">{{item.label}}</a></li>
+                        </template>
+                    </dropdown>
+                    <dropdown append-to-body v-if="form_content.id && userIsAdmin">
+                        <btn class="dropdown-toggle">Fiches admin<span class="caret"></span></btn>
+                        <template slot="dropdown">
+                            <li v-for="item in adminTemplates" :key="item.id"><a role="button" :href="template(item.name)">{{item.label}}</a></li>
                         </template>
                     </dropdown>
                 </div>
@@ -49,10 +59,12 @@ import {GeneralMixin, AuthMixin} from '@/core/mixins'
 import {DynForm} from '@/components/tools/dynform'
 import {DynTable, TableController} from '@/components/tools/dyntable'
 import {demTable, PetForm, SaForm, SubForm, DecForm, PaiForm} from './config'
+import adminForm from './adminform'
 
 export default {
     name: 'subventions',
     components: {
+        adminForm,
         DynTable,
         DynForm,
         Dropdown,
@@ -64,12 +76,10 @@ export default {
             default: null
         }
     },
-    computed: {
-        test1 () { return [SERVER, this.ressourceUrl, this.$props.query.fiche].join('/') + '?format=document&template=test1.rtf' },
-        test2 () { return [SERVER, this.ressourceUrl, this.$props.query.fiche].join('/') + '?format=document&template=test2.rtf' }
-    },
     data () {
         return {
+            gestion: false,
+            templates: [],
             groupAdmin: 'tizoutis-subventions',
             routeName: 'subventions',
             ressourceUrl: 'subventions',
@@ -77,7 +87,21 @@ export default {
             userForm: [PetForm, SaForm, SubForm, DecForm, PaiForm]
         }
     },
+    computed: {
+        publicTemplates () {
+            return this.templates.filter(x => x.public)
+        },
+        adminTemplates () {
+            return this.templates.filter(x => !x.public)
+        }
+    },
     methods: {
+        toggle_gestion () {
+            this.gestion = !this.gestion
+        },
+        template (tname) {
+            return [SERVER, this.ressourceUrl, this.$props.query.fiche].join('/') + '?format=document&template=' + tname
+        },
         calcTauxSub (x, evt) {
             /*
             Calcule le taux de sub en fonction des couts totaux et somme accordée
@@ -121,10 +145,10 @@ export default {
             Calcule le statut d'une demande
             */
             var out = 1
-            if (fiche.dec_date_notif !== null) {
+            if (fiche.dec_date_notif && fiche.dec_date_notif !== null) {
                 out = 2
             }
-            if (new Date(fiche.dec_echeance) < new Date()) {
+            if (fiche.dec_echeance && new Date(fiche.dec_echeance) < new Date()) {
                 out = 3
             }
             if (fiche.pai_reste_du === 0) {
@@ -143,6 +167,12 @@ export default {
     mounted () {
         PetForm.fields.filter(x => x.name === 'meta_createur')[0].default = this.user.name
         PetForm.fields.filter(x => x.name === 'meta_createur_mail')[0].default = this.user.mail
+        this.httpInstance.get('/subventions/templates').then(resp => {
+            this.templates = resp.data
+        }).catch(() => {
+            // TODO
+            this.templates = []
+        })
     }
 }
 </script>

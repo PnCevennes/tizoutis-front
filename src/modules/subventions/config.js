@@ -57,7 +57,11 @@ var PetForm = {
         {
             name: 'pet_adresse',
             label: 'Adresse',
-            type: 'text'
+            type: 'line'
+        },
+        {
+            name: 'pet_adresse2',
+            type: 'line'
         },
         {
             name: 'pet_cpostal',
