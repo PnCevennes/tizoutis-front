@@ -13,7 +13,7 @@
                     </div>
                 </li>
                 <li>
-                    <recursive-list :items="items" :idref="0" :editid="editid" :addref="addref" @edit="edit($event)" @add="add($event)" @save="save($event)" @remove="remove" />
+                    <recursive-list :showids="true" :items="items" :idref="0" :editid="editid" :addref="addref" @edit="edit($event)" @add="add($event)" @save="save($event)" @remove="remove" />
                 </li>
             </ul>
         </div>

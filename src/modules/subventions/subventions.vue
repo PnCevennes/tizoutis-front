@@ -20,13 +20,13 @@
                 <div class="dynform right-align">
                     <button type="button" @click="newCard">Nouvelle fiche</button>
                     <dropdown append-to-body v-if="form_content.id">
-                        <btn class="dropdown-toggle">Fiches <span class="caret"></span></btn>
+                        <btn class="dropdown-toggle">Documents<span class="caret"></span></btn>
                         <template slot="dropdown">
                             <li v-for="item in publicTemplates" :key="item.id"><a role="button" :href="template(item.name)">{{item.label}}</a></li>
                         </template>
                     </dropdown>
                     <dropdown append-to-body v-if="form_content.id && userIsAdmin">
-                        <btn class="dropdown-toggle">Fiches admin<span class="caret"></span></btn>
+                        <btn class="dropdown-toggle">Docs admin<span class="caret"></span></btn>
                         <template slot="dropdown">
                             <li v-for="item in adminTemplates" :key="item.id"><a role="button" :href="template(item.name)">{{item.label}}</a></li>
                         </template>
@@ -41,6 +41,7 @@
                         @remove="remove($event)"
                         @calctauxtotal="calcTauxSub(1, $event)"
                         @calctauxmontant="calcTauxSub(2, $event)"
+                        @calctauxattrib="calcTauxAttr($event)"
                         @accpt1="calcReste(1, $event)"
                         @accpt2="calcReste(2, $event)"
                         @accpt3="calcReste(3, $event)"
@@ -108,11 +109,15 @@ export default {
             */
             var vh = this.$refs.subvForm
             if (x === 1) {
-                vh.$set(vh.values, 'sub_taux', Math.round((vh.values.sub_montant / evt) * 100))
+                vh.$set(vh.values, 'sub_taux', Math.round((vh.values.sub_montant / evt) * 10000) / 100)
             } else {
-                vh.$set(vh.values, 'sub_taux', Math.round((evt / vh.values.sub_cout_total) * 100))
-                vh.$set(vh.values, 'pai_reste_du', evt)
+                vh.$set(vh.values, 'sub_taux', Math.round((evt / vh.values.sub_cout_total) * 10000) / 100)
             }
+        },
+        calcTauxAttr (evt) {
+            var vh = this.$refs.subvForm
+            vh.$set(vh.values, 'dec_taux', Math.round((evt / vh.values.sub_cout_total) * 10000) / 100)
+            vh.$set(vh.values, 'pai_reste_du', evt)
         },
         calcReste (x, evt) {
             /*

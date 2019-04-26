@@ -185,17 +185,20 @@ var SubForm = {
             name: 'sub_cout_total',
             label: 'Coût total du projet',
             type: 'number',
+            step: '0.01',
             triggerEvent: 'calctauxtotal'
         },
         {
             name: 'sub_montant',
             label: 'Montant sollicité',
             type: 'number',
+            step: '0.01',
             triggerEvent: 'calctauxmontant'
         },
         {
             name: 'sub_taux',
             label: 'Taux',
+            step: '0.01',
             type: 'number'
         },
         {
@@ -251,7 +254,9 @@ var DecForm = {
         {
             name: 'dec_montant',
             label: 'Montant attribué',
-            type: 'number'
+            type: 'number',
+            step: '0.01',
+            triggerEvent: 'calctauxattrib'
         },
         {
             name: 'dec_tva',
@@ -266,6 +271,7 @@ var DecForm = {
         {
             name: 'dec_taux',
             label: 'Taux de subventionnement accordé',
+            step: '0.01',
             type: 'number'
         },
         {
@@ -334,6 +340,7 @@ var PaiForm = {
             name: 'pai_accpt1_montant',
             label: 'Montant 1er accompte',
             type: 'number',
+            step: '0.01',
             triggerEvent: 'accpt1'
         },
         {
@@ -350,6 +357,7 @@ var PaiForm = {
             name: 'pai_accpt2_montant',
             label: 'Montant 2nd accompte',
             type: 'number',
+            step: '0.01',
             triggerEvent: 'accpt2'
         },
         {
@@ -366,6 +374,7 @@ var PaiForm = {
             name: 'pai_accpt3_montant',
             label: 'Montant 3e accompte',
             type: 'number',
+            step: '0.01',
             triggerEvent: 'accpt3'
         },
         {
@@ -382,6 +391,7 @@ var PaiForm = {
             name: 'pai_accpt4_montant',
             label: 'Montant 4e accompte',
             type: 'number',
+            step: '0.01',
             triggerEvent: 'accpt4'
         },
         {
@@ -398,6 +408,7 @@ var PaiForm = {
             name: 'pai_accpt5_montant',
             label: 'Montant 5e accompte',
             type: 'number',
+            step: '0.01',
             triggerEvent: 'accpt5'
         },
         {
@@ -413,16 +424,19 @@ var PaiForm = {
         {
             name: 'pai_total_verse',
             label: 'Total versé',
+            step: '0.01',
             type: 'number'
         },
         {
             name: 'pai_reste_du',
             label: 'Reste dû',
+            step: '0.01',
             type: 'number'
         },
         {
             name: 'pai_mnt_annule',
             label: 'Montant annulé',
+            step: '0.01',
             type: 'number',
             default: 0
         },
@@ -458,13 +472,21 @@ var demTable = {
             name: 'sa_massif',
             label: 'Massif',
             transform: (val) => thesaurus.getLabel(val),
-            nofilter: true
+            filterType: 'select',
+            choices: [],
+            filter: (val, filterVal) => {
+                return parseInt(val) === parseInt(filterVal)
+            }
         },
         {
             name: 'sa_commission',
             label: 'Commission',
             transform: (val) => thesaurus.getLabel(val),
-            nofilter: true
+            filterType: 'select',
+            choices: [],
+            filter: (val, filterVal) => {
+                return parseInt(val) === parseInt(filterVal)
+            }
         },
         {
             name: 'dec_echeance',
@@ -491,11 +513,13 @@ var demTable = {
 
 // Récupération des données thesaurus
 thesaurus.getThesaurusRef('massifs', SaForm, 'sa_massif')
-thesaurus.getThesaurusRef('services', SaForm, 'sa_service')
+thesaurus.getThesaurusRef('massifs', demTable, 'sa_massif')
+thesaurus.getThesaurusRef('services_desc', SaForm, 'sa_service')
 thesaurus.getThesaurusRef('services', DecForm, 'dec_code_ug')
 thesaurus.getThesaurusRef('compte_charge_subs', DecForm, 'dec_compte')
 thesaurus.getThesaurusRef('operation_sub', DecForm, 'dec_operation')
 thesaurus.getThesaurusRef('commission', SaForm, 'sa_commission')
+thesaurus.getThesaurusRef('commission', demTable, 'sa_commission')
 thesaurus.getThesaurusRef('axe_charte', SaForm, 'sa_axe_charte')
 
 export {

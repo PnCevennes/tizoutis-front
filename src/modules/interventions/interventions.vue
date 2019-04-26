@@ -64,12 +64,12 @@ export default {
             this.hideFinished = evt.target.checked
             if (evt.target.checked) {
                 this.demTableCtrl.filterData['rea_date'] = true
-                this.demTableCtrl.filters['rea_date'] = (v) => {
-                    return v === null
-                }
+                this.demTableCtrl.filters['rea_date'] = (v) => v === null
+                this.demTableCtrl.filterData['rea_annulation'] = true
+                this.demTableCtrl.filters['rea_annulation'] = (v) => !v
             } else {
                 this.demTableCtrl.filterData['rea_date'] = false
-                this.demTableCtrl.filters['rea_date'] = (v) => v
+                this.demTableCtrl.filterData['rea_annulation'] = false
             }
             this.demTableCtrl.update()
             if (this.form_content.id) {

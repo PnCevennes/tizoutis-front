@@ -164,6 +164,12 @@ var reaForm = {
             type: 'text'
         },
         {
+            name: 'rea_annulation',
+            label: 'Annulé',
+            type: 'bool',
+            default: false
+        },
+        {
             name: 'rea_fichiers',
             label: 'Fichiers',
             type: 'upload',
@@ -191,10 +197,11 @@ var demTable = {
     limit: 0,
     lineStyle (line) {
         var selected = line.id === parseInt(this.selected_id) ? 'table_selected ' : ''
-        if (!line.rea_date) {
-            return selected + 'warning'
-        } else if (new Date(line.rea_date) > new Date()) {
+
+        if (line.rea_annulation) {
             return selected + 'danger'
+        } else if (!line.rea_date) {
+            return selected + 'warning'
         } else {
             return selected + 'success'
         }

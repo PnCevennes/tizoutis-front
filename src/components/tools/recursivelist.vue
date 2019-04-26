@@ -2,6 +2,7 @@
     <ul class="th-list">
         <li v-for="item in items" v-if="item.id_ref==idref" :key="item.id">
             <div class="th-row" v-if="item.id !== editid">
+                <span class="text-danger">{{item.id}}</span>
                 <div class="th-label">{{item.label}}</div>
                 <button type="button" class="btn btn-xs btn-warning" @click="edit(item.id)">
                     <span class="glyphicon glyphicon-pencil"></span>
@@ -11,6 +12,7 @@
                 </button>
             </div>
             <div class="th-row" v-else>
+                <span class="text-danger">{{item.id}}</span>
                 <input type="text" v-model="item.label">
                 <button type="button" class="btn btn-xs btn-success" @click="save(item.label)"><span class="glyphicon glyphicon-ok"></span></button>
                 <button type="button" class="btn btn-xs btn-warning" @click="close"><span class="glyphicon glyphicon-remove"></span></button>
@@ -22,14 +24,14 @@
                 <button type="button" class="btn btn-xs btn-warning" @click="close"><span class="glyphicon glyphicon-remove"></span></button>
                 <button type="button" class="btn btn-xs btn-danger" @click="remove"><span class="glyphicon glyphicon-trash"></span></button>
             </div>
-            <recursive-list :items="items" :idref="item.id" :editid="editid" :addref="addref" @edit="edit($event)" @add="add($event)" @save="save($event)" @remove="remove" />
+            <recursive-list :showids="showids" :items="items" :idref="item.id" :editid="editid" :addref="addref" @edit="edit($event)" @add="add($event)" @save="save($event)" @remove="remove" />
         </li>
     </ul>
 </template>
 <script>
 export default {
     name: 'RecursiveList',
-    props: ['items', 'idref', 'editid', 'addref'],
+    props: ['items', 'idref', 'editid', 'addref', 'showids'],
     data () {
         return {
             addval: ''
