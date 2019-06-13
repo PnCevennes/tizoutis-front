@@ -1,0 +1,30 @@
+<div>
+    <h1 class="titlebar">Travaux sur bâtiments</h1>
+    <div class="general-content">
+        <div class="main-list">
+            <div class="dynform recherche">
+                <input
+                    type="number"
+                    @input="changeYear"
+                    v-model="listYear" />
+            </div>
+            <div class="dynform dynform-inline">
+                <label><input type="checkbox" @input="hide_finished($event)" /> Masquer les demandes terminées</label>
+                <label><input type="checkbox" @input="hide_prev($event)" v-model="prev_hidden" />Afficher uniquement les demandes de l'année</label>
+                <div class="separator"></div>
+                <a class="btn btn-success btn-xs" :href="csvUrl">Export CSV</a>
+            </div>
+            <div>
+                <dyn-table :controller="demTableCtrl" @select="select" />
+            </div>
+        </div>
+        <div class="side-form">
+            <div class="dynform right-align">
+                <button type="button" @click="newCard">Nouvelle demande de travaux</button>
+            </div>
+            <div>
+                <dyn-form ref="batForm" :config="formCtrl" v-model="form_content" @commit="save($event)" @remove="remove($event)" @commune-changed="communeChange($event)" />
+            </div>
+        </div>
+    </div>
+</div>

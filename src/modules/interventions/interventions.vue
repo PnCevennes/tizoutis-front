@@ -1,37 +1,4 @@
-<template>
-    <div>
-        <h1 class="titlebar">Interventions</h1>
-        <div class="general-content">
-            <div class="main-list">
-                <div class="dynform recherche">
-                    <input
-                        type="number"
-                        @input="changeYear"
-                        v-model="listYear" />
-                </div>
-                <div class="dynform dynform-inline">
-                    <div>
-                        <label><input type="checkbox" @input="hide_finished($event)" /> Masquer les interventions terminées</label>
-                        <label><input type="checkbox" @input="hide_prev($event)" v-model="prev_hidden" />Afficher uniquement les demandes de l'année</label>
-                    </div>
-                    <div class="separator"></div>
-                    <a class="btn btn-success btn-xs" :href="csvUrl">Export CSV</a>
-                </div>
-                <div>
-                    <dyn-table :controller="demTableCtrl" @select="select" />
-                </div>
-            </div>
-            <div class="side-form">
-                <div class="dynform right-align">
-                    <button type="button" @click="newCard">Nouvelle intervention</button>
-                </div>
-                <div>
-                    <dyn-form :config="formCtrl" v-model="form_content" @commit="save($event)" @remove="remove($event)" />
-                </div>
-            </div>
-        </div>
-    </div>
-</template>
+<template src="./interventions.html" />
 <script>
 import {DynForm} from '@/components/tools/dynform'
 import {DynTable, TableController} from '@/components/tools/dyntable'

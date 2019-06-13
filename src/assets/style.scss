@@ -1,13 +1,13 @@
-#app {
-    padding: 10px;
-    display: flex;
-}
-
-@import 'commons';
+@import '_commons';
 @import 'dynform';
 @import 'dyntable';
 @import 'informations';
 @import 'treelist';
+
+#app {
+    padding: 10px;
+    display: flex;
+}
 
 body {
     overflow: scroll;
