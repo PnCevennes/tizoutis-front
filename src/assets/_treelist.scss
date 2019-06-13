@@ -19,9 +19,12 @@
         margin-top: 3px;
         list-style-type: none;
     }
-    input {
+    input[type=text] {
         border: 0;
         border-bottom: 2px solid #FF0000;
         min-width: 27em;
+    }
+    label {
+        padding: 0 10px;
     }
 }

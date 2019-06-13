@@ -24,7 +24,7 @@ import axios from 'axios'
 import {Notification} from 'uiv'
 import {SERVER} from '@/config'
 import {AuthMixin} from '@/core/mixins'
-import RecursiveList from '@/components/tools/recursivelist'
+import RecursiveList from './recursivelist'
 
 export default {
     name: 'Thesaurus',
@@ -67,7 +67,9 @@ export default {
             this.addref = null
             this.addval = ''
         },
-        save (label) {
+        save (idata) {
+            var label = idata[0]
+            var menu = idata[1]
             var data = {}
             var apiUrl = ''
             var token = this.$store.state.userToken
@@ -76,7 +78,8 @@ export default {
                 data = {
                     id: this.editid,
                     id_ref: item.id_ref,
-                    label: label
+                    label: label,
+                    menu: menu
                 }
                 apiUrl = SERVER + '/thesaurus/' + this.editid + '?token=' + token
                 console.log('change', data)
@@ -84,7 +87,8 @@ export default {
                 data = {
                     id: this.maxid,
                     id_ref: this.addref,
-                    label: label
+                    label: label,
+                    menu: menu
                 }
                 apiUrl = SERVER + '/thesaurus/?token=' + token
             }
