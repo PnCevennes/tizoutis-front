@@ -1,0 +1,31 @@
+<div>
+    <h1 class="titlebar">Recrutement</h1>
+    <div class="general-content">
+        <div class="main-list">
+            <div class="dynform recherche">
+                <input
+                    type="number"
+                    @input="changeYear"
+                    v-model="listYear" />
+            </div>
+            <div class="dynform dynform-inline">
+                <label><input type="checkbox" @input="hide_prev($event)" v-model="prev_hidden" />Afficher uniquement les recrutements de l'année</label>
+                <div class="separator"></div>
+                <a class="btn btn-success btn-xs" :href="csvUrl">Export CSV</a>
+            </div>
+            <hr />
+            <div>
+                <dyn-table :controller="demTableCtrl" @select="select" />
+            </div>
+        </div>
+        <div class="side-form">
+            <div class="dynform right-align">
+                <button type="button" @click="newCard">Nouvelle fiche</button>
+            </div>
+            <div>
+                <dyn-form :config="formCtrl" v-model="form_content" @commit="save($event)" @remove="remove($event)" />
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -27,7 +27,7 @@
 import {AuthMixin} from '@/core/mixins'
 import {CORE_MODULES} from '@/core'
 import {MODULES} from '@/modules'
-import {VERSION, BUILD} from '@/config'
+import {VERSION, BUILD, BUILD_NAME} from '@/config'
 
 export default {
     name: 'App',
@@ -55,6 +55,7 @@ export default {
         }
     },
     created () {
+        document.title = BUILD_NAME
         this.$store.commit('setRoute', this.$router.currentRoute)
         this.$router.push({name: 'login', query: {reconnect: true}})
     }

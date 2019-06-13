@@ -127,7 +127,8 @@ var reaForm = {
         {
             name: 'rea_nb_agents',
             label: "Nombre d'agents affectés",
-            type: 'number'
+            type: 'number',
+            default: 0
         },
         {
             name: 'rea_commentaire',
