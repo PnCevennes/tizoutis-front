@@ -8,6 +8,7 @@ var thesaurus = new Thesaurus()
 // meta + petitionnaire
 var PetForm = {
     label: 'Pétitionnaire',
+    readonly: true,
     fields: [
         {
             name: 'meta_createur',
@@ -47,7 +48,8 @@ var PetForm = {
         {
             name: 'pet_nom',
             label: 'Nom du pétitionnaire',
-            type: 'line'
+            type: 'line',
+            required: true
         },
         {
             name: 'pet_civ',
@@ -94,6 +96,7 @@ var PetForm = {
 // suivi administratif
 var SaForm = {
     label: 'Suivi administratif',
+    readonly: true,
     fields: [
         {
             name: 'sa_massif',
@@ -150,6 +153,7 @@ var SaForm = {
 // subvention
 var SubForm = {
     label: 'Subvention',
+    readonly: true,
     fields: [
         {
             name: 'sub_objet',
@@ -230,6 +234,7 @@ var SubForm = {
 // décision
 var DecForm = {
     label: 'Décision',
+    readonly: true,
     fields: [
         {
             name: 'dec_date_bureau',
@@ -330,6 +335,7 @@ var DecForm = {
 // paiement
 var PaiForm = {
     label: 'Paiement',
+    readonly: true,
     fields: [
         {
             name: 'pai_date_recept_demande',
@@ -425,19 +431,22 @@ var PaiForm = {
             name: 'pai_total_verse',
             label: 'Total versé',
             step: '0.01',
-            type: 'number'
+            type: 'number',
+            readonly: true
         },
         {
             name: 'pai_reste_du',
             label: 'Reste dû',
             step: '0.01',
-            type: 'number'
+            type: 'number',
+            readonly: true
         },
         {
             name: 'pai_mnt_annule',
             label: 'Montant annulé',
             step: '0.01',
             type: 'number',
+            triggerEvent: 'accpt6',
             default: 0
         },
         {
@@ -455,8 +464,9 @@ var demTable = {
     selected_id: '',
     limit: 0,
     lineStyle (line) {
+        var selected = line.id === parseInt(this.selected_id) ? 'table_selected ' : ''
         var s = ['primary', 'warning', 'danger', 'success'][line.meta_statut - 1]
-        return s
+        return selected + s
     },
     fields: [
         {

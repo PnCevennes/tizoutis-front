@@ -1,58 +1,4 @@
-<template>
-    <div>
-        <h1 class="titlebar">Subventions</h1>
-        <button v-if="userIsAdmin" type="button" class="btn btn-primary" @click="toggle_gestion">Gérer</button>
-        <div v-if="gestion">
-            <admin-form>
-            </admin-form>
-        </div>
-        <div v-else class="general-content">
-            <div class="main-list">
-                <div class="dynform dynform-inline">
-                    <a class="btn btn-success btn-xs" :href="csvUrl">Export CSV</a>
-                </div>
-                <hr />
-                <div>
-                    <dyn-table :controller="demTableCtrl" @select="select" />
-                </div>
-            </div>
-            <div class="side-form">
-                <div class="dynform right-align">
-                    <button type="button" @click="newCard">Nouvelle fiche</button>
-                    <dropdown append-to-body v-if="form_content.id">
-                        <btn class="dropdown-toggle">Documents<span class="caret"></span></btn>
-                        <template slot="dropdown">
-                            <li v-for="item in publicTemplates" :key="item.id"><a role="button" :href="template(item.name)">{{item.label}}</a></li>
-                        </template>
-                    </dropdown>
-                    <dropdown append-to-body v-if="form_content.id && userIsAdmin">
-                        <btn class="dropdown-toggle">Docs admin<span class="caret"></span></btn>
-                        <template slot="dropdown">
-                            <li v-for="item in adminTemplates" :key="item.id"><a role="button" :href="template(item.name)">{{item.label}}</a></li>
-                        </template>
-                    </dropdown>
-                </div>
-                <div>
-                    <dyn-form
-                        ref="subvForm"
-                        :config="formCtrl"
-                        v-model="form_content"
-                        @commit="save($event)"
-                        @remove="remove($event)"
-                        @calctauxtotal="calcTauxSub(1, $event)"
-                        @calctauxmontant="calcTauxSub(2, $event)"
-                        @calctauxattrib="calcTauxAttr($event)"
-                        @accpt1="calcReste(1, $event)"
-                        @accpt2="calcReste(2, $event)"
-                        @accpt3="calcReste(3, $event)"
-                        @accpt4="calcReste(4, $event)"
-                        @accpt5="calcReste(5, $event)"
-                        />
-                </div>
-            </div>
-        </div>
-    </div>
-</template>
+<template src="./subventions.html" />
 <script>
 import {Dropdown, Btn} from 'uiv'
 import {SERVER} from '@/config'
@@ -125,41 +71,54 @@ export default {
             */
             var vh = this.$refs.subvForm
             var vals = vh.values
-            var out
+            var totVerse = (
+                parseFloat(vals.pai_accpt1_montant) +
+                parseFloat(vals.pai_accpt2_montant) +
+                parseFloat(vals.pai_accpt3_montant) +
+                parseFloat(vals.pai_accpt4_montant) +
+                parseFloat(vals.pai_accpt5_montant)
+            )
+            var mntAnnule = parseFloat(vals.pai_mnt_annule)
             switch (x) {
             case 1:
-                out = vals.sub_montant - evt - vals.pai_accpt2_montant - vals.pai_accpt3_montant - vals.pai_accpt4_montant - vals.pai_accpt5_montant
+                totVerse -= vals.pai_accpt1_montant - evt
                 break
             case 2:
-                out = vals.sub_montant - vals.pai_accpt1_montant - evt - vals.pai_accpt3_montant - vals.pai_accpt4_montant - vals.pai_accpt5_montant
+                totVerse -= vals.pai_accpt2_montant - evt
                 break
             case 3:
-                out = vals.sub_montant - evt - vals.pai_accpt1_montant - vals.pai_accpt2_montant - vals.pai_accpt4_montant - vals.pai_accpt5_montant
+                totVerse -= vals.pai_accpt3_montant - evt
                 break
             case 4:
-                out = vals.sub_montant - evt - vals.pai_accpt1_montant - vals.pai_accpt2_montant - vals.pai_accpt3_montant - vals.pai_accpt5_montant
+                totVerse -= vals.pai_accpt4_montant - evt
                 break
             case 5:
-                out = vals.sub_montant - evt - vals.pai_accpt1_montant - vals.pai_accpt2_montant - vals.pai_accpt3_montant - vals.pai_accpt4_montant
+                totVerse -= vals.pai_accpt5_montant - evt
+                break
+            case 6:
+                mntAnnule = parseFloat(evt)
                 break
             }
-            vh.$set(vals, 'pai_reste_du', out)
+            vh.$set(vals, 'pai_total_verse', Math.abs(Math.round(totVerse * 100) / 100))
+            vh.$set(vals, 'pai_reste_du', Math.round((vals.sub_montant - totVerse - mntAnnule) * 100) / 100)
+            this.calcStatut(this.form_content)
         },
         calcStatut (fiche) {
             /*
             Calcule le statut d'une demande
             */
-            var out = 1
-            if (fiche.dec_date_notif && fiche.dec_date_notif !== null) {
-                out = 2
+            if (fiche.meta_statut !== 4) {
+                var out = 1
+                if (fiche.dec_date_notif && fiche.dec_date_notif !== null) {
+                    out = 2
+                    if (fiche.dec_echeance && new Date(fiche.dec_echeance) < new Date()) {
+                        out = 3
+                    } else if (parseInt(fiche.pai_reste_du) === 0) {
+                        out = 4
+                    }
+                }
+                fiche.meta_statut = out
             }
-            if (fiche.dec_echeance && new Date(fiche.dec_echeance) < new Date()) {
-                out = 3
-            }
-            if (fiche.pai_reste_du === 0) {
-                out = 4
-            }
-            fiche.meta_statut = out
             return fiche
         },
         getAllCardsClbk (data) {

@@ -1,0 +1,55 @@
+<div>
+    <h1 class="titlebar">Subventions</h1>
+    <button v-if="userIsAdmin" type="button" class="btn btn-primary" @click="toggle_gestion">Gérer</button>
+    <div v-if="gestion">
+        <admin-form>
+        </admin-form>
+    </div>
+    <div v-else class="general-content">
+        <div class="main-list">
+            <div class="dynform dynform-inline">
+                <a class="btn btn-success btn-xs" :href="csvUrl">Export CSV</a>
+            </div>
+            <hr />
+            <div>
+                <dyn-table :controller="demTableCtrl" @select="select" />
+            </div>
+        </div>
+        <div class="side-form">
+            <div class="dynform right-align">
+                <button type="button" @click="newCard">Nouvelle fiche</button>
+                <dropdown append-to-body v-if="form_content.id">
+                    <btn class="dropdown-toggle">Documents<span class="caret"></span></btn>
+                    <template slot="dropdown">
+                        <li v-for="item in publicTemplates" :key="item.id"><a role="button" :href="template(item.name)">{{item.label}}</a></li>
+                    </template>
+                </dropdown>
+                <dropdown append-to-body v-if="form_content.id && userIsAdmin">
+                    <btn class="dropdown-toggle">Docs admin<span class="caret"></span></btn>
+                    <template slot="dropdown">
+                        <li v-for="item in adminTemplates" :key="item.id"><a role="button" :href="template(item.name)">{{item.label}}</a></li>
+                    </template>
+                </dropdown>
+            </div>
+            <div>
+                <dyn-form
+                    ref="subvForm"
+                    :config="formCtrl"
+                    v-model="form_content"
+                    @commit="save($event)"
+                    @remove="remove($event)"
+                    @calctauxtotal="calcTauxSub(1, $event)"
+                    @calctauxmontant="calcTauxSub(2, $event)"
+                    @calctauxattrib="calcTauxAttr($event)"
+                    @accpt1="calcReste(1, $event)"
+                    @accpt2="calcReste(2, $event)"
+                    @accpt3="calcReste(3, $event)"
+                    @accpt4="calcReste(4, $event)"
+                    @accpt5="calcReste(5, $event)"
+                    @accpt6="calcReste(6, $event)"
+                    />
+            </div>
+        </div>
+    </div>
+</div>
+
