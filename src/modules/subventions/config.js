@@ -318,6 +318,11 @@ var DecForm = {
             type: 'date'
         },
         {
+            name: 'dec_relance',
+            label: 'Relance',
+            type: 'date'
+        },
+        {
             name: 'dec_prorogation',
             label: 'Prorogation',
             type: 'date'
