@@ -31,6 +31,7 @@ export default {
             routeName: 'subventions',
             ressourceUrl: 'subventions',
             demTableCtrl: new TableController(demTable),
+            filterSubs: false,
             userForm: [PetForm, SaForm, SubForm, DecForm, PaiForm]
         }
     },

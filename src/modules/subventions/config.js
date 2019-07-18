@@ -476,8 +476,7 @@ var demTable = {
     fields: [
         {
             name: 'meta_id',
-            label: 'Numéro',
-            nofilter: true
+            label: 'Numéro'
         },
         {
             name: 'pet_nom',
@@ -507,7 +506,10 @@ var demTable = {
             name: 'dec_echeance',
             label: 'Échéance',
             transform: datefr,
-            nofilter: true
+            filterType: 'date',
+            filter: (val, filterVal) => new Date(val).getTime() <= new Date(filterVal).getTime(),
+            sortfunc: (data, fieldName, sortOrder) => data.sort((a, b) => (a[fieldName] === null ? 1 : new Date(a[fieldName]).getTime() >= new Date(b[fieldName]).getTime() ? -1 : 1) * (-1 * sortOrder))
+            // nofilter: true
         },
         {
             name: 'meta_statut',

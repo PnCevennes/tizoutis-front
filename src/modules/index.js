@@ -1,59 +1,17 @@
-import {annuaire} from './annuaire'
-import {batiments} from './batiments/'
-import {interventions} from './interventions/'
-import {recrutement} from './recrutement/'
-import {supervision} from './supervision/'
-import {subventions} from './subventions/'
+import {ROUTE as annuaire} from './annuaire'
+import {ROUTE as recrutement} from './recrutement/'
+import {ROUTE as batiments} from './batiments/'
+import {ROUTE as interventions} from './interventions/'
+import {ROUTE as supervision} from './supervision/'
+import {ROUTE as subventions} from './subventions/'
 
 const MODULES = [
-    {
-        path: '/annuaire',
-        label: 'Annuaire',
-        access: [],
-        name: 'annuaire',
-        component: annuaire,
-        props: (route) => ({ query: route.query })
-    },
-    {
-        path: '/recrutement',
-        label: 'Recrutement',
-        access: [],
-        name: 'recrutement',
-        component: recrutement,
-        props: (route) => ({ query: route.query })
-    },
-    {
-        path: '/interventions',
-        label: 'Interventions',
-        access: [],
-        name: 'interventions',
-        component: interventions,
-        props: (route) => ({ query: route.query })
-    },
-    {
-        path: '/batiments',
-        label: 'Bâtiments',
-        access: ['tizoutis-travaux-batiments-admin', 'tizoutis-travaux-batiments-user'],
-        name: 'batiments',
-        component: batiments,
-        props: (route) => ({ query: route.query })
-    },
-    {
-        path: '/subventions',
-        label: 'Subventions',
-        access: [],
-        name: 'subventions',
-        component: subventions,
-        props: (route) => ({ query: route.query })
-    },
-    {
-        path: '/supervision',
-        label: 'Supervision',
-        access: ['tizoutis-supervision'],
-        name: 'supervision',
-        component: supervision,
-        props: (route) => ({ query: route.query })
-    }
+    annuaire,
+    recrutement,
+    interventions,
+    batiments,
+    subventions,
+    supervision
 ]
 
 export {MODULES}

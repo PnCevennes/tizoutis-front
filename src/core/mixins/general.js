@@ -23,12 +23,6 @@ export default {
         }
     },
     computed: {
-        user () {
-            return this.$store.state.user
-        },
-        userIsAdmin () {
-            return this.$store.getters.isMember(this.groupAdmin)
-        },
         full_form () {
             return this.user ? this.userIsAdmin && this.form_content.id !== undefined : false
         },
@@ -53,17 +47,15 @@ export default {
         }
     },
     methods: {
+        getServer (params) {
+            return this.httpInstance.get(this.ressource, {params})
+        },
         getAllCards (year) {
             /*
              * charge la liste des fiches créées dans l'année
              */
             this.$store.commit('loadingData')
-            this.httpInstance.get(
-                this.ressource,
-                {
-                    params: {annee: year}
-                }
-            ).then(res => {
+            this.getServer({annee: year}).then(res => {
                 var results
                 if (this.getAllCardsClbk !== undefined) {
                     results = this.getAllCardsClbk(res.data)
@@ -80,10 +72,10 @@ export default {
             charge la liste des fiches non fermées au début de l'année
             */
             this.$store.commit('loadingData')
-            this.httpInstance.get(this.ressource, {params: {
+            this.getServer({
                 annee: this.listYear,
                 add_prev_years: true
-            }}).then(res => {
+            }).then(res => {
                 var results
                 if (this.getOldCardsClbk !== undefined) {
                     results = this.getOldCardsClbk(res.data)
@@ -105,15 +97,19 @@ export default {
             var ressource = this.ressource + intervention
 
             this.httpInstance.get(ressource).then(res => {
-                var results
                 if (this.getOneCardClbk !== undefined) {
-                    results = this.getOneCardClbk(res.data)
+                    this.getOneCardClbk(res.data).then((results) => {
+                        this.form_content = results
+                        this.$store.commit('dataLoaded')
+                    }).catch(() => {
+                        this.form_content = {}
+                        this.$store.commit('dataLoaded')
+                    })
                 } else {
-                    results = res.data
+                    this.form_content = res.data
+                    this.$store.commit('dataLoaded')
                 }
                 this.demTableCtrl.selected_id = intervention
-                this.form_content = results
-                this.$store.commit('dataLoaded')
                 window.scrollTo({top: 0})
             }).catch(() => {
                 this.form_content = {}

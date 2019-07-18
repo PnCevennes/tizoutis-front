@@ -13,6 +13,20 @@
         margin-top: 12px;
     }
 
+    .form-ronly {
+        margin-top: 1em;
+        tr:nth-of-type(2n-1) {
+            background-color: #EFEFEF;
+        }
+        td, th {
+            padding: 0.5em;
+            border-bottom: 2px solid lightgrey;
+        }
+        th {
+            width: 50%;
+        }
+    }
+
     li {
         list-style-type: none;
         padding: 0;

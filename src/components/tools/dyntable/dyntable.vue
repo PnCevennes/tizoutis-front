@@ -9,7 +9,7 @@
                     title="cliquez pour trier"
                     >{{field.label}}&nbsp;&nbsp;<span
                         class="glyphicon"
-                        :class="{'glyphicon-triangle-bottom': controller.sorting[field.name] == 1, 'glyphicon-triangle-top': controller.sorting[field.name] == -1}"></span></th>
+                        :class="{'glyphicon-triangle-top': controller.sorting[field.name] == 1, 'glyphicon-triangle-bottom': controller.sorting[field.name] == -1}"></span></th>
             </tr>
             <tr>
                 <th
@@ -19,6 +19,12 @@
                         <input
                             type="text"
                             v-if="!field.filterType || field.filterType === 'text'"
+                            :placeholder="field.filterLabel ? field.filterLabel : ''"
+                            v-model="controller.filterData[field.name]"
+                            @input="controller.update()" />
+                        <input
+                            type="date"
+                            v-if="field.filterType === 'date'"
                             :placeholder="field.filterLabel ? field.filterLabel : ''"
                             v-model="controller.filterData[field.name]"
                             @input="controller.update()" />
@@ -70,3 +76,8 @@ export default {
     }
 }
 </script>
+<style scoped>
+input[type=date]{
+    font-weight: 100;
+}
+</style>

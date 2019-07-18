@@ -29,17 +29,15 @@ export default {
         }
     },
     methods: {
-        getOneCard (fiche) {
-            // charge le détail d'une fiche
-            this.httpInstance.get(this.ressource + fiche).then(res => {
-                this.refGeo.getBatiments(res.data.dem_commune, reqForm, 'dem_designation')
-                this.demTableCtrl.selected_id = fiche
-                setTimeout(() => {
-                    this.form_content = res.data
-                    window.scrollTo({top: 0})
-                }, 10)
-            }).catch(() => {
-                this.form_content = {}
+        getOneCardClbk (data) {
+            return new Promise((resolve, reject) => {
+                this.refGeo.getBatimentsAsync(data.dem_commune, reqForm, 'dem_designation').then(() => {
+                    resolve(data)
+                }).catch((err) => {
+                    console.log(err)
+                    reject(err)
+                })
+                return data
             })
         },
         communeChange (evt) {
@@ -50,9 +48,7 @@ export default {
             this.hideFinished = evt.target.checked
             if (evt.target.checked) {
                 this.demTableCtrl.filterData['rea_date'] = true
-                this.demTableCtrl.filters['rea_date'] = (v) => {
-                    return v === null
-                }
+                this.demTableCtrl.filters['rea_date'] = (v) => v === null
             } else {
                 this.demTableCtrl.filterData['rea_date'] = false
                 this.demTableCtrl.filters['rea_date'] = (v) => v

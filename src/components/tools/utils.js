@@ -17,18 +17,33 @@ class Thesaurus {
     constructor () {
         this.cache = {}
     }
+    getThesaurusRefAsync (idRef, config, fieldName) {
+        return new Promise((resolve, reject) => {
+            var result = this.getThesaurusRef(idRef, config, fieldName)
+            if (result) {
+                resolve(result)
+            } else {
+                reject(new Error('Thesaurus value not found'))
+            }
+        })
+    }
     getThesaurusRef (idRef, config, fieldName) {
-        axios.get(SERVER + '/thesaurus/ref/' + idRef).then(res => {
-            var item = config.fields.find(itm => itm.name === fieldName)
-            item.choices = res.data.map(v => {
-                v.value = v.id
-                this.cache[v.id] = v.label
-                return v
-            })
-            item.choices.unshift({0: ''})
-        }).catch(err => { console.error(err) })
+        if (idRef) {
+            axios.get(SERVER + '/thesaurus/ref/' + idRef).then(res => {
+                var item = config.fields.find(itm => itm.name === fieldName)
+                item.choices = res.data.map(v => {
+                    v.value = v.id
+                    this.cache[v.id] = v.label
+                    return v
+                })
+                item.choices.unshift({0: ''})
+            }).catch(err => { console.error(err) })
+        } else {
+            return null
+        }
     }
     getLabel (idRef) {
+        if (!idRef) return ''
         if (this.cache[idRef]) {
             return this.cache[idRef]
         } else {
@@ -80,6 +95,17 @@ class RefGeo {
         var item = config.fields.filter(itm => itm.name === fieldName)[0]
         item.choices = this.cache.batiments.commune[id]
         return item.choices
+    }
+
+    getBatimentsAsync (id, config, fieldName) {
+        return new Promise((resolve, reject) => {
+            var choices = this.getBatiments(id, config, fieldName)
+            if (choices) {
+                resolve(choices)
+            } else {
+                reject(new Error('Error loading bats'))
+            }
+        })
     }
 
     getBatimentLabel (id) {

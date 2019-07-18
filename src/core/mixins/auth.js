@@ -1,4 +1,12 @@
 export default {
+    computed: {
+        user () {
+            return this.$store.state.user
+        },
+        userIsAdmin () {
+            return this.$store.getters.isMember(this.groupAdmin)
+        }
+    },
     beforeRouteEnter (to, from, next) {
         next(vm => {
             if (!vm.$store.getters.isAuth) {

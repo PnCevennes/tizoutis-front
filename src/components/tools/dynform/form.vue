@@ -13,7 +13,7 @@
                         @validation="validate($event)"
                         @event-triggered="trigger($event)"/>
                 </div>
-                <table class="table" v-else>
+                <table class="table form-ronly" v-else>
                     <tr v-for="item in fset.fields" :key="item.name">
                         <th>{{item.label}}</th>
                         <td><info :config="item" :value="values[item.name]" /></td>

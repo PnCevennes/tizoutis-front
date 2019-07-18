@@ -1,6 +1,6 @@
-const defaultFilter = (value, filterValue) => {
-    return value && (value.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1)
-}
+const defaultFilter = (value, filterValue) => value && (value.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1)
+
+const defaultSortFunc = (data, fieldName, sortingOrder) => data.sort((a, b) => (a[fieldName] > b[fieldName] ? 1 : -1) * sortingOrder)
 
 class TableController {
     page = 0
@@ -8,6 +8,7 @@ class TableController {
     selected = {}
     // eslint-disable-next-line
     selected_id = ''
+    sortfuncs = {}
     sorting = {}
     filters = {}
     filterData = {}
@@ -26,6 +27,7 @@ class TableController {
         this.limit = config.limit !== undefined ? config.limit : 25
         this.page = config.page !== undefined ? config.page : 0
         for (var _field in config.fields) {
+            this.sortfuncs[config.fields[_field].name] = config.fields[_field].sortfunc ? config.fields[_field].sortfunc : defaultSortFunc
             this.filters[config.fields[_field].name] = config.fields[_field].filter ? config.fields[_field].filter : defaultFilter
             this.filterData[config.fields[_field].name] = ''
             if (config.fields[_field].transform === undefined) {
@@ -75,9 +77,7 @@ class TableController {
     getSortedData (data) {
         for (var _field in this.sorting) {
             if (this.sorting[_field] !== 0) {
-                return data.sort((a, b) => {
-                    return (a[_field] > b[_field] ? 1 : -1) * this.sorting[_field]
-                })
+                return this.sortfuncs[_field](data, _field, this.sorting[_field])
             }
         }
         return data
