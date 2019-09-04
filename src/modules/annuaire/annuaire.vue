@@ -206,7 +206,7 @@ export default {
             this.$store.commit('loadingData')
             axios.get(URLS['entites'] + this.urlParams + '&token=' + token).then(
                 res => {
-                    this.results = res.data
+                    this.results = res.data.liste
                     this.extract(idEdit)
                     this.$store.commit('dataLoaded')
                     Notification.notify({

@@ -126,7 +126,14 @@ export default {
             return data.map(this.calcStatut)
         },
         getOneCardClbk (data) {
-            return this.calcStatut(data)
+            return new Promise((resolve, reject) => {
+                try {
+                    var _data = this.calcStatut(data)
+                    resolve(_data)
+                } catch (e) {
+                    reject(e)
+                }
+            })
         }
     },
     mounted () {
