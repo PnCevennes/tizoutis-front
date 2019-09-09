@@ -101,7 +101,7 @@ export default {
                 break
             }
             vh.$set(vals, 'pai_total_verse', Math.abs(Math.round(totVerse * 100) / 100))
-            vh.$set(vals, 'pai_reste_du', Math.round((vals.sub_montant - totVerse - mntAnnule) * 100) / 100)
+            vh.$set(vals, 'pai_reste_du', Math.round((vals.dec_montant - totVerse - mntAnnule) * 100) / 100)
             this.calcStatut(this.form_content)
         },
         calcStatut (fiche) {
@@ -110,11 +110,12 @@ export default {
             */
             if (fiche.meta_statut !== 4) {
                 var out = 1
-                if (fiche.dec_date_notif && fiche.dec_date_notif !== null) {
+                if (fiche.dec_date_bureau && fiche.dec_date_bureau !== null) {
                     out = 2
                     if (fiche.dec_echeance && new Date(fiche.dec_echeance) < new Date()) {
                         out = 3
-                    } else if (parseInt(fiche.pai_reste_du) === 0) {
+                    }
+                    if (parseInt(fiche.pai_reste_du) === 0) {
                         out = 4
                     }
                 }
