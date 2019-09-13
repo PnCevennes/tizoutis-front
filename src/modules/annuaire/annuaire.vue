@@ -3,7 +3,7 @@
         <h1 class="titlebar">Annuaire</h1>
         <div class="container-fluid">
             <div class="row recherche dynform">
-                <recherche v-model="searchParams" :url="URLS['recherche']" :format="formatListClbk" />
+                <recherche v-model="searchParams" :url="searchUrl" :format="formatListClbk" />
                 <btn
                     :disabled="!searchInputValid"
                     type="success"
@@ -12,39 +12,54 @@
                     @click="search">Go !</btn>
             </div>
             <div class="row">
-                <div>
-                    <editeur :data="current" @close="close" @save="save($event)" @remove="remove($event)" @editing="switch_editing" />
+            <div class="search-results" v-if="results.recherche.length">
+                <div class="search-res">
+                    <resultlist :ltitle="'Éléments recherchés'" v-model="results.recherche" />
                 </div>
-                <div class="col-lg-10 col-lg-offset-1">
-                    <div class="main-list" v-if="query.s">
-                        <list-results :data="results" :search-params="query.s" @select="edit($event)" />
+                <div class="search-lst">
+                    <resultlist :ltitle="'Éléments liés'" v-model="results.liste" />
+                </div>
+            </div>
+            <div class="search-results" v-else-if="userIsAdmin">
+                <div class="search-res btn-group">
+                    <div>
+                        <button type="button" class="btn btn-primary" @click="addNew('entite')">Nouveau groupe</button>
                     </div>
-                    <information v-else />
+                    <div>
+                        <button type="button" class="btn btn-primary" @click="addNew('correspondant')">Nouveau correspondant</button>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-primary" @click="addNew('entreprise')">Nouvelle entreprise</button>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-primary" @click="addNew('commune')">Nouvelle commune</button>
+                    </div>
                 </div>
+                <div class="search-lst">
+                    <ann-form ref="addform" />
+                </div>
+            </div>
             </div>
         </div>
     </div>
 </template>
 <script>
 import axios from 'axios'
-import {Notification, MessageBox, Btn} from 'uiv'
+import {Notification, Btn} from 'uiv'
 import recherche from '@/components/tools/recherche'
-import listResults from './listresults'
-import information from './informations'
-import editeur from './editeur'
-import {URLS} from './config'
 import {AuthMixin} from '@/core/mixins'
+import resultlist from './resultlist'
+import {SERVER} from '@/config'
+import annForm from './resultcard/forms/annForm'
 
 export default {
     name: 'annuaire',
     components: {
         Notification,
-        MessageBox,
         Btn,
         recherche,
-        listResults,
-        information,
-        editeur
+        resultlist,
+        annForm
     },
     props: {
         query: { default: null }
@@ -53,34 +68,31 @@ export default {
     data () {
         return {
             groupAccept: ['*'],
-            URLS,
             searchParams: [''],
-            current: '',
-            results: [],
-            prevSearch: '',
-            editing: false,
-            searchResults: {
-                correspondants: [],
-                communes: [],
-                entites: [],
-                entreprises: []
-            }
+            results: {recherche: [], liste: []}
         }
     },
     computed: {
-        searchInputValid () {
-            return this.searchParams.every(x => typeof (x) === 'object')
+        userIsAdmin () {
+            return this.$store.getters.isMember(['tizoutis-annuaire'])
         },
-        urlParams () {
-            var params = new URLSearchParams()
-            this.searchParams.forEach(x => { params.append('params', x.id) })
-            return params
+        httpInstance () {
+            return axios.create({
+                baseURL: SERVER,
+                headers: {token: this.$store.state.userToken}
+            })
         },
-        user () {
-            return this.$store.state.user
+        searchUrl () {
+            return SERVER + '/annuaire/entites/'
+        },
+        searchCount () {
+            return this.searchParams[0] && this.searchParams[0].id !== undefined
         }
     },
     methods: {
+        addNew (type) {
+            this.$refs.addform.setForm(type)
+        },
         formatListClbk (item) {
             if (item.fonction) {
                 return '<b>' + item.label + '</b> <small>(' + item.fonction + ')</small>'
@@ -88,80 +100,11 @@ export default {
                 return '<b>' + item.label + '</b>'
             }
         },
-        save (data) {
-            if (!data.id) {
-                axios.post(this.URLS.save + '?token=' + this.$store.state.userToken, data).then(
-                    res => {
-                        Notification.notify({
-                            content: 'Données enregistrées',
-                            placement: 'top-right',
-                            type: 'success'})
-                        this.init_page(JSON.parse(this.prevSearch), res.data.id, true)
-                        /*
-                            this.$router.push({
-                            name: 'annuaire',
-                            query: {
-                                s: JSON.parse(this.prevSearch),
-                                e: res.data.id
-                            }
-                        })
-                        */
-                    }
-                ).catch(
-                    () => {
-                        Notification.notify({
-                            content: 'Erreur d\'enregistrement',
-                            placement: 'top-right',
-                            type: 'danger'})
-                    }
-                )
-            } else {
-                axios.put(this.URLS.save + '/' + data.id + '?token=' + this.$store.state.userToken, data).then(
-                    res => {
-                        Notification.notify({
-                            content: 'Données enregistrées',
-                            placement: 'top-right',
-                            type: 'success'})
-                        this.init_page(JSON.parse(this.prevSearch), data.id, true)
-                    }
-                ).catch(
-                    () => {
-                        Notification.notify({
-                            content: 'Erreur d\'enregistrement',
-                            placement: 'top-right',
-                            type: 'danger'})
-                    }
-                )
-            }
+        searchInputValid () {
+            return this.searchParams.every(x => typeof (x) === 'object')
         },
-        remove (data) {
-            MessageBox.confirm({
-                title: "Suppression d'une fiche",
-                content: 'Êtes vous certain de vouloir supprimer cette fiche ?'
-            }).then(() => {
-                axios.delete(this.URLS.save + '/' + data.id + '?token=' + this.$store.state.userToken).then((res) => {
-                    Notification.notify({
-                        content: 'Fiche supprimée',
-                        placement: 'top-right',
-                        type: 'success'})
-                    this.init_page(JSON.parse(this.prevSearch), null, true)
-                }).catch((err) => {
-                    console.error(err)
-                })
-            }).catch(() => {
-                Notification.notify({
-                    content: 'Suppression annulée',
-                    placement: 'top-right',
-                    type: 'info'})
-            })
-        },
-        close () {
-            this.current = {}
-            this.editing = false
-            this.$router.push({ name: 'annuaire', query: { s: this.query.s } })
-        },
-        switch_editing () {
-            this.editing = true
+        search () {
+            this.$router.push({ name: 'annuaire', query: { s: this.searchParams.map(x => x.id) } })
         },
         getSearchParams (query) {
             var qr = typeof (query) === 'object' ? query : [query]
@@ -169,86 +112,57 @@ export default {
             qr.forEach(x => { params.append('params', x) })
             return params
         },
-        init_page (query, idEdit, reload) {
-            var token = this.$store.state.userToken
-            this.current = {}
-            if (query !== null && query !== undefined) {
-                if (typeof (query) === 'string') {
-                    query = [parseInt(query)]
+        getList (search) {
+            // entites: SERVER + '/annuaire/entites?',
+            var sparams = this.getSearchParams(search)
+            this.httpInstance.get('/annuaire/entites?' + sparams).then(
+                resp => {
+                    this.results = resp.data
                 }
-                if (!!reload || JSON.stringify(query) !== this.prevSearch) {
-                    this.prevSearch = JSON.stringify(query)
-                    axios.get(URLS['labels'] + this.getSearchParams(query) + '&token=' + token).then(
-                        res => {
-                            this.searchParams = res.data
-                            this.get_xhr(idEdit * 1)
-                        }
-                    ).catch(
-                        err => { Notification.notify('erreur ! ' + err.msg) }
-                    )
-                } else {
-                    if (idEdit) {
-                        this.extract(idEdit * 1)
-                    }
+            ).catch(err => { console.log(err) })
+            this.httpInstance.get('/annuaire/lib_entites/?' + sparams).then(
+                resp => {
+                    this.searchParams = resp.data
                 }
-            } else {
-                this.searchParams = ['']
-                this.searchResults = {
-                    correspondants: [],
-                    communes: [],
-                    entites: [],
-                    entreprises: []
-                }
-            }
-        },
-        get_xhr (idEdit) {
-            var token = this.$store.state.userToken
-            this.$store.commit('loadingData')
-            axios.get(URLS['entites'] + this.urlParams + '&token=' + token).then(
-                res => {
-                    this.results = res.data.liste
-                    this.extract(idEdit)
-                    this.$store.commit('dataLoaded')
-                    Notification.notify({
-                        content: 'Données reçues',
-                        placement: 'top-right',
-                        type: 'success'})
-                }
-            ).catch(
-                err => { this.searchResults = err.data }
-            )
-        },
-        extract (idEdit) {
-            if (idEdit !== undefined) {
-                var current = this.results.filter(x => x.id === idEdit)
-                if (current.length) {
-                    this.current = current[0]
-                    this.$emit('show', this.current)
-                }
-            }
-        },
-        search () {
-            this.$router.push({ name: 'annuaire', query: { s: this.searchParams.map(x => x.id) } })
-        },
-        edit (id) {
-            if (id === this.query.e) {
-            } else {
-                this.$router.push({
-                    name: 'annuaire',
-                    query: {
-                        s: this.searchParams.map(x => x.id),
-                        e: id
-                    }
-                })
-            }
+            ).catch(err => { console.log(err) })
         }
     },
     mounted () {
-        this.init_page(this.query.s, this.query.e)
+        console.log('mounted')
+        console.log(this.query.s)
+        if (this.query.s && this.query.s !== undefined) {
+            this.getList(this.query.s)
+        }
     },
     beforeRouteUpdate (to, from, next) {
-        this.init_page(to.query.s, to.query.e)
+        console.log('beforeRouteUpdate')
+        console.log(to.query.s)
+        if (to.query.s && to.query.s !== undefined) {
+            this.getList(to.query.s)
+        } else {
+            this.results = {recherche: [], liste: []}
+            this.searchParams = ['']
+        }
         next()
     }
 }
 </script>
+<style scoped>
+.search-results {
+    width: 100%;
+    display: flex;
+}
+.search-res {
+    flex: 1;
+}
+.search-lst {
+    flex: 2;
+}
+.btn-group>div {
+    margin-top: 5px;
+}
+
+.btn-group button {
+    width: 100%;
+}
+</style>
