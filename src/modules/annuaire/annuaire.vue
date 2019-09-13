@@ -73,7 +73,7 @@ export default {
         }
     },
     computed: {
-        userIsAdmin () {
+        userIsAdmin () {
             return this.$store.getters.isMember(['tizoutis-annuaire'])
         },
         httpInstance () {
@@ -128,15 +128,11 @@ export default {
         }
     },
     mounted () {
-        console.log('mounted')
-        console.log(this.query.s)
         if (this.query.s && this.query.s !== undefined) {
             this.getList(this.query.s)
         }
     },
     beforeRouteUpdate (to, from, next) {
-        console.log('beforeRouteUpdate')
-        console.log(to.query.s)
         if (to.query.s && to.query.s !== undefined) {
             this.getList(to.query.s)
         } else {

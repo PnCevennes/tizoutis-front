@@ -38,9 +38,10 @@ export default {
 <style scoped>
 .showbtn {
     border-radius: 0 0 3px 3px;
+    border-top: 1px solid #CCC;
     margin: 3px -5px -5px -5px;
-    background-color: #EEE;
     color: #AAA;
+    background-color: #FFF5E5;
     text-align: center;
 }
 

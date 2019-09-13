@@ -1,6 +1,6 @@
 <template>
     <div class="tbx">
-        <h3><slot></slot></h3>
+        <h3 @click="toggle"><slot></slot></h3>
         <div class="tb">
             <a class="btn btn-xs btn-primary" :href="mails"><span class="glyphicon glyphicon-envelope"></span></a>
             <copy-btn id="cp_mail_corresps" title="Copier la liste d'e-mails" css-class="btn btn-xs btn-success" v-model="mails" />
@@ -45,6 +45,9 @@ export default {
             sp.append('type', this.value[0].type_entite)
             sp.append('token', this.$store.state.userToken)
             return sp
+        },
+        toggle () {
+            this.$emit('toggled')
         }
     }
 }

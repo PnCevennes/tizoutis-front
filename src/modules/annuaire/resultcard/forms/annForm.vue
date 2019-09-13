@@ -23,8 +23,8 @@ export default {
     data () {
         return {
             models: {
-                commune: {type_entite: 'commune', nom: '', adresse: '', adresse2: '', code_postal: '', telephone: '', email: '', site_internet: '', ...this.base },
-                correspondant: {type_entite: 'correspondant', nom: '', prenom:'', civilite: '', adresse: '', adresse2: '', code_postal: '', telephone: '', mobile: '', email: '', ...this.base},
+                commune: {type_entite: 'commune', nom: '', adresse: '', adresse2: '', code_postal: '', telephone: '', email: '', site_internet: '', ...this.base},
+                correspondant: {type_entite: 'correspondant', nom: '', prenom: '', civilite: '', adresse: '', adresse2: '', code_postal: '', telephone: '', mobile: '', email: '', ...this.base},
                 entite: {type_entite: 'entite', nom: '', ...this.base},
                 entreprise: {type_entite: 'entreprise', nom: '', adresse: '', adresse2: '', code_postal: '', nom_gerant: '', prenom_gerant: '', telephone: '', telephone2: '', email: '', alt_email: '', site_internet: '', ...this.base}
             },

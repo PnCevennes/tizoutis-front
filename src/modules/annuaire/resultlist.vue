@@ -3,25 +3,31 @@
         <h2>{{ltitle}}</h2>
         <div v-if="!value.length">Aucun résultat</div>
         <div class="results" v-if="correspondants.length">
-            <toolbox v-model="correspondants">Correspondants</toolbox>
-            <div :key="item.id" v-for="item in correspondants">
+            <toolbox v-model="correspondants" @toggled="toggleCorrespondants">
+                Correspondants <span class="badge">{{correspondants.length}}</span>
+            </toolbox>
+            <div :key="item.id" v-for="item in correspondants" v-show="toggles.correspondant">
                 <resultcard :value="item" @removed="removed"/>
             </div>
         </div>
         <div class="results" v-if="entreprises.length">
-            <toolbox v-model="entreprises">Entreprises</toolbox>
-            <div :key="item.id" v-for="item in entreprises">
+            <toolbox v-model="entreprises" @toggled="toggleEntreprises">
+                Entreprises <span class="badge">{{entreprises.length}}</span>
+            </toolbox>
+            <div :key="item.id" v-for="item in entreprises" v-show="togges.entreprise">
                 <resultcard :value="item" @removed="removed"/>
             </div>
         </div>
         <div class="results" v-if="communes.length">
-            <toolbox v-model="communes">Communes</toolbox>
-            <div :key="item.id" v-for="item in communes">
+            <toolbox v-model="communes" @toggled="toggleCommunes">
+                Communes <span class="badge">{{communes.length}}</span>
+            </toolbox>
+            <div :key="item.id" v-for="item in communes" v-show="toggles.commune">
                 <resultcard :value="item" @removed="removed"/>
             </div>
         </div>
         <div class="results" v-if="groupes.length">
-            <h3>Groupes</h3>
+            <h3>Groupes <span class="badge">{{groupes.length}}</span></h3>
             <div :key="item.id" v-for="item in groupes">
                 <resultcard :value="item" @removed="removed"/>
             </div>
@@ -39,6 +45,15 @@ export default {
         resultcard,
         toolbox
     },
+    data () {
+        return {
+            toggles: {
+                correspondant: true,
+                entreprise: true,
+                commune: true
+            }
+        }
+    },
     computed: {
         groupes () {
             return this.value.filter(x => x.type_entite === 'entite')
@@ -54,6 +69,15 @@ export default {
         }
     },
     methods: {
+        toggleCorrespondants () {
+            this.toggles.correspondant = !this.toggles.correspondant
+        },
+        toggleCommunes () {
+            this.toggles.commune = !this.toggles.commune
+        },
+        toggleEntreprises () {
+            this.toggles.entreprise = !this.toggles.entreprise
+        },
         removed (data) {
             console.log('resultlist removed')
             var idx = this.value.findIndex(x => x.id === data.id)
