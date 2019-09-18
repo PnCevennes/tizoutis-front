@@ -225,6 +225,7 @@ var SubForm = {
             name: 'sub_fichiers',
             label: 'Fichiers',
             type: 'upload',
+            referId: 'subv_sub',
             uploadDir: SERVER + '/static/upload/',
             uploadTarget: SERVER + '/upload'
         }
@@ -331,6 +332,7 @@ var DecForm = {
             name: 'dec_fichiers',
             label: 'Fichiers',
             type: 'upload',
+            referId: 'subv_dec',
             uploadDir: SERVER + '/static/upload/',
             uploadTarget: SERVER + '/upload'
         }
@@ -458,6 +460,7 @@ var PaiForm = {
             name: 'pai_fichiers',
             label: 'Fichiers',
             type: 'upload',
+            referId: 'subv_pai',
             uploadDir: SERVER + '/static/upload/',
             uploadTarget: SERVER + '/upload'
         }

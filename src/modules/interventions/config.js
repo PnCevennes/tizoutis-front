@@ -86,6 +86,7 @@ var reqForm = {
             name: 'dem_fichiers',
             label: 'Fichiers',
             type: 'upload',
+            referId: 'intv_dem',
             uploadDir: SERVER + '/static/upload/',
             uploadTarget: SERVER + '/upload'
         }
@@ -144,6 +145,7 @@ var reaForm = {
             name: 'rea_fichiers',
             label: 'Fichiers Réalisation',
             type: 'upload',
+            referId: 'intv_rea',
             uploadDir: SERVER + '/static/upload/',
             uploadTarget: SERVER + '/upload'
         }

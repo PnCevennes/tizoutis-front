@@ -94,6 +94,7 @@ var reqForm = {
             name: 'dem_fichiers',
             label: 'Fichiers',
             type: 'upload',
+            referId: 'bati_dem',
             uploadDir: SERVER + '/static/upload/',
             uploadTarget: SERVER + '/upload'
         }
@@ -134,6 +135,7 @@ var planForm = {
             name: 'plan_fichiers',
             label: 'Fichiers',
             type: 'upload',
+            referId: 'bati_plan',
             uploadDir: SERVER + '/static/upload/',
             uploadTarget: SERVER + '/upload'
         }
@@ -173,6 +175,7 @@ var reaForm = {
             name: 'rea_fichiers',
             label: 'Fichiers',
             type: 'upload',
+            referId: 'bati_rea',
             uploadDir: SERVER + '/static/upload/',
             uploadTarget: SERVER + '/upload'
         }

@@ -45,8 +45,13 @@ export default {
             })
         },
         remove (fichier) {
-            axios.delete(this.config.uploadTarget + '/' + fichier.id).then(res => {
+            var deleteUrl = this.config.uploadTarget + '/' + fichier.id
+            if (this.config.referId) {
+                deleteUrl += ('?refer_id=' + this.config.referId)
+            }
+            axios.delete(deleteUrl).then(res => {
                 this.fichiers.splice(this.fichiers.indexOf(fichier), 1)
+                this.$emit('input', this.fichiers)
             }).catch(() => {})
         },
         getUrl (uri) {

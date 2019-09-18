@@ -204,6 +204,7 @@ var reqForm = {
             name: 'fichiers',
             label: 'Fichiers',
             type: 'upload',
+            referId: 'recrutement',
             uploadDir: SERVER + '/static/upload/',
             uploadTarget: SERVER + '/upload'
         }

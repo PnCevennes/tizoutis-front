@@ -14,7 +14,7 @@
             <toolbox v-model="entreprises" @toggled="toggleEntreprises">
                 Entreprises <span class="badge">{{entreprises.length}}</span>
             </toolbox>
-            <div :key="item.id" v-for="item in entreprises" v-show="togges.entreprise">
+            <div :key="item.id" v-for="item in entreprises" v-show="toggles.entreprise">
                 <resultcard :value="item" @removed="removed"/>
             </div>
         </div>
