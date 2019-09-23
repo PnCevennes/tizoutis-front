@@ -25,6 +25,7 @@ export default {
                 urlfilters: this.filters ? this.filters : '',
                 formatListClbk: this.format,
                 property: 'label',
+                autoFocus: true,
                 placeholder: 'Tapez votre recherche ici'
             }
         }

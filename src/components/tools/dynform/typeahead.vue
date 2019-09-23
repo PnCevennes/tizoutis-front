@@ -14,6 +14,7 @@
             :placeholder="placeholder"
             @input="search($event.target.value)"
             :class="{'invalid': invalid}"
+            v-focus="config.autoFocus"
             />
         <ul
             :class="{panvisible: formattedSearchRes.length}"
@@ -37,6 +38,15 @@ import axios from 'axios'
 
 export default {
     name: 'typeahead',
+    directives: {
+        focus: {
+            inserted (el, binding) {
+                if (binding.value) {
+                    el.focus()
+                }
+            }
+        }
+    },
     props: {
         config: Object,
         value: [Object, String]
