@@ -12,33 +12,36 @@
                     @click="search">Go !</btn>
             </div>
             <div class="row">
-            <div class="search-results" v-if="results.recherche.length">
-                <div class="search-res">
-                    <resultlist :ltitle="'Éléments recherchés'" v-model="results.recherche" />
+                <div v-if="!results.recherche.length && !userIsAdmin">
+                    <informations />
                 </div>
-                <div class="search-lst">
-                    <resultlist :ltitle="'Éléments liés'" v-model="results.liste" />
-                </div>
-            </div>
-            <div class="search-results" v-else-if="userIsAdmin">
-                <div class="search-res btn-group">
-                    <div>
-                        <button type="button" class="btn btn-primary" @click="addNew('entite')">Nouveau groupe</button>
+                <div class="search-results" v-if="results.recherche.length">
+                    <div class="search-res">
+                        <resultlist :ltitle="'Éléments recherchés'" v-model="results.recherche" />
                     </div>
-                    <div>
-                        <button type="button" class="btn btn-primary" @click="addNew('correspondant')">Nouveau correspondant</button>
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-primary" @click="addNew('entreprise')">Nouvelle entreprise</button>
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-primary" @click="addNew('commune')">Nouvelle commune</button>
+                    <div class="search-lst">
+                        <resultlist :ltitle="'Éléments liés'" v-model="results.liste" />
                     </div>
                 </div>
-                <div class="search-lst">
-                    <ann-form ref="addform" />
+                <div class="search-results" v-else-if="userIsAdmin">
+                    <div class="search-res btn-group">
+                        <div>
+                            <button type="button" class="btn btn-primary" @click="addNew('entite')">Nouveau groupe</button>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-primary" @click="addNew('correspondant')">Nouveau correspondant</button>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-primary" @click="addNew('entreprise')">Nouvelle entreprise</button>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-primary" @click="addNew('commune')">Nouvelle commune</button>
+                        </div>
+                    </div>
+                    <div class="search-lst">
+                        <ann-form ref="addform" />
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
     </div>
@@ -51,6 +54,7 @@ import {AuthMixin} from '@/core/mixins'
 import resultlist from './resultlist'
 import {SERVER} from '@/config'
 import annForm from './resultcard/forms/annForm'
+import informations from './informations'
 
 export default {
     name: 'annuaire',
@@ -59,6 +63,7 @@ export default {
         Btn,
         recherche,
         resultlist,
+        informations,
         annForm
     },
     props: {

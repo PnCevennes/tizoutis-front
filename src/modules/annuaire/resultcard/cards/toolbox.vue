@@ -2,7 +2,7 @@
     <div class="tbx">
         <h3 @click="toggle"><slot></slot></h3>
         <div class="tb">
-            <a class="btn btn-xs btn-primary" :href="mails"><span class="glyphicon glyphicon-envelope"></span></a>
+            <a class="btn btn-xs btn-primary" :href="'mailto:'+mails"><span class="glyphicon glyphicon-envelope"></span></a>
             <copy-btn id="cp_mail_corresps" title="Copier la liste d'e-mails" css-class="btn btn-xs btn-success" v-model="mails" />
             <a class="btn btn-xs btn-warning" :href="csvLink" title="Exporter au format CSV"><span class="glyphicon glyphicon-download-alt"></span></a>
             <a class="btn btn-xs btn-info" :href="vcardLink" title="Exporter au format VCard"><span class="glyphicon glyphicon-phone"></span></a>
@@ -21,7 +21,7 @@ export default {
     },
     computed: {
         mails () {
-            return 'mailto:' + this.value.map(x => `${x.label} <${x.email}>`).join(',')
+            return '' + this.value.map(x => `${x.label} <${x.email}>`).join(',')
         },
         query () {
             return this.$route.query.s
