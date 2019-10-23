@@ -10,7 +10,7 @@ src/config.js
 cfg/templates/test.js
 cfg/templates/dev.js
 cfg/templates/prod.js
-
+.sass-cache
 
 # Editor directories and files
 .idea
