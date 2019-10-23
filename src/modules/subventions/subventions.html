@@ -11,7 +11,7 @@
                 <a class="btn btn-success btn-xs"
                    :href="csvUrl"
                    title="Attention, l'export concerne toutes les données, pas seulement celles visibles à l'écran">Export CSV</a>
-                <label><input type="checkbox" v-model="filterSubs">Ajouter les dossiers clos</label>
+                <label><input type="checkbox" v-model="filterSubs" @change="changeAff">Ajouter les dossiers clos</label>
             </div>
             <hr />
             <div>

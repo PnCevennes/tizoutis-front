@@ -74,6 +74,7 @@ export default {
                     placement: 'top-right',
                     type: 'success'
                 })
+                this.$store.dispatch('thesaurus/load')
                 this.$router.push(this.$store.getters.redirectRoute)
             }).catch(() => {
                 window.sessionStorage.setItem('tizoutis-userdata', '')
@@ -108,6 +109,7 @@ export default {
                                 query: {}
                             }
                         }
+                        this.$store.dispatch('thesaurus/load')
                         this.$router.push({
                             name: redir.name,
                             query: redir.query

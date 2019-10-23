@@ -1,22 +1,30 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
+import {SERVER} from '@/config'
 import {User} from '@/core/authentification/'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+        serverURL: SERVER,
         user: new User(),
         userToken: '',
         initialRoute: '',
         acceptedGroups: [],
         loading: false,
-        saving: false
+        saving: false,
+        _http: null
     },
     mutations: {
         setUserToken (state, token) {
             state.userToken = token
+            state._http = axios.create({
+                baseURL: state.serverURL,
+                headers: {token: state.userToken}
+            })
         },
         setUser (state, userData) {
             state.user = userData
@@ -43,6 +51,15 @@ export default new Vuex.Store({
         }
     },
     getters: {
+        httpInstance: (state) => {
+            if (!state._http) {
+                state._http = axios.create({
+                    baseURL: state.serverURL,
+                    headers: {token: state.userToken}
+                })
+            }
+            return state._http
+        },
         isAuth: (state) => {
             return !!state.user.id
         },

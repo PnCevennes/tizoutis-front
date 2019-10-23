@@ -1,9 +1,10 @@
 .dyntable {
+    font-size: 10pt;
     padding: 0;
     width: 100%;
     border-padding: 0;
     border-spacing: 0;
-    border: 1px solid #999;
+    border: 2px solid #999;
 
     .itemIsSelected {
         background-color: #CCC;
@@ -18,17 +19,21 @@
         cursor: pointer;
     }
 
+    tr {
+        border-bottom: 1px solid #CCC;
+    }
     th {
-        background-color: #FBFBFB;
-        padding: 5px 10px;
+        background-color: #EBEBEB;
+        padding: 2px 10px;
         cursor: pointer;
         white-space: nowrap;
     }
 
     td {
-        padding: 5px 10px;
+        background-color: #FEFEF9;
+        padding: 2px 10px;
         font-weight: 100;
-        border-right: 1px solid lightgrey;
+        border-right: 1px solid #E9E9E9;
     }
 
     select {
@@ -42,6 +47,22 @@
         border-bottom: 2px solid #999;
         margin: 3px 0;
         padding: 3px;
+    }
+
+    .table_selected {
+        outline: 2px solid red;
+    }
+
+    .warning {
+        border-left: 10px solid $warning-color;
+    }
+
+    .danger {
+        border-left: 10px solid $danger-color;
+    }
+
+    .success {
+        border-left: 10px solid $success-color;
     }
 }
 

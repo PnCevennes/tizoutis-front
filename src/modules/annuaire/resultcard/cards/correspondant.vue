@@ -16,8 +16,8 @@
                 <div class="inline" v-if="value.mobile">
                     <span class="glyphicon glyphicon-phone"></span> {{value.mobile}}
                 </div>
-                <div>
-                    <a :href="'mailto:'+value.email">{{value.email}}</a>
+                <div class="inline">
+                    <a :href="'mailto:'+value.email"><span class="glyphicon glyphicon-envelope"></span>{{value.email}}</a>
                 </div>
             </div>
             <complementinfo v-model="value">

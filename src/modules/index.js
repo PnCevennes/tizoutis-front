@@ -4,6 +4,7 @@ import {ROUTE as batiments} from './batiments/'
 import {ROUTE as interventions} from './interventions/'
 import {ROUTE as supervision} from './supervision/'
 import {ROUTE as subventions} from './subventions/'
+import {ROUTE as materiel} from './materiel'
 
 const MODULES = [
     annuaire,
@@ -11,6 +12,7 @@ const MODULES = [
     interventions,
     batiments,
     subventions,
+    materiel,
     supervision
 ]
 

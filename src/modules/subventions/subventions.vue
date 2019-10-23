@@ -44,6 +44,9 @@ export default {
         }
     },
     methods: {
+        changeAff () {
+            this.$router.push({name: 'subventions', query: {termines: this.filterSubs}})
+        },
         toggle_gestion () {
             this.gestion = !this.gestion
         },
@@ -124,6 +127,9 @@ export default {
             return fiche
         },
         getAllCardsClbk (data) {
+            if (!this.filterSubs) {
+                data = data.filter(x => x.meta_statut !== 4)
+            }
             return data.map(this.calcStatut)
         },
         getOneCardClbk (data) {

@@ -17,6 +17,7 @@
                 </li>
             </ul>
         </div>
+        <pre>{{tree}}</pre>
     </div>
 </template>
 <script>
@@ -44,6 +45,9 @@ export default {
     computed: {
         maxid () {
             return Math.max(...this.items.map(x => x.id)) + 1
+        },
+        tree () {
+            return this.$store.getters['thesaurus/asTree']
         }
     },
     methods: {

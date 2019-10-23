@@ -1,12 +1,23 @@
-@import '_commons';
+$success-color: #bdf0b5;
+$warning-color: #fff8c2;
+$danger-color: #ffbebe;
+$primary-color: #CCCCff;
+$persona-parc-color: darkorange;
+
 @import 'dynform';
 @import 'dyntable';
 @import 'informations';
 @import 'treelist';
 
+
 #app {
     padding: 10px;
     display: flex;
+}
+
+.right-align {
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 body {
@@ -14,7 +25,7 @@ body {
 }
 
 body * {
-    font-family: "ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     margin: 0;
 }
 
@@ -156,10 +167,6 @@ h1 {
 
 .side-form {
     min-width: 40%;
-}
-
-.table_selected {
-    outline: 2px solid red;
 }
 
 .login-form {
