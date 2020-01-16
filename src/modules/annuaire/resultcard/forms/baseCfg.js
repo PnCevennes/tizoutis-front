@@ -37,5 +37,13 @@ export default [
         name: 'observations',
         label: 'Observations',
         type: 'text'
+    },
+    {
+        name: 'meta_update_date',
+        type: 'hidden'
+    },
+    {
+        name: 'meta_update_user',
+        type: 'hidden'
     }
 ]

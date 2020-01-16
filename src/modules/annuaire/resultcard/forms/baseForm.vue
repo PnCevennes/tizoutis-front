@@ -85,6 +85,8 @@ export default {
             this.formControl = new FormController(this.config, this.$store.state.user)
             this.formControl.user_is_admin = true
             this.formControl.show_buttons = true
+            this.value.meta_update_user = this.$store.state.user.name
+            this.value.meta_update_date = new Date()
         }
     },
     mounted () {

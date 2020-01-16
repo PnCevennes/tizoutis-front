@@ -21,13 +21,26 @@
                     <router-link :to="{name: 'annuaire', query: {s: item.id}}">{{item.label}}</router-link>
                 </div>
             </div>
+            <i v-if="userIsAdmin">
+                dernière modification le {{value.meta_update_date|datefr}} par {{value.meta_update_user}}
+            </i>
         </div>
     </div>
 </template>
 <script>
+import {datefr} from '@/components/tools/utils'
+
 export default {
     name: 'complementinfo',
     props: ['value'],
+    filters: {
+        datefr
+    },
+    computed: {
+        userIsAdmin () {
+            return this.$store.getters.isMember(['tizoutis-annuaire'])
+        }
+    },
     data () {
         return {
             visible: false
