@@ -132,6 +132,11 @@ var SaForm = {
             choices: []
         },
         {
+            name: 'sa_date_commission',
+            label: 'Date de la commission',
+            type: 'date'
+        },
+        {
             name: 'sa_axe_charte',
             label: 'Axe de la charte',
             type: 'select',
@@ -324,8 +329,23 @@ var DecForm = {
             type: 'date'
         },
         {
+            name: 'dec_dem_prorogation_date',
+            label: 'Date de demande de prorogation',
+            type: 'date'
+        },
+        {
+            name: 'dec_bur_prorogation_date',
+            label: 'Date du bureau prorogation',
+            type: 'date'
+        },
+        {
+            name: 'dec_numdel_prorogation',
+            label: 'N° de délibération prorogation',
+            type: 'line'
+        },
+        {
             name: 'dec_prorogation',
-            label: 'Prorogation',
+            label: 'Envoi courrier de prorogation',
             type: 'date'
         },
         {
