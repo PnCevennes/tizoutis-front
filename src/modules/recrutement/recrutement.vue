@@ -1,5 +1,6 @@
 <template src="./recrutement.html" />
 <script>
+import {SERVER} from '@/config'
 import {DynForm} from '@/components/tools/dynform'
 import {DynTable, TableController} from '@/components/tools/dyntable'
 import {demTable, headForm, reqForm} from './config'
@@ -15,6 +16,15 @@ export default {
     props: {
         query: {
             default: null
+        }
+    },
+    computed: {
+        dl_template () {
+            if (this.form_content.id) {
+                return [SERVER, this.ressourceUrl, this.form_content.id].join('/') + '?token=' + this.$store.state.userToken + '&format=document'
+            } else {
+                return '#'
+            }
         }
     },
     data () {

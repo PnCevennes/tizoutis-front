@@ -21,6 +21,9 @@
         <div class="side-form">
             <div class="dynform right-align">
                 <button type="button" @click="newCard">Nouvelle fiche</button>
+                <span v-if="form_content.id" style="margin-right: 5px;">
+                    <a class="btn btn-primary" :href="dl_template">Fiche imprimable</a>
+                </span>
             </div>
             <div>
                 <dyn-form :config="formCtrl" v-model="form_content" @commit="save($event)" @remove="remove($event)" />
