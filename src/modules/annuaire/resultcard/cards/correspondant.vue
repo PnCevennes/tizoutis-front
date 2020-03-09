@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div class="card-header">
-            <h3>{{value.civilite}} {{value.label}}</h3>
+            <h3><small>{{value.civilite}}</small> {{value.label}}</h3>
             <button v-if="userIsAdmin" class="btn btn-xs btn-default" type="button" @click="edit=!edit"><span class="glyphicon glyphicon-cog"></span></button>
         </div>
         <correspondant-form v-model="value" v-if="edit" @changed="changed" @removed="removed" />
