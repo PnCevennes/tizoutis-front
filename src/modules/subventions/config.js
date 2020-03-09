@@ -253,9 +253,49 @@ var DecForm = {
             type: 'line'
         },
         {
+            name: 'dec_refus_ajourn',
+            label: 'Refus ou ajournement',
+            type: 'select',
+            choices: [
+                {value: 0, label: ''},
+                {value: 1, label: 'Refusé'},
+                {value: 2, label: 'Ajourné'}
+            ]
+        },
+        {
             name: 'dec_motif_refus',
-            label: "Motif de refus ou d'ajournement",
-            type: 'text'
+            label: 'Motif de refus',
+            type: 'text',
+            // eslint-disable-next-line
+            condition: (data) => data.dec_refus_ajourn == 1 // noqa
+        },
+        {
+            name: 'dec_motif_ajourn',
+            label: "Motif d'ajournement",
+            type: 'text',
+            // eslint-disable-next-line
+            condition: (values) => values.dec_refus_ajourn == 2 // noqa
+        },
+        {
+            name: 'dec_bur_ajourn_date',
+            label: 'Date du bureau ajournement',
+            type: 'date',
+            // eslint-disable-next-line
+            condition: (values) => values.dec_refus_ajourn == 2 // noqa
+        },
+        {
+            name: 'dec_numdel_ajourn',
+            label: 'N° de délibération ajournement',
+            type: 'line',
+            // eslint-disable-next-line
+            condition: (values) => values.dec_refus_ajourn == 2 // noqa
+        },
+        {
+            name: 'dec_courrier_ajourn',
+            label: 'Date envoi courrier ajournement',
+            type: 'date',
+            // eslint-disable-next-line
+            condition: (values) => values.dec_refus_ajourn == 2 // noqa
         },
         {
             name: 'dec_conditions',

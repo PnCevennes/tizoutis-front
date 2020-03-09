@@ -8,6 +8,14 @@ import {DynTable, TableController} from '@/components/tools/dyntable'
 import {demTable, PetForm, SaForm, SubForm, DecForm, PaiForm} from './config'
 import adminForm from './adminform'
 
+/*
+Fonctions de vérifications diverses
+*/
+const chklen = (val) => val && val.length
+const chkdte = (val) => val && val !== null
+const chkdteexp = (val) => val && new Date(val) < new Date()
+const chkval = (val) => parseInt(val * 100) === 0
+
 export default {
     name: 'subventions',
     components: {
@@ -107,20 +115,35 @@ export default {
         calcStatut (fiche) {
             /*
             Calcule le statut d'une demande
+            statuts :
+                1 a presenter
+                2 en cours
+                3 a annuler
+                4 clos
             */
-            if (fiche.meta_statut !== 4) {
-                var out = 1
-                if (fiche.dec_date_bureau && fiche.dec_date_bureau !== null) {
-                    out = 2
-                    if (fiche.dec_echeance && new Date(fiche.dec_echeance) < new Date()) {
-                        out = 3
-                    }
-                    if (parseInt(fiche.pai_reste_du) === 0) {
-                        out = 4
-                    }
-                }
-                fiche.meta_statut = out
+            if (fiche.meta_statut === 4) {
+                return fiche
             }
+            if (chklen(fiche.dec_motif_refus)) {
+                fiche.meta_statut = 4
+                return fiche
+            }
+            if (chklen(fiche.dec_motif_ajourn) && !chkdte(fiche.dec_bur_ajourn_date)) {
+                fiche.meta_statut = 1
+                return fiche
+            }
+            if (!chkdte(fiche.dec_date_bureau)) {
+                fiche.meta_statut = 1
+                return fiche
+            }
+            var out = 2
+            if (chkval(fiche.pai_reste_du)) {
+                out = 4
+            }
+            if (chkdteexp(fiche.dec_echeance)) {
+                out = 3
+            }
+            fiche.meta_statut = out
             return fiche
         },
         getAllCardsClbk (data) {
