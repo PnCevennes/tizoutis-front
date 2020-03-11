@@ -136,14 +136,15 @@ export default {
                 fiche.meta_statut = 1
                 return fiche
             }
-            var out = 2
             if (chkval(fiche.pai_reste_du)) {
-                out = 4
+                fiche.meta_statut = 4
+                return fiche
             }
             if (chkdteexp(fiche.dec_echeance)) {
-                out = 3
+                fiche.meta_statut = 3
+                return fiche
             }
-            fiche.meta_statut = out
+            fiche.meta_statut = 2
             return fiche
         },
         getAllCardsClbk (data) {
