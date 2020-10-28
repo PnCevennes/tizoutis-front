@@ -9,18 +9,18 @@
         <div v-else>
             <div v-if="show_login_form">
                 <div class="login-form dynform">
-                    <form>
+                    <div>
                         <div>
                             <label for="login">Login : </label><input id="login" type="text" v-model="login" />
                         </div>
                         <div>
                             <label for="pwd">Mot de passe : </label><input id="pwd" type="password" v-model="passwd" />
                         </div>
-                        <div class="toolbox">
-                            <div class="separator"></div>
-                            <input type="submit" class="btn btn-xs btn-success" @click="loginfn"/>
-                        </div>
-                    </form>
+                    </div>
+                    <div class="toolbox">
+                        <div class="separator"></div>
+                        <button type="button" class="btn btn-xs btn-success" @click="loginfn">Se connecter</button>
+                    </div>
                 </div>
                 <div class="login-form">
                     <h1>Se connecter à TiZouTis</h1>
@@ -88,6 +88,7 @@ export default {
             })
         },
         reconnect () {
+            const defaultInitialRoute = {name: 'annuaire', query: {}}
             var rawLoginData = window.localStorage.getItem('tizoutis-userdata')
             if (!rawLoginData || !rawLoginData.length) {
                 this.show_login_form = true
@@ -101,12 +102,13 @@ export default {
                         this.$store.commit('setUserToken', res.data.token)
                         this.$store.commit('dataSaved')
                         if (this.$store.getters.isMember(this.$store.state.acceptedGroups)) {
-                            redir = this.$store.state.initialRoute
-                        } else {
-                            redir = {
-                                name: 'annuaire',
-                                query: {}
+                            if (this.$store.state.initialRoute) {
+                                redir = this.$store.state.initialRoute
+                            } else {
+                                redir = defaultInitialRoute
                             }
+                        } else {
+                            redir = defaultInitialRoute
                         }
                         this.$router.push({
                             name: redir.name,
@@ -138,3 +140,8 @@ export default {
 }
 
 </script>
+<style scoped>
+.toolbox {
+    margin-top: 10px;
+}
+</style>

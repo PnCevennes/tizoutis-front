@@ -63,7 +63,7 @@ export default new Vuex.Store({
         },
         redirectRoute: (state) => {
             if (state.initialRoute === '' || state.initialRoute.name === 'logout' || state.initialRoute.name === 'login') {
-                return {name: 'index'}
+                return {name: 'annuaire', query: {}}
             }
             return {name: state.initialRoute.name, query: state.initialRoute.query}
         }

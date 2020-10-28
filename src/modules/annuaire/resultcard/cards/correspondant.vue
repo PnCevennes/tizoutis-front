@@ -10,7 +10,7 @@
                 <div>
                     {{value.fonction}}
                 </div>
-                <div class="inline">
+                <div class="inline" v-if="value.telephone">
                     <span class="glyphicon glyphicon-earphone"></span> {{value.telephone}}
                 </div>
                 <div class="inline" v-if="value.mobile">
